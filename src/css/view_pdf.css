@@ -1,0 +1,32 @@
+#pdf-container {
+    position: relative;
+    width: 100%;
+    height: auto; /* Adjust height as needed */
+  }
+
+  #pdf-canvas {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(255, 0, 0, 0.5); /* Adjust watermark color and opacity */
+    font-size: 24px; /* Adjust watermark font size */
+  }
+  .watermark::after {
+  content: url('../img/logo.png'); /* Replace 'watermark.png' with your image path */
+  width: 50vw;
+  height: 50vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5; /* Adjust watermark opacity as needed */
+  pointer-events: none; /* Disable pointer events */
+  z-index: 9999; /* Ensure watermark is on top */
+}

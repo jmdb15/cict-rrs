@@ -1,0 +1,20 @@
+.tag-option{
+    cursor: pointer;
+    padding: 8px 6px;
+    font-size: small;
+}
+
+.tag-option:hover{
+  background-color: rgba(229,231,235,var(--tw-bg-opacity));
+}
+.tag-chosen{
+    font-size: smaller;
+    color: white;
+    background-color: #1F2937;
+    padding: 5px 5px;
+    border-radius:4px;
+    cursor: pointer;
+}
+.tag-chosen:hover{
+    filter: brightness(110%);
+}
