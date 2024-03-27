@@ -1,12 +1,13 @@
 <?php
-
+session_start();
+if (!isset($_SESSION["id"])) {
+  header("Location:landing.php");
+}
+include('../db/db.php');
 use function PHPSTORM_META\type;
-
-$imports = '
-<link rel="stylesheet" href="../src/css/upload_res.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">            
-';
-$showNav = true;
+$id = $_SESSION['id'];
+$sql = "SELECT * FROM studies WHERE account_id=$id ORDER BY id DESC";
+$res = $conn->query($sql);
 
 if(isset($_POST['project-title'])){
     include('../db/db.php');
@@ -49,13 +50,13 @@ if(isset($_POST['project-title'])){
                 $fileNameNew = uniqid('', true) . "." . $fileActualExt;
                 $fileDestination = '../public/pdfs/' . $fileNameNew;
 
-                // $coverNameNew = uniqid('', true) . "." . $coverActualExt;
-                // $coverDestination = '../public/images/cover/' . $coverNameNew;
+                $coverNameNew = uniqid('', true) . "." . $coverActualExt;
+                $coverDestination = '../public/images/cover/' . $coverNameNew;
 
                 move_uploaded_file($fileTmpName, $fileDestination);
-                // move_uploaded_file($coverTmpName, $coverDestination);
+                move_uploaded_file($coverTmpName, $coverDestination);
 
-                $sql = "INSERT INTO `studies` (`project_title`, `research_title`, `authors`, `panels`, `accession`, `adviser`, `tags`, `month_yr`, `description`, `file`) VALUES ('$pTitle', '$rTitle', '$authors', '$panels', '$accession', '$adviser', '$tags', '$month_yr', '$description', '$fileNameNew')";
+                $sql = "INSERT INTO `studies` (`project_title`, `research_title`, `authors`, `panels`, `accession`, `adviser`, `tags`, `month_yr`, `description`, `file`, `cover`) VALUES ('$pTitle', '$rTitle', '$authors', '$panels', '$accession', '$adviser', '$tags', '$month_yr', '$description', '$fileNameNew', '$coverNameNew')";
                 $res = $conn->query($sql);
                 echo "<script>alert('Success');</script>";
             } else {
@@ -69,6 +70,13 @@ if(isset($_POST['project-title'])){
     }
 }
 
+
+$imports = '
+<link rel="stylesheet" href="../src/css/upload_res.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">            
+';
+$showNav = true;
+$isLoggedIn = true;
 $content_template = "../src/template/upload_research_page.php";
 include "../base.php";
 ?>

@@ -1,4 +1,4 @@
-<main class="container mx-auto lg:px-8 xl:px-32 w-screen flex flex-col gap-y-2 justify-center">
+<main class="container mx-auto lg:px-8 xl:px-32 flex flex-col gap-y-2 justify-center">
     <!-- SECTION 1 -->
     <section class="pt-4 px-4">
         <h4 class="text-xl font-bold text-center md:text-start md:indent-8 my-3">Previous Reading</h4>
@@ -55,7 +55,7 @@
     </section>
     <!-- SECTION 2 -->
     <section class="pt-4 px-4">
-        <h4 class="text-xl font-bold md:text-start md:indent-8 my-3">Popular Studies</h4>
+        <h4 class="text-xl font-bold text-center md:text-start md:indent-8 my-3">Popular Studies</h4>
         <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center">
             <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
                 <img src="../src/img/BloodLink 2.png" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
@@ -110,7 +110,7 @@
     </section>
     <!-- SECTION 3 -->
     <section class="p-4 relative">
-        <div class="flex justify-between flex-col sm:flex-row gap-y-1 justify-center items-center mb-4 sm:mb-0">
+        <div class="flex justify-between flex-col sm:flex-row gap-y-1 items-center mb-4 sm:mb-0">
             <h4 class="text-xl font-bold text-orange-400 text-center md:text-start md:indent-8 my-3">Research Title</h4>
             <div class="relative max-w-[240px]">
                 <div class="absolute border-r-2 px-2 h-[37px] top-0 start-0 flex items-center pointer-events-none">
@@ -121,7 +121,7 @@
                 <input type="search" id="default-search" class="block w-full px-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Studies" />
             </div>
         </div>
-        <div class="flex flex-col-reverse sm:flex-col " id="page-content">
+        <div class="flex flex-col h-fit" id="page-content">
             <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center">
                 <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
                     <img src="../src/img/pana.png" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">

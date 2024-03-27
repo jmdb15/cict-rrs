@@ -1,12 +1,18 @@
 <?php
-$imports = '<link rel="stylesheet" href="../src/css/signup.css">';
+session_start();
+if (!isset($_SESSION["id"])) {
+  header("Location:landing.php");
+}
+$imports = '';
 include('../db/db.php');
 
 $id = $_GET['id'];
 $sql = "SELECT * FROM `studies` WHERE id=$id";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
+$file = $row['file'];
 
+$isLoggedIn = true;
 $showNav = true;
 $content_template = "../src/template/view_pdf_page.php";
 include "../base.php";

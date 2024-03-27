@@ -3,28 +3,28 @@ let dropdown = document.getElementById("tag-dropdown");
 let here = document.getElementById("here");
 let form = document.querySelector('form');
 
-input.addEventListener("focus", function() {
+input.addEventListener("focus", function () {
     dropdown.style.display = "block";
 });
 
-window.addEventListener("click", function(event) {
+window.addEventListener("click", function (event) {
     if (!event.target.matches('#tag-input')) {
-    dropdown.style.display = "none";
+        dropdown.style.display = "none";
     }
 });
 
-function addOption(){
+function addOption() {
     var options = dropdown.querySelectorAll(".tag-option");
-    options.forEach(function(option) {
-    option.addEventListener("click", function(event) {
-        event.preventDefault();
-        here.innerHTML += `<span onclick="removeMe(this)" class="tag-chosen">${event.target.textContent}</span>`;
-        option.remove();
-    });
+    options.forEach(function (option) {
+        option.addEventListener("click", function (event) {
+            event.preventDefault();
+            here.innerHTML += `<span onclick="removeMe(this)" class="tag-chosen">${event.target.textContent}</span>`;
+            option.remove();
+        });
     });
 }
 
-function removeMe(e){
+function removeMe(e) {
     e.remove();
     dropdown.innerHTML += `<option class="tag-option">${e.innerText}</option>`;
     addOption();
@@ -32,12 +32,12 @@ function removeMe(e){
 
 addOption();
 
-form.addEventListener('submit', function(event) {
+form.addEventListener('submit', function (event) {
     event.preventDefault();
     let parentDiv = document.querySelector('#here');
     let childDivs = parentDiv.querySelectorAll('span');
     let texts = [];
-    childDivs.forEach(function(childDiv) {
+    childDivs.forEach(function (childDiv) {
         texts.push(childDiv.innerText);
     });
     input.value = JSON.stringify(texts);
@@ -48,3 +48,23 @@ form.addEventListener('submit', function(event) {
 flatpickr("#month-yr", {
     dateFormat: "m/Y",
 });
+
+function displayFile() {
+    const fileInput = document.getElementById('dropzone-file');
+    const file = fileInput.files[0];
+    const fileContentsDisplay = document.getElementById('img-cont');
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+            const contents = event.target.result;
+            fileContentsDisplay.innerText = contents;
+        };
+
+        reader.readAsText(file);
+        console.log('true');
+    } else {
+        fileContentsDisplay.innerText = "No file selected.";
+    }
+}

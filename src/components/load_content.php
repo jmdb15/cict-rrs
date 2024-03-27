@@ -16,11 +16,11 @@ if($total_records <= 5){
     $sql = "SELECT * FROM studies";
     $result = $conn->query($sql);
 
-    echo '<div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center">';
+    echo '<div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center h-fit">';
     while($row = $result->fetch_assoc()) {
-        echo '  <a href="view_study.php?id='.$row['id'].'" class="cursor-pointer">
-                    <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
-                        <img src="../src/img/BloodLink 2.png" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
+        echo '  <a href="view_study.php?id='.$row['id'].'" class="cursor-pointer w-[28%] min-w-[290px]">
+                    <div class="relative flex gap-x-2 p-4 h-[120px] w-full bg-white rounded-lg shadow-md">
+                        <img src="../public/images/cover/'.$row['cover'].'" class="w-auto min-w-[120px] h-auto basis-[40%] aspect-video" alt="Cover">
                         <div class="flex flex-col justify-between">
                             <p>'. $row['project_title'] .'</p>
                             <p class="text-base text-ellipsis overflow-hidden">'. $row['research_title'] .'</p>
@@ -65,8 +65,8 @@ if($total_records <= 5){
     echo '<div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center">';
     while($row = $result->fetch_assoc()) {
         echo '  <a href="view_study.php?id='.$row['id'].'" class="cursor-pointer">
-                    <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
-                        <img src="pana.png" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
+                    <div class="relative flex gap-x-2 p-4 h-[120px] w-[36%] min-w-[320px] bg-white rounded-lg shadow-md hover:brightness-90">
+                        <img src="../public/images/cover/'.$row['cover'].'" class="w-auto min-w-[120px] h-auto basis-[46%] aspect-video" alt="Cover">
                         <div class="flex flex-col justify-between">
                             <p>'. $row['project_title'] .'</p>
                             <p>Subtitle</p>
