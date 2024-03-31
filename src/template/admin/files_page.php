@@ -1,4 +1,4 @@
-<div class="relative overflow-x-auto p-2 lg:px-24 xl:px-48 border">
+<div class="relative overflow-x-auto p-2 lg:px-24 xl:px-48 min-h-[390px]">
     <div class="flex justify-center items-center gap-4 md:gap-12 p-8 ">
         <button class="active option-btns">Files</button>
         <button class="btn-bordered option-btns">Archived</button>
@@ -25,7 +25,7 @@
                 <!-- Dropdown menu -->
                 <div id="dropdownRadio" class="z-50 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
                     <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
-                        <li>
+                        <li onclick="()=>{document.querySelector('#radio-filter').innerText='All'}">
                             <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
                                 <input 
                                     <?= (!isset($_GET['type']) ? 'checked' : $_GET['type'] == 'all' ) ? 'checked' : '' ?> 
@@ -37,7 +37,7 @@
                                 <label for="filter-radio-example-5" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">All</label>
                             </div>
                         </li>
-                        <li>
+                        <li >
                             <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
                                 <input 
                                     <?= (!isset($_GET['type']) ? '' : $_GET['type'] == 'day' ) ? 'checked' : '' ?>
@@ -45,6 +45,7 @@
                                     type="radio" 
                                     value="yesterday" 
                                     name="type" 
+                                    onchange="()=>console.log(2)"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="filter-radio-example-1" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Yesterday</label>
                             </div>
@@ -109,7 +110,10 @@
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <div class="sticky top-0 bg-white flex justify-between p-5 border-b-[1px] rounded w-full">
                 <h2 class="text-xl">File List</h2>
-                <button class="px-4 py-2 bg-orange-400 text-white hover:brightness-110 rounded-md">Upload File</button>
+                <div class="flex justify-center items-center gap-2">
+                    <button class="px-4 py-2 bg-orange-400 text-white hover:brightness-110 rounded-md">Upload File</button>
+                    <button id="export-btn" class="px-4 py-2 bg-[#4D4D4D] text-white hover:brightness-110 rounded-md">Generate Report</button>
+                </div>
             </div>
             <thead class="sticky top-[81px] text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -127,12 +131,12 @@
                     </th>
                 </tr>
             </thead>
-            <tbody id="file-tbody">
+            <tbody class="tbodies" id="not-archived-tbody">
                 <?php   while($row = $result->fetch_assoc()){ 
                         $dateTime = new DateTime($row['created_at']);
                         $row['created_at'] = $dateTime->format("F j, Y");    
                 ?>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <tr id="tr-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <?=$row['project_title']?>
                             </th>
@@ -155,12 +159,12 @@
                         </tr>
                 <?php } ?>
             </tbody>
-            <tbody class="hidden" id="archive-tbody">
+            <tbody class="hidden tbodies" id="archived-tbody">
                 <?php   while($row = $aresult->fetch_assoc()){ 
                         $dateTime = new DateTime($row['created_at']);
                         $row['created_at'] = $dateTime->format("F j, Y");    
                 ?>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <tr id="atr-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <?=$row['project_title']?>
                             </th>
@@ -189,15 +193,24 @@
     setActiveNav('files');
     initiateButtons();
 
+    const radioInputs = document.querySelectorAll('input[type="radio"][name="type"]');
+    const span = document.getElementById('radio-filter');
+
+    radioInputs.forEach(input => {
+        input.addEventListener('change', updateSelectedFilter);
+    });
+
     function archiveFile(id, func){
         $.ajax({
             url: '../../src/ajax/archive_file.php',
             type: 'POST',
             data: { 
                 id: id,
-                func: func
+                func: func,
+                table: 'studies'
             },
             success:function(response){
+                updateTableWhenArchived(id, func);
                 alert(response);
             }
         });
@@ -226,58 +239,85 @@
             data:{
                 key: key,
                 active:activeType,
-                type:selectedValue
+                type:selectedValue,
+                table: 'studies'
             },
             success: function(response){
                 const parsed = JSON.parse(response);
-                const elemId = activeType == '1' ? 'archive-tbody' : 'file-tbody';
+                const elemId = activeType == '1' ? 'archived-tbody' : 'not-archived-tbody';
                 let tbody = document.getElementById(elemId);
-                renderedHTML = parsed.map(data => {
-                    let action = '';
-                    if(activeType == 0){
-                        action = `
-                            <a href="view.php?id=${data.id}" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
-                                <img src="../../src/img/View.svg" alt="">
-                                View
-                            </a>
-                            <span onclick="archiveFile(${data.id}, 1)" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
-                                <img src="../../src/img/Archive.svg" alt="">
-                                Archive
-                            </span>
-                        `;
-                    }else{
-                        action = `
-                            <span onclick="archiveFile(${data.id}, 0)" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
-                                <img src="../../src/img/Restore Page.svg" alt="">
-                                Unarchive
-                            </span>    
-                        `;
-                    }
-                    return tr = `
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                ${data.project_title}
+                
+                if(parsed.length == 0){
+                    tbody.innerHTML = `
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer">
+                            <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] max-w-none font-medium text-gray-900 dark:text-white">
+                                NO RECORDS FOUND
                             </th>
-                            <td class="px-1 sm:px-6 py-4 text-gray-600">
-                                ${data.email}
-                            </td>
-                            <td class="px-1 sm:px-6 py-4 text-gray-600">
-                                ${data.created_at}
-                            </td>
-                            <td class="px-1 sm:px-6 py-4 text-gray-600 flex gap-x-4">
-                                ${action}
-                            </td>
                         </tr>
                     `;
-                });
-                tbody.innerHTML = renderedHTML.join('');
-                document.querySelector('#radio-filter').innerHTML = radioFilter; 
+                }else{
+                    renderedHTML = parsed.map(data => {
+                        let action = '';
+                        if(activeType == 0){
+                            action = `
+                                <a href="view.php?id=${data.id}" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                    <img src="../../src/img/View.svg" alt="">
+                                    View
+                                </a>
+                                <span onclick="archiveFile(${data.id}, 1)" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                    <img src="../../src/img/Archive.svg" alt="">
+                                    Archive
+                                </span>
+                            `;
+                        }else{
+                            action = `
+                                <span onclick="archiveFile(${data.id}, 0)" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                    <img src="../../src/img/Restore Page.svg" alt="">
+                                    Unarchive
+                                </span>    
+                            `;
+                        }
+                        return tr = `
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    ${data.project_title}
+                                </th>
+                                <td class="px-1 sm:px-6 py-4 text-gray-600">
+                                    ${data.email}
+                                </td>
+                                <td class="px-1 sm:px-6 py-4 text-gray-600">
+                                    ${data.created_at}
+                                </td>
+                                <td class="px-1 sm:px-6 py-4 text-gray-600 flex gap-x-4">
+                                    ${action}
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    tbody.innerHTML = renderedHTML.join('');
+                    document.querySelector('#radio-filter').innerHTML = radioFilter; 
+                }
             }
         })
     }
 
-    function capitalizeFirst(str){
-        const newStr = str[0].toUpperCase() + str.substr(1);
-        return newStr;
-    }
+//     function initiateButtons(){
+//   const optionButtons = document.querySelectorAll('.option-btns');
+//   optionButtons.forEach((btn) => {
+//       btn.addEventListener('click', function(event){
+//           optionButtons[0].classList.toggle('active');
+//           optionButtons[1].classList.toggle('active');
+//           optionButtons[0].classList.toggle('btn-bordered');
+//           optionButtons[1].classList.toggle('btn-bordered');
+//         tbodies[0].classList.toggle('hidden');
+//         tbodies[1].classList.toggle('hidden');
+//           active = event.target.innerText.toLowerCase();
+//           document.querySelector('#active-type').value = active;
+//           const exportBtn = document.querySelector('#export-btn');
+//           if(exportBtn != null){
+//               exportBtn.classList.toggle('hidden');
+//           }
+//       });
+//   });
+// }
 </script>
