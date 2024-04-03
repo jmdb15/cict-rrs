@@ -1,4 +1,11 @@
 <?php
+include ('../../db/db.php'); 
+
+$sql = "SELECT r.*, s.project_title, a.email FROM requests r JOIN studies s ON r.studies_id = s.id JOIN account a ON r.account_id = a.number WHERE status = 0";
+$result = $conn->query($sql);
+
+$tsql = "SELECT r.*, s.project_title, a.email FROM requests r JOIN studies s ON r.studies_id = s.id JOIN account a ON r.account_id = a.number WHERE status != 0";
+$tresult = $conn->query($tsql);
 
 $scripts = "
 <script>

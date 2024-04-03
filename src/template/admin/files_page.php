@@ -32,7 +32,7 @@
                                     id="filter-radio-example-5" 
                                     type="radio" 
                                     value="all" 
-                                    name="type" 
+                                    name="date" 
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="filter-radio-example-5" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">All</label>
                             </div>
@@ -44,7 +44,7 @@
                                     id="filter-radio-example-1" 
                                     type="radio" 
                                     value="yesterday" 
-                                    name="type" 
+                                    name="date" 
                                     onchange="()=>console.log(2)"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="filter-radio-example-1" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Yesterday</label>
@@ -57,7 +57,7 @@
                                     id="filter-radio-example-2" 
                                     type="radio" 
                                     value="week" 
-                                    name="type" 
+                                    name="date" 
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="filter-radio-example-2" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last Week</label>
                             </div>
@@ -69,7 +69,7 @@
                                     id="filter-radio-example-3" 
                                     type="radio" 
                                     value="month" 
-                                    name="type" 
+                                    name="date" 
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="filter-radio-example-3" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last Month</label>
                             </div>
@@ -81,7 +81,7 @@
                                     id="filter-radio-example-4" 
                                     type="radio" 
                                     value="year" 
-                                    name="type" 
+                                    name="date" 
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="filter-radio-example-4" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last Year</label>
                             </div>
@@ -112,7 +112,17 @@
                 <h2 class="text-xl">File List</h2>
                 <div class="flex justify-center items-center gap-2">
                     <button class="px-4 py-2 bg-orange-400 text-white hover:brightness-110 rounded-md">Upload File</button>
-                    <button id="export-btn" class="px-4 py-2 bg-[#4D4D4D] text-white hover:brightness-110 rounded-md">Generate Report</button>
+                    <form action="export-pdf.php" method="POST" onsubmit="waitSubmit(this, event)">
+                        <input type="text" name="type" id="gen-when" hidden>
+                        <input type="text" name="key" id="gen-key" hidden>
+                        <input type="text" name="table" value="studies" hidden>
+                        <button 
+                            id="export-btn" 
+                            type="submit"
+                            class="px-4 py-2 bg-[#4D4D4D] text-white hover:brightness-110 rounded-md">
+                            Generate Report
+                        </button>
+                    </form>
                 </div>
             </div>
             <thead class="sticky top-[81px] text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
@@ -151,7 +161,7 @@
                                     <img src="../../src/img/View.svg" alt="">
                                     View
                                 </a>
-                                <span onclick="archiveFile(<?=$row['id']?>, 1)" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                <span onclick="archiveFile(<?=$row['id']?>, 1, 'studies')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
                                     <img src="../../src/img/Archive.svg" alt="">
                                     Archive
                                 </span>
@@ -175,7 +185,7 @@
                                 <?=$row['created_at']?>
                             </td>
                             <td class="px-1 sm:px-6 py-4 text-gray-600">
-                                <span onclick="archiveFile(<?=$row['id']?>, 0)" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                <span onclick="archiveFile(<?=$row['id']?>, 0, 'studies')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
                                     <img src="../../src/img/Restore Page.svg" alt="">
                                     Unarchive
                                 </span>                            
@@ -193,36 +203,15 @@
     setActiveNav('files');
     initiateButtons();
 
-    const radioInputs = document.querySelectorAll('input[type="radio"][name="type"]');
+    const radioInputs = document.querySelectorAll('input[type="radio"][name="date"]');
     const span = document.getElementById('radio-filter');
 
     radioInputs.forEach(input => {
         input.addEventListener('change', updateSelectedFilter);
     });
-
-    function archiveFile(id, func){
-        $.ajax({
-            url: '../../src/ajax/archive_file.php',
-            type: 'POST',
-            data: { 
-                id: id,
-                func: func,
-                table: 'studies'
-            },
-            success:function(response){
-                updateTableWhenArchived(id, func);
-                alert(response);
-            }
-        });
-    }
-
-    function formSubmit(form, event){
-        event.preventDefault();
-        const type = document.getElementsByName("type");
-        const activeType = document.getElementById('active-type').value == 'archived' ? 1 : 0 ;
-        const key = document.getElementById('table-search').value;
-        
-        //GET SELECTED VALUE FROM THE RADIO INPUTS
+    
+    function getSelectedDateValue(){
+        const type = document.getElementsByName("date");
         let selectedValue = "";
         for (var i = 0; i < type.length; i++) {
             if (type[i].checked) {
@@ -230,6 +219,40 @@
                 break;
             }
         }
+        return selectedValue;
+    }
+
+    function waitSubmit(form, event){
+        event.preventDefault();
+        const type = getSelectedDateValue();
+        const key = document.getElementById('table-search').value;
+
+        document.getElementById('gen-key').value = key;
+        document.getElementById('gen-when').value = type;
+
+        form.submit();
+    }
+
+    function archiveFile(id, func, table){
+        $.ajax({
+            url: '../../src/ajax/archive_file.php',
+            type: 'POST',
+            data: { 
+                id: id,
+                func: func,
+                table: table
+            },
+            success:function(response){
+                updateTableWhenArchived(id, func);
+            }
+        });
+    }
+
+    function formSubmit(form, event){
+        event.preventDefault();
+        const selectedValue = getSelectedDateValue();
+        const activeType = document.getElementById('active-type').value == 'archived' ? 1 : 0 ;
+        const key = document.getElementById('table-search').value;
         
         const radioFilter = selectedValue == 'yesterday' || selectedValue == 'all' ? capitalizeFirst(selectedValue) : `Last ${capitalizeFirst(selectedValue)}`;
         
@@ -239,10 +262,11 @@
             data:{
                 key: key,
                 active:activeType,
-                type:selectedValue,
+                date:selectedValue,
                 table: 'studies'
             },
             success: function(response){
+                console.log(response);
                 const parsed = JSON.parse(response);
                 const elemId = activeType == '1' ? 'archived-tbody' : 'not-archived-tbody';
                 let tbody = document.getElementById(elemId);
@@ -264,14 +288,14 @@
                                     <img src="../../src/img/View.svg" alt="">
                                     View
                                 </a>
-                                <span onclick="archiveFile(${data.id}, 1)" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                <span onclick="archiveFile(${data.id}, 1, 'studies')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
                                     <img src="../../src/img/Archive.svg" alt="">
                                     Archive
                                 </span>
                             `;
                         }else{
                             action = `
-                                <span onclick="archiveFile(${data.id}, 0)" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                <span onclick="archiveFile(${data.id}, 0, 'studies')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
                                     <img src="../../src/img/Restore Page.svg" alt="">
                                     Unarchive
                                 </span>    

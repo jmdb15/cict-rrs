@@ -7,7 +7,29 @@ extract($_POST);
 
 // if(isset($submit)){
 if(true){
-  $sql = "SELECT * FROM studies";
+  $key = $_POST['key'];
+  $type = $_POST['type'];
+  $table = $_POST['table'];
+  $within = '';
+  switch ($type) {
+    case 'all':
+      break;
+    case 'yesterday':
+      $within = 'AND created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)';
+      break;
+    case 'week':
+      $within = 'AND created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 1 WEEK)';
+      break;
+    case 'month':
+      $within = 'AND created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH)';
+      break;
+    case 'year':
+      $within = 'AND created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 1 YEAR)';
+      break;
+  }
+
+  $sql = "SELECT * FROM $table WHERE project_title LIKE '%$key%' AND is_archived = 0 $within";
+  // $sql = "SELECT * FROM studies";
   $result = $conn->query($sql);
   $html = '';
   $html .= '
@@ -38,7 +60,7 @@ if(true){
   }else{
     $html .= '
       <tr>
-        <th colspan="5">No data</th>
+        <th colspan="5" style="border: 1px solid #ddd;">No data</th>
       </tr>
     ';
   }

@@ -1,8 +1,9 @@
 // FILES / ARCHIVED BUTTON STYLE 
 function initiateButtons() {
   const optionButtons = document.querySelectorAll('.option-btns');
-  optionButtons.forEach((btn) => {
+  optionButtons.forEach((btn, index) => {
     btn.addEventListener('click', function (event) {
+      const oppositeIndex = index == 0 ? 1 : 0;
       const tbodies = document.getElementsByClassName('tbodies');
       optionButtons[0].classList.toggle('active');
       optionButtons[1].classList.toggle('active');
@@ -11,21 +12,24 @@ function initiateButtons() {
       tbodies[0].classList.toggle('hidden');
       tbodies[1].classList.toggle('hidden');
       active = event.target.innerText.toLowerCase();
-      document.querySelector('#active-type').value = active;
+      activeOnInput = document.querySelector('#active-type');
+      active === activeOnInput.value
+        ? activeOnInput.value = optionButtons[oppositeIndex].innerText.toLowerCase()
+        : activeOnInput.value = active;
       const exportBtn = document.querySelector('#export-btn');
-      if(exportBtn != null){
-          exportBtn.classList.toggle('hidden');
+      if (exportBtn != null) {
+        exportBtn.classList.toggle('hidden');
       }
     });
   });
 }
 
-function capitalizeFirst(str){
-    return str[0].toUpperCase() + str.substr(1);
+function capitalizeFirst(str) {
+  return str.chatAt(0).toUpperCase() + str.slice(1);
 }
 
 //DISPLAY ORANGE BG
-function setActiveNav(str){
+function setActiveNav(str) {
   const element = document.getElementById(str);
   element.classList.add('bg-orange-400');
   element.firstElementChild.classList.add('brightness-100');
@@ -34,12 +38,12 @@ function setActiveNav(str){
 
 // UPDATE DATE FILTER TEXT
 function updateSelectedFilter() {
-    radioInputs.forEach(input => {
-        if (input.checked) {
-            let selectedValue = input.value;
-            span.textContent = selectedValue == 'yesterday' || selectedValue == 'all' ? capitalizeFirst(selectedValue) : `Last ${capitalizeFirst(selectedValue)}`;
-        }
-    });
+  radioInputs.forEach(input => {
+    if (input.checked) {
+      let selectedValue = input.value;
+      span.textContent = selectedValue == 'yesterday' || selectedValue == 'all' ? capitalizeFirst(selectedValue) : `Last ${capitalizeFirst(selectedValue)}`;
+    }
+  });
 }
 
 // UPDATE TABLE ROW WHEN ARCHIVED
@@ -75,3 +79,30 @@ function updateTableWhenArchived(id, archive) {
   trHtml = tr.outerHTML;
   document.getElementById(tbody).innerHTML += trHtml;
 }
+
+function requestFunction(id, toDo) {
+  $.ajax({
+    url: '../../src/ajax/app-deny-request.php',
+    type: 'POST',
+    data: { id, toDo },
+    success: function (response) {
+      console.log(response);
+    }
+  })
+}
+
+// function archiveFile(id, func, table){
+//   $.ajax({
+//       url: '../../src/ajax/archive_file.php',
+//       type: 'POST',
+//       data: { 
+//           id: id,
+//           func: func,
+//           table: table
+//       },
+//       success:function(response){
+//           // updateTableWhenArchived(id, func);
+//           alert(response);
+//       }
+//   });
+// }

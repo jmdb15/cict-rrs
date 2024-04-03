@@ -1,9 +1,10 @@
 <?php
   include("../../db/db.php");
 
-if(isset($_POST['type'])){
+if(isset($_POST['date'])){
   $searchKey = $_POST['key'];
   $active = $_POST['active'];
+    $type = $_POST['date'];
   $table = $_POST['table'];
   $column = $table == 'studies' ? 'project_title' : 'survey_name';
   $within = '';
@@ -14,25 +15,24 @@ if(isset($_POST['type'])){
     $end = $_POST['end'];
     $sql = "SELECT * FROM `$table` WHERE `project_title` LIKE '%$searchKey%' AND (created_at BETWEEN '$start' AND '$end')";
   } else {
-    $type = $_POST['type'];
     switch ($type) {
       case 'all':
         $within = '';
         break;
-      case 'yesterday':
-        $within = 'AND created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)';
+      case "yesterday":
+        $within = "AND `created_at` >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)";
         break;
-      case 'week':
-        $within = 'AND created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 1 WEEK)';
+      case "week":
+        $within = "AND `created_at` >= DATE_SUB(CURRENT_DATE, INTERVAL 1 WEEK)";
         break;
-      case 'month':
-        $within = 'AND created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH)';
+      case "month":
+        $within = "AND `created_at` >= DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH)";
         break;
-      case 'year':
-        $within = 'AND created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 1 YEAR)';
+      case "year":
+        $within = "AND `created_at` >= DATE_SUB(CURRENT_DATE, INTERVAL 1 YEAR)";
         break;
     }
-    $sql = "SELECT s.*, a.email FROM `$table` s JOIN account a ON s.account_id = a.number WHERE is_archived = $active AND `$column` LIKE '%$searchKey%' $within";
+    $sql = "SELECT s.*, a.email FROM $table s JOIN account a ON s.account_id = a.number WHERE is_archived = $active AND $column LIKE '%$searchKey%' $within";
   }
   $result = $conn->query($sql);
   $data = array();

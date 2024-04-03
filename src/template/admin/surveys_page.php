@@ -10,8 +10,7 @@
                 type="text"
                 value="<?= !isset($_GET['active']) || $_GET['active'] == '1' ? '1': '0' ?>" 
                 name="active" 
-                hidden 
-                />
+                hidden/>
             <div>
                 <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
                     <svg class="w-3 h-3 text-gray-500 dark:text-gray-400 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -32,7 +31,7 @@
                                     id="filter-radio-example-5" 
                                     type="radio" 
                                     value="all" 
-                                    name="type" 
+                                    name="date" 
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="filter-radio-example-5" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">All</label>
                             </div>
@@ -44,7 +43,7 @@
                                     id="filter-radio-example-1" 
                                     type="radio" 
                                     value="yesterday" 
-                                    name="type" 
+                                    name="date" 
                                     onchange="()=>console.log(2)"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="filter-radio-example-1" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Yesterday</label>
@@ -57,7 +56,7 @@
                                     id="filter-radio-example-2" 
                                     type="radio" 
                                     value="week" 
-                                    name="type" 
+                                    name="date" 
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="filter-radio-example-2" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last Week</label>
                             </div>
@@ -69,7 +68,7 @@
                                     id="filter-radio-example-3" 
                                     type="radio" 
                                     value="month" 
-                                    name="type" 
+                                    name="date" 
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="filter-radio-example-3" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last Month</label>
                             </div>
@@ -81,7 +80,7 @@
                                     id="filter-radio-example-4" 
                                     type="radio" 
                                     value="year" 
-                                    name="type" 
+                                    name="date" 
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="filter-radio-example-4" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last Year</label>
                             </div>
@@ -148,7 +147,7 @@
                                 <img src="../../src/img/View.svg" alt="">
                                 View
                             </a>
-                            <span onclick="archiveFile(<?=$row['id']?>, 1)" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                            <span onclick="archiveFile(<?=$row['id']?>, 1, 'surveys')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
                                 <img src="../../src/img/Archive.svg" alt="">
                                 Archive
                             </span>
@@ -172,7 +171,7 @@
                             <?=$row['created_at']?>
                         </td>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
-                            <span onclick="archiveFile(<?=$row['id']?>, 0)" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                            <span onclick="archiveFile(<?=$row['id']?>, 0, 'surveys')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
                                 <img src="../../src/img/Restore Page.svg" alt="">
                                 Unarchive
                             </span>                            
@@ -190,14 +189,18 @@
     setActiveNav('surveys');
     initiateButtons();
 
-    function archiveFile(id, func){
+    function capitalizeFirst(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function archiveFile(id, func, table){
         $.ajax({
             url: '../../src/ajax/archive_file.php',
             type: 'POST',
             data: { 
                 id: id,
                 func: func,
-                table: 'surveys'
+                table: table
             },
             success:function(response){
                 updateTableWhenArchived(id, func);
@@ -208,7 +211,7 @@
 
     function formSubmit(form, event){
         event.preventDefault();
-        const type = document.getElementsByName("type");
+        const type = document.getElementsByName("date");
         const activeType = document.getElementById('active-type').value == 'archived' ? 1 : 0 ;
         const key = document.getElementById('table-search').value;
         
@@ -229,7 +232,7 @@
             data:{
                 key: key,
                 active:activeType,
-                type:selectedValue,
+                date:selectedValue,
                 table: 'surveys'
             },
             success: function(response){
@@ -254,16 +257,16 @@
                                     <img src="../../src/img/View.svg" alt="">
                                     View
                                 </a>
-                                <span onclick="archiveFile(${data.id}, 1)" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                <span onclick="archiveFile(${data.id}, 1, 'surveys')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
                                     <img src="../../src/img/Archive.svg" alt="">
-                                    Archive
+                                    Archiveee
                                 </span>
                             `;
                         }else{
                             action = `
-                                <span onclick="archiveFile(${data.id}, 0)" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                <span onclick="archiveFile(${data.id}, 0, 'surveys')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
                                     <img src="../../src/img/Restore Page.svg" alt="">
-                                    Unarchive
+                                    Unarchivee
                                 </span>    
                             `;
                         }

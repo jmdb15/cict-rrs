@@ -1,10 +1,10 @@
 <?php
 include ('../../db/db.php'); 
 
-$sql = "SELECT s.*, a.email FROM surveys s JOIN account a ON s.account_id = a.number WHERE is_archived = 0";
+$sql = "SELECT s.*, a.email FROM surveys s JOIN account a ON s.account_id = a.number WHERE s.is_archived = 0";
 $result = $conn->query($sql);
 
-$asql = "SELECT s.*, a.email FROM surveys s JOIN account a ON s.account_id = a.number WHERE is_archived = 1";
+$asql = "SELECT s.*, a.email FROM surveys s JOIN account a ON s.account_id = a.number WHERE s.is_archived = 1";
 $aresult = $conn->query($asql);
 
 $scripts = "

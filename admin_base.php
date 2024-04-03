@@ -110,10 +110,10 @@
                     </button>
                     <ul id="dropdown-example" class="hidden py-2 space-y-2">
                         <li>
-                            <a href="students.php" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Students</a>
+                            <a href="students.php" class="flex items-center w-full p-2 text-gray-400 transition duration-75 rounded-lg pl-11 group hover:text-white hover:bg-orange-400 dark:text-white dark:hover:bg-gray-700">Students</a>
                         </li>
                         <li>
-                            <a href="faculties.php" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Faculty</a>
+                            <a href="faculties.php" class="flex items-center w-full p-2 text-gray-400 transition duration-75 rounded-lg pl-11 group hover:text-white hover:bg-orange-400 dark:text-white dark:hover:bg-gray-700">Faculty</a>
                         </li>
                     </ul>
                 </li>
