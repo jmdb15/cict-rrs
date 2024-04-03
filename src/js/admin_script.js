@@ -47,12 +47,12 @@ function updateSelectedFilter() {
 }
 
 // UPDATE TABLE ROW WHEN ARCHIVED
-function updateTableWhenArchived(id, archive) {
+function updateTableWhenArchived(id, archive, table, isUser=false) {
   if (archive !== 0) {
     var tr = document.querySelector(`#tr-${id}`);
     tr.id = `atr-${id}`;
     tr.lastElementChild.innerHTML = `
-      <span onclick="archiveFile(${id}, 0)" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+      <span onclick="archiveFile(${id}, 0, '${table}')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
         <img src="../../src/img/Restore Page.svg" alt="">
         Unarchive 
       </span>        
@@ -63,11 +63,13 @@ function updateTableWhenArchived(id, archive) {
     var tr = document.querySelector(`#atr-${id}`);
     tr.id = `tr-${id}`;
     tr.lastElementChild.innerHTML = `
-      <a href="view.php?id=${id}" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+    ${ isUser ? '' :
+      `<a href="view.php?id=${id}" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
           <img src="../../src/img/View.svg" alt="">
           View
-      </a>
-      <span onclick="archiveFile(${id}, 1)" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+      </a>`
+    }
+      <span onclick="archiveFile(${id}, 1, '${table}')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
           <img src="../../src/img/Archive.svg" alt="">
           Archive
       </span>   

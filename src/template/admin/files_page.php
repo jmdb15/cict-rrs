@@ -243,7 +243,7 @@
                 table: table
             },
             success:function(response){
-                updateTableWhenArchived(id, func);
+                updateTableWhenArchived(id, func, table);
             }
         });
     }

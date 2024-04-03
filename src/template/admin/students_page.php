@@ -11,7 +11,9 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
             </div>
-            <input type="text" id="table-search" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
+            <form action="" onsubmit="searchUser(this, event)">
+                <input type="text" id="table-search" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
+            </form>
         </div>
     </div>
     <div class="rounded bg-gray-50 max-h-[620px] overflow-auto">
@@ -47,7 +49,7 @@
             </thead>
             <tbody class="tbodies" id="not-archived-tbody">
                 <?php   while($row = $result->fetch_assoc()){  ?>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <tr id="tr-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             <?=$row['number']?>
                         </th>
@@ -67,7 +69,7 @@
                             4E-G1
                         </td>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
-                            <span onclick="archiveFile(<?=$row['number']?>, 1, 'account')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                            <span onclick="archiveFile(<?=$row['id']?>, 1, 'account')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
                                 <img src="../../src/img/Archive.svg" alt="">
                                 Archive
                             </span>
@@ -75,9 +77,9 @@
                     </tr>
                 <?php } ?>
             </tbody>
-            <tbody class="hidden tbodies" id="archive-tbody">
+            <tbody class="hidden tbodies" id="archived-tbody">
                 <?php   while($row = $aresult->fetch_assoc()){  ?>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <tr id="atr-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             <?=$row['number']?>
                         </th>
@@ -97,7 +99,7 @@
                             4E-G1
                         </td>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
-                            <span onclick="archiveFile(<?=$row['number']?>, 0, 'account')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                            <span onclick="archiveFile(<?=$row['id']?>, 0, 'account')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
                                 <img src="../../src/img/Restore Page.svg" alt="">
                                 Unarchive
                             </span> 
@@ -124,9 +126,32 @@
                 table: table
             },
             success:function(response){
-                // updateTableWhenArchived(id, func);
+                updateTableWhenArchived(id, func, table, isUser=true);
                 alert(response)
             }
         });
+    }
+
+    function searchUser(form, e){
+        e.preventDefault();
+        const key = document.getElementById('table-search').value;
+        
+        $.ajax({
+            url: '../../src/ajax/search-user.php',
+            type: 'POST',
+            data: {
+                key: key,
+                type: 'students'
+            },
+            success: function(response){
+                // if(response == 'error'){
+                //     console.log(response);
+                // }else{
+                //     const parsed = JSON.parse(response);
+                //     console.log(parsed);
+                // }
+                console.log(response);
+            }
+        })
     }
 </script>
