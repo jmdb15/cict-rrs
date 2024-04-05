@@ -32,7 +32,7 @@ if(isset($_POST['date'])){
         $within = "AND `created_at` >= DATE_SUB(CURRENT_DATE, INTERVAL 1 YEAR)";
         break;
     }
-    $sql = "SELECT s.*, a.email FROM $table s JOIN account a ON s.account_id = a.number WHERE is_archived = $active AND $column LIKE '%$searchKey%' $within";
+    $sql = "SELECT s.*, a.email FROM $table s JOIN account a ON s.account_id = a.number WHERE s.is_archived = $active AND $column LIKE '%$searchKey%' $within";
   }
   $result = $conn->query($sql);
   $data = array();

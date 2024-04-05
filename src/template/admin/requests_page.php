@@ -121,10 +121,13 @@
                         Research Title
                     </th>
                     <th scope="col" colspan="2" class="px-1 sm:px-6 py-3">
-                        Upload by
+                        Requested by
                     </th>
                     <th scope="col" colspan="2" class="px-1 sm:px-6 py-3">
-                        Date Upload
+                        Date Requested
+                    </th>
+                    <th scope="col" colspan="2" class="hidden tbodies px-1 sm:px-6 py-3">
+                        Updated at
                     </th>
                     <th scope="col" colspan="2" class="px-1 sm:px-6 py-3">
                         Action
@@ -136,18 +139,18 @@
                         $dateTime = new DateTime($row['created_at']);
                         $row['created_at'] = $dateTime->format("F j, Y");    
                 ?>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <tr id="pend-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="row" colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
                             <?=$row['id']?>
                         </th>
                         <td colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600  text-wrap">
-                        <?=$row['project_title']?>
-                        </td>
-                        <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
-                            <?=$row['created_at']?>
+                            <?=$row['project_title']?>
                         </td>
                         <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
                             <?=$row['email']?>
+                        </td>
+                        <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
+                            <?=$row['created_at']?>
                         </td>
                         <td colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600 flex items-center gap-3">
                             <img src="../../src/img/Ok.svg" alt="Approve" class="hover:brightness-110 cursor-pointer" onclick="requestFunction(<?=$row['id']?>, 1)">
@@ -160,19 +163,24 @@
                 <?php   while($row = $tresult->fetch_assoc()){ 
                         $dateTime = new DateTime($row['created_at']);
                         $row['created_at'] = $dateTime->format("F j, Y");    
+                        $dateTimee = new DateTime($row['updated_at']);
+                        $row['updated_at'] = $dateTimee->format("F j, Y");    
                 ?>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <tr id="transact-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="row" colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
                             <?=$row['id']?>
                         </th>
                         <td colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600  text-wrap">
-                        <?=$row['project_title']?>
+                            <?=$row['project_title']?>
+                        </td>
+                        <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
+                            <?=$row['email']?>
                         </td>
                         <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
                             <?=$row['created_at']?>
                         </td>
                         <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
-                            <?=$row['email']?>
+                            <?=$row['updated_at']?>
                         </td>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
                             <?= ($row['status'] == 1) ? 'Approved' : 'Declined' ?>
@@ -187,17 +195,70 @@
 <script>
     let active = 'pending';
     setActiveNav('requests');
-    initiateButtons();
+    initiateButtons(updatedAtPresent=true);
+
+    function initiateButtons(updatedAtPresent=false) {
+  const optionButtons = document.querySelectorAll('.option-btns');
+  optionButtons.forEach((btn, index) => {
+    btn.addEventListener('click', function (event) {
+      const oppositeIndex = index == 0 ? 1 : 0;
+      const tbodies = document.getElementsByClassName('tbodies');
+      optionButtons[0].classList.toggle('active');
+      optionButtons[1].classList.toggle('active');
+      optionButtons[0].classList.toggle('btn-bordered');
+      optionButtons[1].classList.toggle('btn-bordered');
+      tbodies[0].classList.toggle('hidden');
+      tbodies[1].classList.toggle('hidden');
+      (updatedAtPresent) ? tbodies[2].classList.toggle('hidden') : null;
+      active = event.target.innerText.toLowerCase();
+      activeOnInput = document.querySelector('#active-type');
+      active === activeOnInput.value
+        ? activeOnInput.value = optionButtons[oppositeIndex].innerText.toLowerCase()
+        : activeOnInput.value = active;
+      const exportBtn = document.querySelector('#export-btn');
+      if (exportBtn != null) {
+        exportBtn.classList.toggle('hidden');
+      }
+    });
+  });
+}
 
     function requestFunction(id, toDo) {
         $.ajax({
             url: '../../src/ajax/app-deny-request.php',
             type: 'POST',
-            data: { id, toDo },
+            data: { id:id, toDo:toDo },
             success: function (response) {
-            console.log(response);
+                alert(response);
+                var formattedDate = getDateToday();
+                const tr = document.getElementById(`pend-${id}`);
+                tr.remove();
+                tr.id = `transact-${id}`;
+                tr.lastElementChild.innerHTML = toDo === 1 ? 'Approved' : 'Declined';
+                var newChild = document.createElement("td");
+                newChild.classList = 'px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600';
+                newChild.colSpan = 2;
+                newChild.innerText = formattedDate;
+                var lastChild = tr.lastElementChild;
+                tr.insertBefore(newChild, lastChild);
+                document.getElementById('transaction-tbody').innerHTML += tr.outerHTML;
             }
         });
+    }
+
+    function getDateToday() {
+        var currentDate = new Date();
+        var day = currentDate.getDate();
+        var month = currentDate.getMonth() + 1;
+        var year = currentDate.getFullYear();
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        var formattedDate = currentDate.toLocaleDateString('en-US', options);
+        return formattedDate;
+    }
+
+    function capitalizeFirst(str) {
+        // return str.chatAt(0).toUpperCase() + str.slice(1);
+        return str.toUpperCase();
     }
 
     // function initiateButtons() {
@@ -270,14 +331,21 @@
                         let action = '';
                         if(activeType == 'pending'){
                             action = `
+                            <td class="px-1 sm:px-6 py-4 text-gray-600 flex gap-4">
                                 <img src="../../src/img/Ok.svg" alt="Approve" class="hover:brightness-110 cursor-pointer" onclick="requestFunction(${data.id}, 1)">
                                 <img src="../../src/img/Cancel.svg" alt="Reject" class="hover:brightness-110 cursor-pointer" onclick="requestFunction(${data.id}, -1)">
+                            </td>
                             `;
                         }else{
                             action = `
-                                <span onclick="archiveFile(${data.id}, 0)" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
-                                    ${data.status == 1 ? 'Approved' : 'Declined'}
-                                </span>    
+                                <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
+                                    ${data.updated_at}
+                                </td>
+                                <td class="px-1 sm:px-6 py-4 text-gray-600 flex gap-4">
+                                    <span onclick="archiveFile(${data.id}, 0)" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                        ${data.status == 1 ? 'Approved' : 'Declined'}
+                                    </span>    
+                                </td>
                             `;
                         }
                         return tr = `
@@ -289,14 +357,12 @@
                                     ${data.project_title}
                                 </td>
                                 <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
-                                    ${data.created_at}
-                                </td>
-                                <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
                                     ${data.email}
                                 </td>
-                                <td class="px-1 sm:px-6 py-4 text-gray-600 flex gap-4">
-                                    ${action}
+                                <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
+                                    ${data.created_at}
                                 </td>
+                                ${action}
                             </tr>
                         `;
                     });

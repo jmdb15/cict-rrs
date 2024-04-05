@@ -8,7 +8,7 @@
             <input 
                 id="active-type"
                 type="text"
-                value="<?= !isset($_GET['active']) || $_GET['active'] == '1' ? '1': '0' ?>" 
+                value="files" 
                 name="active" 
                 hidden 
                 />
@@ -222,6 +222,11 @@
         return selectedValue;
     }
 
+    function capitalizeFirst(str) {
+        // return str.chatAt(0).toUpperCase() + str.slice(1);
+        return str.toUpperCase();
+    }
+
     function waitSubmit(form, event){
         event.preventDefault();
         const type = getSelectedDateValue();
@@ -282,7 +287,9 @@
                 }else{
                     renderedHTML = parsed.map(data => {
                         let action = '';
+                        let newId = '';
                         if(activeType == 0){
+                            newId = `id="tr-${data.id}"`;
                             action = `
                                 <a href="view.php?id=${data.id}" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
                                     <img src="../../src/img/View.svg" alt="">
@@ -294,6 +301,7 @@
                                 </span>
                             `;
                         }else{
+                            newId = `id="atr-${data.id}"`;
                             action = `
                                 <span onclick="archiveFile(${data.id}, 0, 'studies')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
                                     <img src="../../src/img/Restore Page.svg" alt="">
@@ -302,7 +310,7 @@
                             `;
                         }
                         return tr = `
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <tr ${newId} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     ${data.project_title}
                                 </th>

@@ -1,5 +1,5 @@
 // FILES / ARCHIVED BUTTON STYLE 
-function initiateButtons() {
+function initiateButtons(updatedAtPresent=false) {
   const optionButtons = document.querySelectorAll('.option-btns');
   optionButtons.forEach((btn, index) => {
     btn.addEventListener('click', function (event) {
@@ -11,6 +11,7 @@ function initiateButtons() {
       optionButtons[1].classList.toggle('btn-bordered');
       tbodies[0].classList.toggle('hidden');
       tbodies[1].classList.toggle('hidden');
+      (updatedAtPresent) ? tbodies[2].classList.toggle('hidden') : null;
       active = event.target.innerText.toLowerCase();
       activeOnInput = document.querySelector('#active-type');
       active === activeOnInput.value
@@ -24,8 +25,11 @@ function initiateButtons() {
   });
 }
 
+
+
 function capitalizeFirst(str) {
-  return str.chatAt(0).toUpperCase() + str.slice(1);
+  // return str.chatAt(0).toUpperCase() + str.slice(1);
+  return str.toUpperCase();
 }
 
 //DISPLAY ORANGE BG
