@@ -5,10 +5,11 @@ include('../db/db.php');
 
 $id = $_GET['id'];
 $uid = $_SESSION['id'];
+$email = $_SESSION['email'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Loop through each form field
-    $objectsArray = array();
+    $objectsArray = array("email"=>$email);
     $questionWhat ='';
     foreach ($_POST as $key => $value) {
         $ex = explode("-",$key);
@@ -33,8 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $questionWhat = $ex[1];
     }
 
-    print_r($objectsArray);
-    // echo(json_encode($objectsArray));
     $file = $_GET['file'];
     $json = file_get_contents('../src/js/surveys/'.$file);
     $jsondecoded = json_decode(json_decode($json));
@@ -47,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $sql = "INSERT INTO `response`(`account_id`, `survey_id`) VALUES ('$uid','$id')";
 if($conn->query($sql)){
+    insertLog($conn, $uid, 'Responded on a Survey: ');
     header("Location:index.php");
 }else{
     header("Location:surveys.php");

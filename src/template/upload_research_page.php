@@ -1,4 +1,4 @@
-<form method="POST" enctype="multipart/form-data" class="container mt-[68px] mx-auto">
+<form method="POST" action="save_research.php" enctype="multipart/form-data" class="container mt-[68px] mx-auto">
     <div class="p-4 flex flex-wrap gap-4 h-inherit">
 
         <div class="w-full lg:basis-[62%] border h-full py-6 px-12 bg-white shadow rounded-lg">

@@ -102,7 +102,6 @@
     // });
     showObject(formObject);
     function showObject(object){
-        console.log(object);
         for (const key in object[0].questionnaire) {
             if (Object.hasOwnProperty.call(object[0].questionnaire, key)) {
                 const type = object[0].questionnaire[key].type;

@@ -14,7 +14,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"  rel="stylesheet" />
     <?= $imports ?? '' ?>
     <!-- logo -->
-    <link rel="icon" href="../img/logo.png">
+    <link rel="icon" href="../src/img/logo.png">
     <link rel="stylesheet" href="../src/css/style.css">
     <style type="text/tailwindcss">
         .input-text{

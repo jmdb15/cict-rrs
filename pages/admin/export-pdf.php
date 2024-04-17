@@ -1,11 +1,12 @@
 <?php
 
-require_once ('../../db/db.php');
-require_once ('../../dompdf/autoload.inc.php');
+require_once('../../dompdf/autoload.inc.php');
+require_once('../../db/db.php');
 use Dompdf\Dompdf;
 extract($_POST);
 
 // if(isset($submit)){
+  echo 'hello';
 if(true){
   $key = $_POST['key'];
   $type = $_POST['type'];
@@ -71,5 +72,3 @@ if(true){
   $dompdf->render();
   $dompdf->stream('data.pdf');
 }
-
-?>

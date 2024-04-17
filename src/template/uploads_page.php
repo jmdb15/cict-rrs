@@ -120,9 +120,9 @@
                             <?=$row['created_at']?>
                         </td>
                         <td colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
-                            <a href="../src/img/images.jpeg" download="results" class="w-fit h-fit cursor-pointer">
+                            <span onclick="downloadResponses(<?=$row['id']?>)" class="w-fit h-fit cursor-pointer">
                                 <img src="../src/img/dlres.png" alt="">
-                            </a>
+                            </span>
                         </td>
                     </tr>
         <?php   }}else{ ?> <!-- PHP -->
@@ -216,5 +216,23 @@
         });
         document.getElementById(`${id}-table`).classList.remove('hidden');
         document.getElementById(`${id}-list`).classList.add('text-orange-400');
+    }
+
+    function downloadResponses(id){
+        $.ajax({
+            url: `export-csv.php`,
+            type:'POST',
+            data: { id: id },
+            success:function(response){
+                // alert(response)
+                var blob = new Blob([response], {type: 'text/csv'});
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'output.csv';
+
+                // Simulate a click on the link to trigger the download
+                link.click();
+            }
+        })
     }
 </script>

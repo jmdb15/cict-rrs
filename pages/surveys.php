@@ -9,7 +9,7 @@ include('../db/db.php');
 
 
 // $id = $_GET['id'];
-$sql = "SELECT s.*, a.email FROM surveys s JOIN account a ON s.account_id = a.number WHERE s.deadline >= CURDATE();";
+$sql = "SELECT s.*, a.email FROM surveys s JOIN account a ON s.account_id = a.number WHERE s.deadline >= CURDATE() AND s.is_archived = 0";
 $result = $conn->query($sql);
 $i = 0;
 $data = array();
@@ -34,4 +34,4 @@ $isLoggedIn = true;
 $showNav = true;
 $content_template = "../src/template/surveys_page.php";
 include "../base.php";
-?>
+?>"

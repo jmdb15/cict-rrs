@@ -21,16 +21,16 @@ if (isset ($_POST['start'])) {
         $within = '';
         break;
         case 'yesterday':
-        $within = "AND $columnToFilter >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)";
+        $within = "AND created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)";
         break;
         case 'week':
-        $within = "AND $columnToFilter >= DATE_SUB(CURRENT_DATE, INTERVAL 1 WEEK)";
+        $within = "AND created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 1 WEEK)";
         break;
         case 'month':
-        $within = "AND $columnToFilter >= DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH)";
+        $within = "AND created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH)";
         break;
         case 'year':
-        $within = "AND $columnToFilter >= DATE_SUB(CURRENT_DATE, INTERVAL 1 YEAR)";
+        $within = "AND created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 1 YEAR)";
         break;
     }
     // $sql = "SELECT r.*, a.email FROM requests r JOIN account a ON r.account_id = a.number WHERE $condition $within"; // LIKE '%$searchKey%'

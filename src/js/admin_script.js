@@ -61,7 +61,6 @@ function updateTableWhenArchived(id, archive, table, isUser=false) {
         Unarchive 
       </span>        
     `;
-    console.log(tr.lastElementChild.classList);
     tbody = 'archived-tbody';
   } else {
     var tr = document.querySelector(`#atr-${id}`);
@@ -78,7 +77,6 @@ function updateTableWhenArchived(id, archive, table, isUser=false) {
           Archive
       </span>   
     `;
-    console.log(tr.lastElementChild.classList);
     tbody = 'not-archived-tbody';
   }
   tr.remove();

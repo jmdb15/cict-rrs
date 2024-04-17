@@ -11,15 +11,15 @@ $active = '<li>
 <button onclick="loadPage('.($page).')" aria-current="page" class="z-10 pointer-events-none flex items-center justify-center px-4 py-6 h-10 leading-tight text-white border border-gray-800 bg-gray-800 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">'.($page).'</button>
 </li>';
 
-if($total_records <= 5){
+if($total_records <= 6){
 
     $sql = "SELECT * FROM studies";
     $result = $conn->query($sql);
 
     echo '<div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center h-fit">';
     while($row = $result->fetch_assoc()) {
-        echo '  <a href="view_study.php?id='.$row['id'].'" class="cursor-pointer w-1/3 min-w-[290px]">
-                    <div class="relative flex gap-x-2 p-4 h-[120px] w-full bg-white rounded-lg shadow-md">
+        echo '  <a href="view_study.php?id='.$row['id'].'" class="cursor-pointer w-[28%] min-w-[290px]">
+                    <div class="relative flex gap-x-2 p-4 h-[120px] bg-white rounded-lg shadow-md">
                         <img src="../public/images/cover/'.$row['cover'].'" class="w-auto min-w-[120px] h-auto basis-[40%] aspect-video" alt="Cover">
                         <div class="flex flex-col justify-between">
                             <p>'. $row['project_title'] .'</p>
@@ -50,7 +50,7 @@ if($total_records <= 5){
     ';
 
 }else{
-    $perpage = 5; 
+    $perpage = 6; 
     $start = ($page - 1) * $perpage;
 
     $sql = "SELECT * FROM studies LIMIT $start, $perpage";
@@ -62,11 +62,11 @@ if($total_records <= 5){
     }
 
 
-    echo '<div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center">';
+    echo '<div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center h-fit">';
     while($row = $result->fetch_assoc()) {
-        echo '  <a href="view_study.php?id='.$row['id'].'" class="cursor-pointer">
-                    <div class="relative flex gap-x-2 p-4 h-[120px] w-[36%] min-w-[320px] bg-white rounded-lg shadow-md hover:brightness-90">
-                        <img src="../public/images/cover/'.$row['cover'].'" class="w-auto min-w-[120px] h-auto basis-[46%] aspect-video" alt="Cover">
+        echo '  <a href="view_study.php?id='.$row['id'].'" class="cursor-pointer w-[28%]">
+                    <div class="relative flex gap-x-2 p-4 h-[120px] min-w-[290px] bg-white rounded-lg shadow-md hover:brightness-90">
+                        <img src="../public/images/cover/'.$row['cover'].'" class="w-auto min-w-[120px] h-auto basis-[40%] aspect-video" alt="Cover">
                         <div class="flex flex-col justify-between">
                             <p>'. $row['project_title'] .'</p>
                             <p>Subtitle</p>

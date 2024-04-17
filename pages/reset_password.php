@@ -7,8 +7,6 @@ if(isset($_POST['reset'])){
     $res1 = $conn->query($sql1);
     if($res1->num_rows > 0){
         while($row1 = $res1->fetch_assoc()){
-            echo $row1['reset_token'];
-            echo '<br>'.$token;
             if( $token == $row1['reset_token']){
                 $pass = $_POST['password'];
                 $conf = $_POST['confirm'];

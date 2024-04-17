@@ -4,7 +4,7 @@
 
         <div class="h-1/2 w-full flex flex-col bg-transparent relative justify-center items-center md:h-full">
             <img src="../src/img/circles.svg" alt="" class="hidden absolute md:flex md:-left-6 md:w-[400px] md:h-[500px]">
-            <div class="flex flex-col w-full h-full gap-8 z-10 ml-0 sm:ml-10 md:ml-64 md:mt-64">
+            <div class="flex flex-col w-full h-full gap-8 p-1 z-10 ml-0 sm:ml-10 md:ml-64 mt-32 md:mt-64">
                 <h1 class="text-[1.5rem] font-bold md:text-[3rem]">Research <br>Repository System</h1>
                 <p class="text-1xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, in?</p>
                 <a href="#" data-modal-target="signup-modal" data-modal-toggle="signup-modal" class="bg-[#FF8A01] text-white p-2 w-[120px] md:p-3 md:w-[140px] rounded-lg flex items-center justify-center cursor-pointer">
@@ -36,7 +36,7 @@
 
     <!-- FEATURES -->
     <section id="feature" class="bg-transparent flex mb-6 justify-center items-center flex-col w-full md:h-[500px] gap-16">
-        <div class="w-full flex flex-col justify-center items-center gap-3">
+        <div class="w-full flex flex-col justify-center items-center gap-3 p-1">
             <p class="text-[#FF8A01] font-bold text-1xl">Features</p>
             <p class="text-[#4D4D4D] font-bold text-4xl">Benefits using our website</p>
         </div>

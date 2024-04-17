@@ -24,7 +24,7 @@
                 </div>
                 <div class="w-1/2 mb-5">
                     <label for="deadline">Deadline</label>
-                    <input type="date" class="input-text" name="deadline" id="deadline">
+                    <input type="date" class="input-text" name="deadline" id="deadline" required>
                 </div>
 
                 <div class="w-full my-4 bg-orange-300 p-2">
@@ -75,7 +75,7 @@ let divcount = 1;
 let myObject = {};
 appendFormDiv();
 
-function saveForm(event, form) {focus:border-none
+function saveForm(event, form) {
     event.preventDefault();
     newObject = [
         {

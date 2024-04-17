@@ -122,7 +122,7 @@
             </div>
         </div>
         <div class="flex flex-col h-fit" id="page-content">
-            <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center">
+            <!-- <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center h-fit">
                 <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
                     <img src="../src/img/pana.png" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
                     <div class="flex flex-col justify-between">
@@ -149,7 +149,7 @@
                         <p>12 views</p>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 </main>
@@ -174,7 +174,7 @@
 
     function loadPage(page) {
         $.ajax({
-            url: '../src/components/load_content.php',
+            url: '../src/components/load_content2.php',
             type: 'GET',
             data: {page: page},
             success: function(response) {
