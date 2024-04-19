@@ -17,6 +17,7 @@ $row['created_at'] = $dateTime->format("F j, Y");
 
 $isLoggedIn = true;
 $showNav = true;
+$sessionMessage = $_SESSION['toast']['message'] ?? '';
 $content_template = "../src/template/answer_survey_page.php";
 include "../base.php";
 ?>

@@ -175,7 +175,7 @@
                     </div>
 
                     <div class="relative w-[550px] h-[680px] flex justify-content">
-                        <form class="w-3/4 mx-auto gap-2 flex flex-col justify-content" method="POST" action="login.php">
+                        <form class="w-3/4 mx-auto gap-2 flex flex-col justify-content" method="POST" action="actions/login.php">
                             <p class="text-[2.5rem] mb-5">Login</p>
                             <div class="mb-5">
                                 <input type="email" id="email" name="email" class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -240,7 +240,7 @@
                     </div>
 
                     <div class="relative w-[550px] h-[680px] flex flex-col justify-content">
-                        <form class="w-3/4 mx-auto gap-2 flex flex-col justify-content" method="POST" action="signup.php">
+                        <form class="w-3/4 mx-auto gap-2 flex flex-col justify-content" method="POST" action="actions/signup.php">
                             <p class="text-[2.5rem] mb-5">Sign up</p>
                             <p class="text-[1rem] mb-5 text-gray-500">Register As:</p>
                             <div class="flex flex-row items-center justify-between mb-10">

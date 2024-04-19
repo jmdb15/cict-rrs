@@ -13,6 +13,7 @@ $imports = '';
 
 $isLoggedIn = true;
 $showNav = true;
+$sessionMessage = $_SESSION['toast']['message'] ?? '';
 $content_template = "../src/template/upload_survey_pagec.php";
 include "../base.php";
 ?>

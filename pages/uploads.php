@@ -16,6 +16,7 @@ $surveyResult = $conn->query($surveySql);
 
 $isLoggedIn = true;
 $showNav = true;
+$sessionMessage = $_SESSION['toast']['message'] ?? '';
 $content_template = "../src/template/uploads_page.php";
 include "../base.php";
 ?>

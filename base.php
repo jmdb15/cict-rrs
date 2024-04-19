@@ -58,6 +58,15 @@
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- AJAX -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script> <!-- FLOWBITE -->
+
+    <script>
+        function removeToast(){
+            setTimeout(() => {
+                const elem = document.getElementById('toast-default');
+                elem.classList.toggle('hidden');
+            }, 3000);
+        }
+    </script>
 </head>
 <body class="bg-[#F0F0F0]">
 
@@ -67,6 +76,43 @@
         }
         include $content_template; 
     ?>
+
+    <!-- TOAST MESSAGE -->
+<?php if(isset($_SESSION['toast'])){ 
+    unset($_SESSION['toast']);
+    echo "<script>removeToast();</script>";
+    ?>
+    <div id="toast-default" class="w-full my-auto flex flex-col items-center fixed top-[100px]" role="alert">
+        <div class="w-full md:w-3/4 lg:w-1/2 flex flex-col justify-center items-center mt-24 md:mt-8 z-50">
+            <div class="w-1/2 flex flex-row items-center py-2 px-3 rounded-t-xl bg-white">
+                <img src="../src/img/logo.png" class="mr-1" alt="">
+                <span class="text-black flex flex-row gap-1 text-sm md:text-md lg:text-lg">CICT
+                    <p class="text-sm md:text-md lg:text-lg text-[#FF8A01]">Files</p>
+                </span>
+                <button type="button" class="ms-auto bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-default" aria-label="Close">
+                    <span class="sr-only">Close</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="w-1/2 h-[50px] flex justify-center items-center p-8 md:p-4 rounded-b-xl bg-[#F0F0F0] shadow-xl">
+                <!-- USER SIDE -->
+            <!-- 
+                <p class="hidden text-sm md:text-md">Message is archived successfully.</p>
+            -->
+                <!-- ADMIN SIDE -->
+                <!-- <p class="hidden text-sm md:text-md">Task uploaded successfully.</p>
+                <p class="hidden text-sm md:text-md">Announcement uploaded successfully.</p>
+                <p class="hidden text-sm md:text-md">Changes have been saved successfully.</p>
+                <p class="hidden text-sm md:text-md">User selection archived successfully.</p>
+                <p class="hidden text-sm md:text-md">Task selection has been successfully archived.</p> -->
+                <p class="text-sm md:text-md"><?=$sessionMessage?></p>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+    
 
 </body>
 </html>

@@ -15,5 +15,6 @@ $imports = '
 ';
 $showNav = true;
 $isLoggedIn = true;
+$sessionMessage = $_SESSION['toast']['message'] ?? '';
 $content_template = "../src/template/upload_research_page.php";
 include "../base.php";

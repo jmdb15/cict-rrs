@@ -1,5 +1,6 @@
 <main class="container mx-auto lg:px-8 xl:px-32 flex flex-col gap-y-2 justify-center">
-    <!-- SECTION 1 -->
+
+    <!-- SECTION FOR PREVIOUS READING -->
     <section class="pt-4 px-4">
         <h4 class="text-xl font-bold text-center md:text-start md:indent-8 my-3">Previous Reading</h4>
         <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center">
@@ -53,7 +54,8 @@
             </div>
         </div>
     </section>
-    <!-- SECTION 2 -->
+
+    <!-- SECTION FOR POPULAR STUDIES -->
     <section class="pt-4 px-4">
         <h4 class="text-xl font-bold text-center md:text-start md:indent-8 my-3">Popular Studies</h4>
         <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center">
@@ -108,7 +110,8 @@
         </div>
 
     </section>
-    <!-- SECTION 3 -->
+
+    <!-- SECTION FOR RESEARCH LISTING -->
     <section class="p-4 relative">
         <div class="flex justify-between flex-col sm:flex-row gap-y-1 items-center mb-4 sm:mb-0">
             <h4 class="text-xl font-bold text-orange-400 text-center md:text-start md:indent-8 my-3">Research Title</h4>
@@ -121,36 +124,8 @@
                 <input type="search" id="default-search" class="block w-full px-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Studies" />
             </div>
         </div>
-        <div class="flex flex-col h-fit" id="page-content">
-            <!-- <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center h-fit">
-                <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
-                    <img src="../src/img/pana.png" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
-                    <div class="flex flex-col justify-between">
-                        <p>Title - '. $item . '</p>
-                        <p>Subtitle</p>
-                        <p>12 views</p>
-                    </div>
-                </div>
-
-                <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
-                    <img src="../src/img/pana.png" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
-                    <div class="flex flex-col justify-between">
-                        <p>Title - '. $item . '</p>
-                        <p>Subtitle</p>
-                        <p>12 views</p>
-                    </div>
-                </div>
-
-                <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
-                    <img src="../src/img/pana.png" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
-                    <div class="flex flex-col justify-between">
-                        <p>Title - '. $item . '</p>
-                        <p>Subtitle</p>
-                        <p>12 views</p>
-                    </div>
-                </div>
-            </div> -->
-        </div>
+        <!-- DYNAMIC RESEARCH LISTING CONTAINER WITH PAGINATION -->
+        <div class="flex flex-col h-fit" id="page-content"></div>
     </section>
 </main>
 

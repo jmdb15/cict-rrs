@@ -32,6 +32,7 @@ while($row = $result->fetch_assoc()){
 
 $isLoggedIn = true;
 $showNav = true;
+$sessionMessage = $_SESSION['toast']['message'] ?? '';
 $content_template = "../src/template/surveys_page.php";
 include "../base.php";
 ?>"

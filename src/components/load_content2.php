@@ -64,7 +64,7 @@ if($total_records <= 6){
 
     echo '<div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center h-fit">';
     while($row = $result->fetch_assoc()) {
-        echo '  <a href="view_study.php?id='.$row['id'].'" class="cursor-pointer w-[28%]">
+        echo '  <a href="view_study.php?id='.$row['id'].'" class="cursor-pointer w-[28%]    min-w-[290px]">
                     <div class="relative flex gap-x-2 p-4 h-[120px] min-w-[290px] bg-white rounded-lg shadow-md hover:brightness-90">
                         <img src="../public/images/cover/'.$row['cover'].'" class="w-auto min-w-[120px] h-auto basis-[40%] aspect-video" alt="Cover">
                         <div class="flex flex-col justify-between">

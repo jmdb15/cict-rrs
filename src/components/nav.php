@@ -131,7 +131,7 @@
                 <img src="../src/img/Logoutbig.png" alt="pic">
                 <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to log out?</h3>
                 <div class="w-full flex flex-col justify-center items-center gap-2">
-                    <a href="logout.php" class="w-1/2">
+                    <a href="actions/logout.php" class="w-1/2">
                         <button type="button" style="background-color: #FF8A01;" class="w-full py-2.5 px-5 text-sm font-medium text-white focus:outline-none rounded-3xl border-2 border-black hover:bg-gray-100  focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                             Yes, Log Me Out
                         </button>

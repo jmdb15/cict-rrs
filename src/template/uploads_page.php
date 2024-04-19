@@ -220,7 +220,7 @@
 
     function downloadResponses(id){
         $.ajax({
-            url: `export-csv.php`,
+            url: `actions/export-csv.php`,
             type:'POST',
             data: { id: id },
             success:function(response){

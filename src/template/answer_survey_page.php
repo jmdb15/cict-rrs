@@ -49,10 +49,8 @@
 
             <div class="w-full border-t">
                 <h3 class="text-base md:text-xl">Questions</h3>
-                <form action="try_save_answer.php?id=<?=$id?>&file=<?=$row['filename']?>" method="POST">
-                    <div id="form-container" class="w-full mx-auto flex flex-col items-center gap-y-2">
-                        
-                    </div>
+                <form action="actions/try_save_answer.php?id=<?=$id?>&file=<?=$row['filename']?>" method="POST">
+                    <div id="form-container" class="w-full mx-auto flex flex-col items-center gap-y-2"></div>
                     <button class="px-3 py-2 rounded text-white bg-orange-400" onclick="submitForm()">Submit</button>
                 </form>
             </div>

@@ -6,7 +6,7 @@ if (!isset($_SESSION["id"])) {
 $imports = '';
 $isLoggedIn = true;
 $showNav = true;
-
+$sessionMessage = $_SESSION['toast']['message'] ?? '';
 $content_template = "../src/template/index_page.php";
 include "../base.php";
 ?>
