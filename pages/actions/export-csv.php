@@ -1,7 +1,7 @@
 <?php
 
 // JSON data
-include('../db/db.php');
+include('../../db/db.php');
 $id = $_POST['id'];
 $sql = "SELECT * FROM `surveys` WHERE id=$id";
 $result = $conn->query($sql);

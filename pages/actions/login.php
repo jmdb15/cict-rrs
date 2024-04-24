@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "../../db/db.php";
 $stud = $_POST['email'];
 $pass = $_POST['password'];
@@ -11,7 +12,6 @@ if($res->num_rows > 0)
     $row = mysqli_fetch_assoc($res);
     $curr_pass = $row['password'];
     if(verify_password($pass, $curr_pass)){
-        session_start();
         $_SESSION["id"] = $row['number'];
         $_SESSION["email"] = $row['email'];
         $_SESSION["points"] = $row['points'];
@@ -21,9 +21,10 @@ if($res->num_rows > 0)
         header("Location:../index.php");
     }else{
         $_SESSION['toast']['message'] = "Wrong username or password.";
+        header("Location:../landing.php");
     }
 }else{  
     $_SESSION['toast']['message'] = "Wrong username or password.";
+    header("Location:../landing.php");
 }
-header("Location:../landing.php");
 ?>

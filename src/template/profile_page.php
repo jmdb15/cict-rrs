@@ -3,12 +3,11 @@
         <!-- LEFT SIDE -->
         <div class="max-w-[500px] w-full h-[860px] lg:h-[700px] mt-4 lg:mt-0 flex flex-col justify-center place-self-center relative">
             <div class="w-full h-[50px] lg:h-[320px] flex justify-center items-center">
-                <img src="../public/images/display/<?=$row['image']?>" class="cursor-pointer w-[100px] h-[100px] md:w-[150px] md:h-[150px] lg:w-[200px] lg:h-[200px] border-2 bg-white border-[#FF8A01] rounded-full absolute top-0 lg:top-28 z-10" alt="pic" onerror="setProfilePic(this)">
+                <img src="../public/images/display/<?=$row['image']?>" class="cursor-pointer w-[100px] h-[100px] md:w-[150px] md:h-[150px] lg:w-[200px] lg:h-[200px] border-2 bg-white border-[#FF8A01] rounded-full absolute top-0 lg:top-4 z-10" alt="pic" onerror="setProfilePic(this)">
                 <!-- USER PROFILE PIC DYNAMIC -->
             </div>
             <div class="w-full h-[250px] md:h-[320px] lg:h-[520px] bg-white shadow-md rounded-xl flex flex-col justify-center items-center mb-6 lg:mb-32 gap-y-2 relative">
-                <p class="font-bold text-sm md:text-md"><?= $row['first_name'] . ' ' . substr($middle_name, 0, 1) . ' ' . $row['last_name'] ?></p>
-                <p  class="font-bold text-sm md:text-md"><?= ucfirst($type) ?></p>
+                <p class="font-bold text-sm md:text-md"><?= $row['first_name'] . ' ' . $row['last_name'] ?></p>
                 <div class="w-full flex flex-col gap-10">            
                     <div class="w-full mt-16 flex flex-col items-center justify-center">
                         <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="w-[150px] py-2 md:py-2.5 px-5 me-2 mb-2 text-xs md:text-md font-medium text-white focus:outline-none bg-[#455A64] rounded-lg border border-gray-200 hover:bg-orange-400 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="button">
@@ -49,7 +48,7 @@
                                 </div>
                                 <div class="flex flex-col gap-x-8 w-full md:w-[400px] lg:w-[348px]">
                                     <label for="message" class="flex flex-row mb-2 text-sm md:text-md font-medium text-gray-900 dark:text-white">Middle Initial <p class="italic text-gray-400">(optional)</p></label>
-                                    <input id="middle_name" name="middle_name" type="text" value="<?=$row['middle_name']?>" class="myInput rounded-xl border-2 p-1 md:p-2 text-sm md:text-md disabled:border-none disabled:bg-transparent" disabled>
+                                    <input id="middle_name" name="middle_name" type="text" value="<?=$row['middle_name'] ?? ''?>" class="myInput rounded-xl border-2 p-1 md:p-2 text-sm md:text-md disabled:border-none disabled:bg-transparent" disabled>
                                 </div>
                                 <div class="flex flex-col gap-x-8 w-full md:w-[400px] lg:w-[348px]">
                                     <label for="message" class="block mb-2 text-sm md:text-md font-medium text-gray-900 dark:text-white">Last Name</label>
@@ -63,6 +62,7 @@
                                 <div class="flex flex-wrap flex-col gap-x-8 w-full md:w-[500px]">
                                     <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course</label>
                                     <select name="course" id="" class="myInput rounded-xl w-full p-1 md:p-2 text-sm md:text-md disabled:border-none disabled:bg-transparent" disabled>
+                                        <option value="none" selected disabled>None</option>
                                         <option value="bsit" <?=$row['course'] == 'bsit' ? 'selected' : ''?> >Bachelor of Science in Information Technology (BSIT)</option>
                                         <option value="blis" <?=$row['course'] == 'blis' ? 'selected' : ''?> >Bachelor of Library and Information Science (BLIS)</option>
                                         <option value="bsis" <?=$row['course'] == 'bsis' ? 'selected' : ''?> >Bachelor of Science and Information Systems (BSIS)</option>
@@ -71,7 +71,7 @@
                                 <div class="flex flex-wrap flex-col gap-x-8 w-full md:w-[300px]">
                                     <label for="specs" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Specialization</label>
                                     <select name="specs" id="specs" class="myInput rounded-xl w-full p-1 md:p-2 text-sm md:text-md disabled:border-none disabled:bg-transparent" disabled>
-                                        <option value="none" <?=$row['specialization'] == 'none' ? 'selected' : ''?> >None</option>
+                                        <option value="none" <?=$row['specialization'] == 'none' || $row['specialization'] == '' ? 'selected' : ''?> >None</option>
                                         <option value="wmad" <?=$row['specialization'] == 'wmad' ? 'selected' : ''?> >Web Dev</option>
                                         <option value="ba" <?=$row['specialization'] == 'ba' ? 'selected' : ''?> >Bussiness Analytics</option>
                                         <option value="sm" <?=$row['specialization'] == 'sm' ? 'selected' : ''?> >Service Management</option>

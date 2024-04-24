@@ -89,14 +89,25 @@
             <!-- ABSTRACT / DESCRIPTION -->
             <div class="w-[98%] mx-auto mb-5">
                 <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Abstract</label>
-                <textarea id="description" name="description" rows="4" class="txtarea   " placeholder="Enter short description"></textarea>
+                <textarea id="description" name="description" rows="4" class="txtarea" required placeholder="Enter short description"></textarea>
+                <div id="desc-error" class="text-gray-500 text-sm">Description must be greater than 300 words.</div>
+                
+        <!-- document.getElementById('desc-error').classList.remove('text-gray-500')
+        document.getElementById('desc-error').classList.add('text-red-500') -->
             </div>
 
 
             <div class="flex flex-col sm:flex-row justify-around gap-y-6">
                 <div class="w-full sm:basis-1/2 lg:basis-[48%]">
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="research-paper">Upload your file</label>
-                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="research-paper" accept=".pdf" type="file" name="file" required>
+                    <input 
+                        id="research-paper" 
+                        accept="application/pdf" 
+                        type="file" 
+                        name="file" 
+                        required
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
+                    />
                     <!-- <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">A profile picture is useful to confirm your are logged into your account</div> -->
                 </div>
                 <div class="w-full sm:basis-1/4 sm:mt-5 lg:basis-[48%] flex justify-center sm:justify-end items-center">
@@ -117,7 +128,7 @@
                         <img src="../src/img/SVG_margin.png" alt="" class="inline h-12">
                         <div class="flex flex-col">
                             <p class="font-normal text-lg">Choose image</p>
-                            <p class="text-gray-500 font-light text-md">JPG, GIF, or PNG. Max size of 800KB</p>
+                            <p class="text-gray-500 font-light text-md">JPG & PNG</p>
                         </div>
                     </div>
                     
@@ -128,9 +139,9 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
                                 </svg>
                                 <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">JPG & PNG</p>
                             </div>
-                            <input id="dropzone-file" type="file" name="cover" class="hidden" onchange="displayFile()"/>
+                            <input id="dropzone-file" type="file" name="cover" class="hidden" accept="image/jpeg, image/png" onchange="displayFile()"/>
                         </label>
                     </div> 
 

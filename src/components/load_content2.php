@@ -1,6 +1,7 @@
 <?php
 include("../../db/db.php");
-$sql_count = "SELECT COUNT(*) AS total FROM studies";
+$key = $_GET['key'];
+$sql_count = "SELECT COUNT(*) AS total FROM studies WHERE project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%'";
 $count_result = $conn->query($sql_count);
 $count_row = $count_result->fetch_assoc();
 $total_records = $count_row['total'];
@@ -13,7 +14,7 @@ $active = '<li>
 
 if($total_records <= 6){
 
-    $sql = "SELECT * FROM studies";
+    $sql = "SELECT * FROM studies WHERE project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%'";
     $result = $conn->query($sql);
 
     echo '<div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center h-fit">';
@@ -53,7 +54,7 @@ if($total_records <= 6){
     $perpage = 6; 
     $start = ($page - 1) * $perpage;
 
-    $sql = "SELECT * FROM studies LIMIT $start, $perpage";
+    $sql = "SELECT * FROM studies WHERE project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%' LIMIT $start, $perpage";
     $result = $conn->query($sql);
 
     $limit = $total_records / $perpage;

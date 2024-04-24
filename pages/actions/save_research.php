@@ -1,5 +1,5 @@
 <?php
-include('../db/db.php');
+include('../../db/db.php');
 session_start();
 
 if(isset($_POST['project-title'])){

@@ -121,7 +121,11 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="search" id="default-search" class="block w-full px-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Studies" />
+                <input 
+                    type="search" 
+                    id="default-search" 
+                    onkeypress="searchContents(event)"
+                    class="block w-full px-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Studies" />
             </div>
         </div>
         <!-- DYNAMIC RESEARCH LISTING CONTAINER WITH PAGINATION -->
@@ -147,14 +151,19 @@
         loadPage(--count);
     });
 
-    function loadPage(page) {
+    function loadPage(page, key='') {
         $.ajax({
             url: '../src/components/load_content2.php',
             type: 'GET',
-            data: {page: page},
+            data: {page, key},
             success: function(response) {
                 $('#page-content').html(response);
             }
         });
+    }
+    function searchContents(e){
+        if (e.keyCode === 13) {
+            loadPage(count, e.target.value);
+        }
     }
 </script>

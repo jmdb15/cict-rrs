@@ -169,7 +169,7 @@
                             <p class="text-[5rem] font-[500]">Log In To</p>
                             <p class="text-[2rem] font-[400]">CICT Research <br> Repository System</p>
                             <p>if you don't have an account register</p>
-                            <span>You can <a href="signup.php" class="cursor-pointer text-[#FF8A01] hover:">Register Here !</a></span>
+                            <span>You can <span data-modal-target="signup-modal" data-modal-toggle="signup-modal" data-modal-hide="login-modal" class="cursor-pointer text-[#FF8A01] underline">Register Here!</span></span>
                         </div>
                         <img src="../src/img/pic1.svg" alt="" class="absolute bottom-0 ml-[400px] w-96 hidden sm:block custom:hidden">
                     </div>
@@ -178,12 +178,25 @@
                         <form class="w-3/4 mx-auto gap-2 flex flex-col justify-content" method="POST" action="actions/login.php">
                             <p class="text-[2.5rem] mb-5">Login</p>
                             <div class="mb-5">
-                                <input type="email" id="email" name="email" class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Enter Student Number" required />
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    name="email" 
+                                    pattern=".+@bulsu\.edu\.ph$" 
+                                    placeholder="Enter Student Number" 
+                                    required
+                                    class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                />
                             </div>
                             <div class="mb-5">
-                                <input type="password" id="password" name="password" class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                                    placeholder="Password" required />
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password" 
+                                    class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                                    placeholder="Password" 
+                                    required 
+                                />
                             </div>
                             <div class="flex justify-end mb-10">
                                 <p class="text-gray-500 hover hover-[#E0E0E0] cursor-pointer" data-modal-target="authentication-modal" data-modal-toggle="authentication-modal">
@@ -228,51 +241,149 @@
             <!-- Modal body -->
             <div class="p-4 md:p-5 space-y-4">
 
-                <div class="container mx-auto flex flex-row justify-content items-center md:flex-row sm:flex-col">
+                <div class="container h-fit mx-auto flex flex-row justify-content items-center md:flex-row sm:flex-col">
                     <div class="relative hidden md:flex md:w-[800px] md:h-[680px] md:mt-[100px]">
                         <div class="absolute top-24 left-10">
                             <p class="text-[5rem] font-[500]">Log In To</p>
                             <p class="text-[2.5rem] font-[500]">CICT Research <br> Repository System</p>
                             <p>if you already have an account</p>
-                            <span>You can <a href="login.php" class="cursor-pointer text-[#FF8A01] hover:">Login Here !</a></span>
+                            <span>You can <span data-modal-target="login-modal" data-modal-toggle="login-modal" data-modal-hide="signup-modal" class="cursor-pointer text-[#FF8A01] underline">Login Here!</span></span>
                         </div>
                         <img src="../src/img/pic2.svg" alt="" class="hidden lg:absolute bottom-2 ml-[400px] w-96 md:block">
                     </div>
 
                     <div class="relative w-[550px] h-[680px] flex flex-col justify-content">
-                        <form class="w-3/4 mx-auto gap-2 flex flex-col justify-content" method="POST" action="actions/signup.php">
-                            <p class="text-[2.5rem] mb-5">Sign up</p>
-                            <p class="text-[1rem] mb-5 text-gray-500">Register As:</p>
-                            <div class="flex flex-row items-center justify-between mb-10">
-                                <div class="flex items-center mb-4 gap-10">
+                        <form class="w-3/4 mx-auto gap-2 flex flex-col justify-content" method="POST" action="actions/signup.php" onsubmit="accountRegistrationForm(this, event)">
+                            <p class="text-3xl lg:text-[2.5rem] mb-2 text-center lg:text-start">Sign up</p>
+                            <div class="flex flex-col items-start">
+                                <p class="text-[1rem] text-gray-500">Register As:</p>
+                                <div class="flex items-center self-center gap-10">
                                     <div class="dv">
-                                        <input id="default-radio-1" type="radio" value="student" name="type" class="w-4 h-4 text-gray-500 bg-gray-100 border-gray-300 focus:ring-gray-500 dark:focus:ring-gray-500 dark:ring-offset-gray-500 focus:ring-2 dark:bg-gray-500 dark:border-gray-500">
-                                        <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Student</label>
+                                        <input 
+                                            id="default-radio-1" 
+                                            type="radio" 
+                                            value="student" 
+                                            name="type" 
+                                            required
+                                            checked
+                                            class="w-4 h-4 cursor-pointer text-gray-500 bg-gray-100 border-gray-300 focus:ring-gray-500 dark:focus:ring-gray-500 dark:ring-offset-gray-500 focus:ring-2 dark:bg-gray-500 dark:border-gray-500">
+                                        <label for="default-radio-1" class="cursor-pointer text-sm font-medium text-gray-900 dark:text-gray-300">Student</label>
                                     </div>
-
                                     <div class="dv">
-                                        <input id="default-radio-1" type="radio" value="faculty" name="type" class="w-4 h-4 text-gray-500 bg-gray-100 border-gray-300 focus:ring-gray-500 dark:focus:ring-gray-500 dark:ring-offset-gray-500 focus:ring-2 dark:bg-gray-500 dark:border-gray-500">
-                                        <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Faculty</label>
+                                        <input 
+                                            id="default-radio-2" 
+                                            type="radio" 
+                                            value="faculty" 
+                                            name="type" 
+                                            required
+                                            class="w-4 h-4 cursor-pointer text-gray-500 bg-gray-100 border-gray-300 focus:ring-gray-500 dark:focus:ring-gray-500 dark:ring-offset-gray-500 focus:ring-2 dark:bg-gray-500 dark:border-gray-500"
+                                        />
+                                        <label for="default-radio-2" class="cursor-pointer text-sm font-medium text-gray-900 dark:text-gray-300">Faculty</label>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="mb-5">
-                                <input type="email" id="email" name="email" class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Enter Email Address" required />
+                            <div class="mb-2 flex justify-between flex-wrap gap-2">
+                                <div class="flex-1">
+                                    <label for="first-name">First Name:</label>
+                                    <input 
+                                        type="text" 
+                                        id="first-name" 
+                                        name="fname" 
+                                        placeholder="Juan"
+                                        required
+                                        class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    />
+                                </div>
+                                <div class="flex-1">
+                                    <label for="last-name">Last Name:</label>
+                                    <input 
+                                        type="text" 
+                                        id="last-name" 
+                                        name="lname" 
+                                        placeholder="Cruz"
+                                        required
+                                        class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    />
+                                </div>
                             </div>
-                            <div class="mb-5">
-                                <input type="text" id="number" name="number" class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Enter Student Number" required />
+
+                            <div class="mb-2">
+                                <label for="email">Email:</label>
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    name="email" 
+                                    pattern=".+@bulsu\.edu\.ph$" 
+                                    placeholder="Enter Email Address" 
+                                    required 
+                                    class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                />
+                                <div class="pl-4 text-xs text-gray-500">
+                                    <h6>Please enter a valid email address ending with @bulsu.edu.ph</h6>
+                                </div>
                             </div>
-                            <div class="mb-5">
-                                <input type="password" id="password" name="password" class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                                    placeholder="Enter Password" required />
+                            <div class="mb-2">
+                                <label for="number">Student | Faculty Number:</label>
+                                <input 
+                                    type="text" 
+                                    id="number" 
+                                    name="number" 
+                                    oninput="allowNumbersOnly(event)"
+                                    placeholder="Student | Faculty Number"
+                                    class="bg-gray-200 appearance-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Enter Student Number" 
+                                    required 
+                                />
                             </div>
-                            <div class="mb-5">
-                                <input type="password" id="password" name="password2" class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                                    placeholder="Re-enter Password" required />
+                            <div class="mb-2">
+                                <label for="password1">Password:</label>
+                                <input
+                                    type="password" 
+                                    pattern="(?=.*\d)(?=.*[A-Z]).{8,}" 
+                                    id="password1" 
+                                    name="password" 
+                                    placeholder="Enter Password" 
+                                    required 
+                                    class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                                />
+                                <div class="pl-4 text-xs text-gray-400">
+                                    <h6 class="text-gray-500">Password must contain:</h6>
+                                    <ul class="list-disc ml-3">
+                                        <li>At least 1 capital letter</li>
+                                        <li>At least one number</li>
+                                        <li>8 characters</li>
+                                    </ul>
+                                </div>
                             </div>
+                            <div class="mb-2">
+                                <label for="password2">Confirm Password:</label>
+                                <input 
+                                    type="password" 
+                                    id="password2" 
+                                    name="password2" 
+                                    placeholder="Re-enter Password" 
+                                    required 
+                                    class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                                />
+                            </div>
+                            <div class="mb-2 text-sm">
+                                <input 
+                                    type="checkbox"
+                                    name="agree"
+                                    id="cb-agree"
+                                    class="scale-90"
+                                    required
+                                />
+                                <label for="cb-agree" class="cursor-pointer">
+                                    I agree to the 
+                                    <span class="underline text-blue-400">
+                                        Terms and Conditions
+                                    </span>
+                                    of the CICT-RRS.
+                                </label>
+                            </div>
+                            <div id="error-msg" class="hidden w-full px-4 py-1 border-red-500 border-2 bg-red-300 text-red-600 rounded-md"></div>
                             <button type="submit" name="signup" class="text-white bg-[#FF8A01] hover hover-[#CC6E00] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-4 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 signup
                             </button>
@@ -283,3 +394,27 @@
         </div>
     </div>
 </div>
+
+<script>
+    function allowNumbersOnly(e){
+        var value = e.target.value;
+        if (isNaN(value)) {
+            e.preventDefault();
+            event.target.value = value.replace(/\D/g, '');
+        }
+    }
+
+    function accountRegistrationForm(form, e){
+        e.preventDefault();
+        const pass = document.getElementById('password1').value;
+        const pass2 =document.getElementById('password2').value;
+        if(pass !== pass2){
+            const errorMsgDiv = document.getElementById('error-msg');
+            errorMsgDiv.classList.toggle('hidden');
+            errorMsgDiv.innerText =  'Password do not match';
+            console.log(pass, pass2)
+        }else{
+            form.submit();
+        }
+    }
+</script>

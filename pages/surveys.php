@@ -6,10 +6,10 @@ if (!isset($_SESSION["id"])) {
 $imports = '';
 include('../db/db.php');
 
-
+$uid = $_SESSION['id'];
 
 // $id = $_GET['id'];
-$sql = "SELECT s.*, a.email FROM surveys s JOIN account a ON s.account_id = a.number WHERE s.deadline >= CURDATE() AND s.is_archived = 0";
+$sql = "SELECT s.*, a.email FROM surveys s JOIN account a ON s.account_id = a.number LEFT JOIN response r ON s.id = r.survey_id AND r.account_id = $uid WHERE s.deadline >= CURDATE() AND s.is_archived = 0 AND r.survey_id IS NULL";
 $result = $conn->query($sql);
 $i = 0;
 $data = array();

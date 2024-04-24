@@ -4,7 +4,7 @@ if (!isset($_SESSION["id"])) {
   header("Location:landing.php");
 }
 
-  include("../db/db.php");
+  include("../../db/db.php");
   $name = $_POST["survey-name"];
   $url = $_POST["url"] ?? '';
   $respondents = $_POST["respondents"];

@@ -19,41 +19,41 @@
 
             <p class="absolute bottom-4 text-sm self-center flex items-center mt-4">
                 <img src="../src/img/Rating.png" height="24px" width="24px" alt="">  
-                My points: 24
+                My points: <?=$_SESSION['points']?>
             </p>
         </div>
 
         <div class="bg-white rounded-lg p-2 sm:p-6 mx-auto max-w-[946px] h-fit z-10">
-            <div class="w-full mb-5">
-                <label for="survey-name">Survey Name</label>
-                <input type="text" id="survey-name" value="<?=$row['survey_name']?>" class="input-text" disabled>
-            </div>
-            <div class="w-1/2 min-w-80">
-                <label for="url">URL <span class="text-gray-400">(if applicable)</span></label>
-                <input type="text" id="url" value="<?=$row['url']?>" class="input-text" disabled>
-            </div>
-            <div class="w-full mb-5">
-                <h3 class="text-xl">Survey Description</h3>
-                <p class="txtarea"><?=$row['description']?></p>
-            </div>
-
-            <div class="my-2 sm:my-8">
-                <h2 class="text-base md:text-xl font-bold text-center px-4 md:px-16">DATA PRIVACY ACT OF 2012 (DPA OF 2012) AND ITS IMPLEMENTING RULES AND REGULATIONS (RA 10173)</h2>
-                <p class="text-sm md:text-base my-3">In accordance with the Data Privacy Act of 2012 and its implementing rules and regulations, answering this form and disclosing your personal or sensitive information will give consent to the researcher to access, collect, and process the gathered data. These will solely be used for academic purposes only.</p>
-                <p class="text-sm md:text-base my-3">By completing this form, I hereby signify my consent and authorize the researchers to collect and process the data indicated, herein for participating in the aforementioned purpose of this survey.</p>
-                <div class="w-full my-2 flex items-center">
-                    <input type="checkbox" name="agree" id="agree" class="mr-1">
-                    <label for="agree" class="text-xs md:text-base">Yes, I understand and give my consent to the researcher</label>
+            <form action="actions/try_save_answer.php?id=<?=$id?>&file=<?=$row['filename']?>" method="POST">
+                <div class="w-full mb-5">
+                    <label for="survey-name">Survey Name</label>
+                    <input type="text" id="survey-name" name="survey-name" value="<?=$row['survey_name']?>" class="input-text" disabled>
                 </div>
-            </div>
+                <div class="w-1/2 min-w-80">
+                    <label for="url">URL <span class="text-gray-400">(if applicable)</span></label>
+                    <input type="text" id="url" value="<?=$row['url']?>" class="input-text" disabled>
+                </div>
+                <div class="w-full mb-5">
+                    <h3 class="text-xl">Survey Description</h3>
+                    <p class="txtarea"><?=$row['description']?></p>
+                </div>
 
-            <div class="w-full border-t">
-                <h3 class="text-base md:text-xl">Questions</h3>
-                <form action="actions/try_save_answer.php?id=<?=$id?>&file=<?=$row['filename']?>" method="POST">
-                    <div id="form-container" class="w-full mx-auto flex flex-col items-center gap-y-2"></div>
-                    <button class="px-3 py-2 rounded text-white bg-orange-400" onclick="submitForm()">Submit</button>
-                </form>
-            </div>
+                <div class="my-2 sm:my-8">
+                    <h2 class="text-base md:text-xl font-bold text-center px-4 md:px-16">DATA PRIVACY ACT OF 2012 (DPA OF 2012) AND ITS IMPLEMENTING RULES AND REGULATIONS (RA 10173)</h2>
+                    <p class="text-sm md:text-base my-3">In accordance with the Data Privacy Act of 2012 and its implementing rules and regulations, answering this form and disclosing your personal or sensitive information will give consent to the researcher to access, collect, and process the gathered data. These will solely be used for academic purposes only.</p>
+                    <p class="text-sm md:text-base my-3">By completing this form, I hereby signify my consent and authorize the researchers to collect and process the data indicated, herein for participating in the aforementioned purpose of this survey.</p>
+                    <div class="w-full my-2 flex items-center">
+                        <input type="checkbox" name="agree" id="agree" class="mr-1" required>
+                        <label for="agree" class="text-xs md:text-base">Yes, I understand and give my consent to the researcher</label>
+                    </div>
+                </div>
+
+                <div class="w-full border-t">
+                    <h3 class="text-base md:text-xl">Questions</h3>
+                        <div id="form-container" class="w-full mx-auto flex flex-col items-center gap-y-2"></div>
+                        <button class="px-3 py-2 rounded text-white bg-orange-400">Submit</button>
+                </div>
+            </form>
         </div>
 
         <div class="absolute left-0 top-[80px] sm:top-[80px] w-3/5 md:w-[30%] md:min-w-80 h-full md:h-[calc(100vh-80px)] bg-orange-400 z-[1] grid place-items-center">
@@ -74,7 +74,7 @@
 
                 <p class="absolute bottom-4 text-sm self-center flex items-center mt-4">
                     <img src="../src/img/Rating.png" height="24px" width="24px" alt="">  
-                    My points: 24
+                    My points: <?=$_SESSION['points']?>
                 </p>
             </div>
 
@@ -112,9 +112,9 @@
                         }else{
                             name = `name="question-${key}"`;
                         }
-                        return (`<div><input type="${type}" ${name} value="${object[0].questionnaire[key].options[index]}" id="${option.toLowerCase()}-${key}"><label for="${option.toLowerCase()}-${key}">${option}</label></div>`);
+                        return (`<div><input required type="${type}" ${name} value="${object[0].questionnaire[key].options[index]}" id="${option.toLowerCase()}-${key}"><label for="${option.toLowerCase()}-${key}">${option}</label></div>`);
                     });
-                    const showOpts = options.map(option => option).join('');
+                    const showOpts = options.map(option => option).join('');    
                     newDiv.innerHTML = (
                        `<h3 class="text-xl">${object[0].questionnaire[key]?.question ?? 'WHAT IS THIS?'}</h3><div class="flex flex-col">${showOpts}</div>`);
                 }else if(type == 'grid'){
@@ -131,7 +131,7 @@
                         `;
                         for (let index = 0; index < colLen; index++) {
                             stri += (`
-                            <div class="flex-1 text-center"> <input type="radio" name="question-${key}-${row.toLowerCase()}" value="${object[0].questionnaire[key].options.col[index]}"> </div>
+                            <div class="flex-1 text-center"> <input required type="radio" name="question-${key}-${row.toLowerCase()}" value="${object[0].questionnaire[key].options.col[index]}"> </div>
                             `);
                         }
                         stri += '</div>';
@@ -150,12 +150,12 @@
                     if(type == 'text'){
                         newDiv.innerHTML = `
                             <h3 class="text-xl">${object[0].questionnaire[key]?.question ?? 'WHAT IS THIS?'}</h3>
-                            <input type="text" class="input-text" name="question-${key}">
+                            <input required type="text" class="input-text" name="question-${key}">
                         `;
                     }else if(type == 'textarea'){
                         newDiv.innerHTML = `
                             <h3 class="text-xl">${object[0].questionnaire[key]?.question ?? 'WHAT IS THIS?'}</h3>
-                            <textarea rows="4" name="question-${key}" class="txtarea"></textarea>
+                            <textarea required rows="4" name="question-${key}" class="txtarea"></textarea>
                         `;
                     }
                 }

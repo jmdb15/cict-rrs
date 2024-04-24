@@ -12,7 +12,7 @@ $row = $res->fetch_assoc();
 
 $imports = '';
 $isLoggedIn = true;
-$sessionMessage = $_SESSION['toast']['message'];
+$sessionMessage = $_SESSION['toast']['message'] ?? '';
 $showNav = true;
 $content_template = "../src/template/profile_page.php";
 include "../base.php";

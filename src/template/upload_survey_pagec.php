@@ -6,7 +6,7 @@
                 <h3 class="text-xl font-medium">Upload Survey Form</h3>
                 <div class="w-full mb-5">
                     <label for="survey-name">Survey Name</label>
-                    <input type="text" id="survey-name" name="survey-name" placeholder="Sample Survey Name" class="input-text">
+                    <input type="text" id="survey-name" name="survey-name" placeholder="Sample Survey Name" class="input-text" required>
                 </div>
                 <div class="w-full mb-5 flex gap-2">
                     <div class="flex-1">
@@ -15,12 +15,12 @@
                     </div>
                     <div class="flex-1">
                         <label for="respondents">Target Respondents </label>
-                        <input type="text" name="respondents" id="survey-name" placeholder="Enter a number" class="input-text">
+                        <input type="text" name="respondents" id="survey-name" placeholder="Enter a number" class="input-text" oninput="allowNumbersOnly(event)" required>
                     </div>
                 </div>
                 <div class="w-full mb-5">
                     <label for="survey-desc">Survey Description</label>
-                    <textarea name="description" id="survey-desc" rows="4" class="txtarea"></textarea>
+                    <textarea name="description" id="survey-desc" rows="4" class="txtarea" required></textarea>
                 </div>
                 <div class="w-1/2 mb-5">
                     <label for="deadline">Deadline</label>
@@ -58,7 +58,7 @@
                 </div>
                 <div class="my-10 flex flex-col justify-center items-center gap-y-4">
                     <button class="btn bg-orange-400" type="submit">Upload Survey</button>
-                    <button class="btn bg-gray-500">Cancel</button>
+                    <a href="surveys.php" class="btn bg-gray-500 text-center text-white">Cancel</a>
                 </div>
             </div>
         </form>
@@ -75,6 +75,14 @@ let divcount = 1;
 let myObject = {};
 appendFormDiv();
 
+function allowNumbersOnly(e){
+    var value = e.target.value;
+    if (isNaN(value)) {
+        e.preventDefault();
+        event.target.value = value.replace(/\D/g, '');
+    }
+}
+
 function saveForm(event, form) {
     event.preventDefault();
     newObject = [
@@ -83,7 +91,9 @@ function saveForm(event, form) {
         }, {
             answers: []
         }
-    ]
+    ];
+    const desc = document.getElementById('survey-desc').value;
+    const descArray = desc.split(' ');
     $.ajax({
         url: '../src/ajax/upload_survey.php',
         type: 'POST',
@@ -96,7 +106,8 @@ function saveForm(event, form) {
             form.appendChild(input);
             form.submit();
         }
-    })
+    });
+        
 }
 function appendFormDiv() {
     let count = divcount++;

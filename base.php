@@ -82,9 +82,9 @@
     unset($_SESSION['toast']);
     echo "<script>removeToast();</script>";
     ?>
-    <div id="toast-default" class="w-full my-auto flex flex-col items-center fixed top-[100px]" role="alert">
-        <div class="w-full md:w-3/4 lg:w-1/2 flex flex-col justify-center items-center mt-24 md:mt-8 z-50">
-            <div class="w-1/2 flex flex-row items-center py-2 px-3 rounded-t-xl bg-white">
+    <div id="toast-default" class="w-[380px] flex flex-col items-center fixed top-[80px] right-[40px] z-[123456798]" role="alert">
+        <div class="w-full flex flex-col justify-center items-center mt-24 md:mt-8 z-50">
+            <div class="w-full flex flex-row items-center py-2 px-3 rounded-t-xl bg-white">
                 <img src="../src/img/logo.png" class="mr-1" alt="">
                 <span class="text-black flex flex-row gap-1 text-sm md:text-md lg:text-lg">CICT
                     <p class="text-sm md:text-md lg:text-lg text-[#FF8A01]">Files</p>
@@ -96,7 +96,7 @@
                     </svg>
                 </button>
             </div>
-            <div class="w-1/2 h-[50px] flex justify-center items-center p-8 md:p-4 rounded-b-xl bg-[#F0F0F0] shadow-xl">
+            <div class="w-full h-[50px] flex justify-center items-center p-8 md:p-4 rounded-b-xl bg-[#F0F0F0] shadow-xl">
                 <!-- USER SIDE -->
             <!-- 
                 <p class="hidden text-sm md:text-md">Message is archived successfully.</p>
@@ -112,7 +112,6 @@
         </div>
     </div>
 <?php } ?>
-    
 
 </body>
 </html>

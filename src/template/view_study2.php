@@ -52,7 +52,7 @@
                 </a>
                 <p class="text-sm self-center flex items-center mt-4">
                     <img src="../src/img/Rating.png" height="24px" width="24px" alt="">  
-                    My points: 24
+                    My points: <?=$_SESSION['points']?>
                 </p>
             </div>
         </div>
