@@ -1,8 +1,8 @@
 <?php
 session_start();
-if (!isset($_SESSION["id"])) {
-  header("Location:landing.php");
-}
+if (!isset($_SESSION["id"])) header("Location:landing.php");
+if(!$_SESSION['verified']) header("Location:verify.php");
+
 $imports = '';
 include('../db/db.php');
 

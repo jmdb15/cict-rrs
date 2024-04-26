@@ -53,6 +53,7 @@ if($conn->query($sql)){
     insertLog($conn, $uid, 'Responded on a Survey: '.$surveyName);
     $sqlp = "UPDATE profile SET points = points + 1 WHERE account_id = $uid;";  
     $conn->query($sqlp);
+    $_SESSION['points'] = $_SESSION['points']+1;
     $_SESSION['toast']['error'] = false;
     $_SESSION['toast']['message'] = "Thank you for your response. Here's a point for your effort!";
 }else{

@@ -14,9 +14,11 @@ if($res->num_rows > 0)
     if(verify_password($pass, $curr_pass)){
         $_SESSION["id"] = $row['number'];
         $_SESSION["email"] = $row['email'];
+        $_SESSION["fullname"] = $row['first_name'].' '.$row['last_name'];
         $_SESSION["points"] = $row['points'];
+        $_SESSION['verified'] = $row['verified_at'] != null ? true : false;
         $_SESSION['toast']['error'] = false;
-        $_SESSION['toast']['message'] = "Hello! You're now logged in. Enjoy the journey!";
+        $_SESSION['toast']['message'] =  $row['verified_at'] != null ? "Hello! You're now logged in. Enjoy the journey!" : "Please verify your account to continue.";
         insertLog($conn, $row['number'], 'Logged in');
         header("Location:../index.php");
     }else{

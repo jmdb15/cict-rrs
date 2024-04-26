@@ -11,38 +11,32 @@ if(isset($_POST['reset'])){
                 $pass = $_POST['password'];
                 $conf = $_POST['confirm'];
                 if($pass == $conf){
-                    $hash = md5($pass);
+                    $hash = generate_hash($pass);
                     $sql = "UPDATE `account` SET `password`='$hash', `reset_token`=null, `reset_expiration`=null WHERE id = '". $row1['id'] ."'";
                     $res = $conn->query($sql);
-                    echo "<br>success reset password";
+                    $_SESSION['toast']['error'] = false;
+                    $_SESSION['toast']['message'] = "You're password has been changed! Try logging in now.";
+                    header ('landing.php');
                 }
             }else{
-                echo "error";
+                $_SESSION['toast']['error'] = true;
+                $_SESSION['toast']['message'] = "Something wnet wrong, please try again later.";
+                header ('landing.php');
             }
         }   
     }else{
         $row = $res1->fetch_assoc();
         $sql = "UPDATE `account` SET `reset_token`=null, `reset_expiration`=null WHERE id = '". $row['id'] ."'";
         $res = $conn->query($sql);
-        echo "Your token has expired. Please click to send a new one.";
+        $_SESSION['toast']['error'] = true;
+        $_SESSION['toast']['message'] = "Your token has expired. Please try again later.";
+        header ('landing.php');
     }
 }
 
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form method="post">
-        <input type="text" value="<?= $_GET['token'] ?>" name="token" hidden>
-        <input type="password" name="password" required >
-        <input type="password" name="confirm"  required>
-        <input type="submit" name="reset" value="reset">
-    </form>
-</body>
-</html>
+$imports = '';
+$isLoggedIn = false;
+$showNav = false;
+$sessionMessage = $_SESSION['toast']['message'] ?? '';
+$content_template = "../src/template/reset_password_page.php";
+include "../base.php";

@@ -1,7 +1,9 @@
 <?php
 include("../../db/db.php");
 $key = $_GET['key'];
-$sql_count = "SELECT COUNT(*) AS total FROM studies WHERE project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%'";
+$idArray = $_GET['arrayId'];
+$idString = implode(",", $idArray);
+$sql_count = "SELECT COUNT(*) AS total FROM studies WHERE id NOT IN ($idString) AND (project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%')";
 $count_result = $conn->query($sql_count);
 $count_row = $count_result->fetch_assoc();
 $total_records = $count_row['total'];
@@ -14,10 +16,14 @@ $active = '<li>
 
 if($total_records <= 6){
 
-    $sql = "SELECT * FROM studies WHERE project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%'";
+    $sql = "SELECT s.*, COALESCE(view_count, 0)  AS view_count 
+    FROM studies s 
+    LEFT JOIN (SELECT studies_id, COUNT(id) AS view_count FROM logs WHERE activity LIKE '%Viewed%' GROUP BY studies_id) AS viewed_logs 
+    ON s.id = viewed_logs.studies_id  
+    WHERE s.id NOT IN ($idString) AND (project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%')";
     $result = $conn->query($sql);
 
-    echo '<div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center h-fit">';
+    echo '<div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-start h-fit">';
     while($row = $result->fetch_assoc()) {
         echo '  <a href="view_study.php?id='.$row['id'].'" class="cursor-pointer w-[28%] min-w-[290px]">
                     <div class="relative flex gap-x-2 p-4 h-[120px] bg-white rounded-lg shadow-md">
@@ -25,7 +31,7 @@ if($total_records <= 6){
                         <div class="flex flex-col justify-between">
                             <p>'. $row['project_title'] .'</p>
                             <p class="text-base text-ellipsis overflow-hidden">'. $row['research_title'] .'</p>
-                            <p class="text-sm text-gray-400">12 views</p>
+                            <p class="text-sm text-gray-400">'. $row['view_count'] .' views</p>
                         </div>
                     </div>
                 </a>';
@@ -54,7 +60,11 @@ if($total_records <= 6){
     $perpage = 6; 
     $start = ($page - 1) * $perpage;
 
-    $sql = "SELECT * FROM studies WHERE project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%' LIMIT $start, $perpage";
+    $sql = "SELECT s.*, COALESCE(view_count, 0)  AS view_count 
+    FROM studies s 
+    LEFT JOIN (SELECT studies_id, COUNT(id) AS view_count FROM logs WHERE activity LIKE '%Viewed%' GROUP BY studies_id) AS viewed_logs 
+    ON s.id = viewed_logs.studies_id  
+    WHERE s.id NOT IN ($idString) AND (project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%') LIMIT $start, $perpage";
     $result = $conn->query($sql);
 
     $limit = $total_records / $perpage;
@@ -63,15 +73,15 @@ if($total_records <= 6){
     }
 
 
-    echo '<div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center h-fit">';
+    echo '<div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-start h-fit">';
     while($row = $result->fetch_assoc()) {
         echo '  <a href="view_study.php?id='.$row['id'].'" class="cursor-pointer w-[28%]    min-w-[290px]">
                     <div class="relative flex gap-x-2 p-4 h-[120px] min-w-[290px] bg-white rounded-lg shadow-md hover:brightness-90">
                         <img src="../public/images/cover/'.$row['cover'].'" class="w-auto min-w-[120px] h-auto basis-[40%] aspect-video" alt="Cover">
                         <div class="flex flex-col justify-between">
                             <p>'. $row['project_title'] .'</p>
-                            <p>Subtitle</p>
-                            <p>12 views</p>
+                            <p class="text-base text-ellipsis overflow-hidden">'. $row['research_title'] .'</p>
+                            <p class="text-sm text-gray-400">'. $row['view_count'] .' view/s</p>
                         </div>
                     </div>
                 </a>';

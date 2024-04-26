@@ -17,13 +17,6 @@
                             data-modal-target="changePassword-modal" data-modal-toggle="changePassword-modal">
                             Change Password
                         </button>
-                        <button 
-                            type="button" 
-                            onclick="sendVerification('<?=$_SESSION['email']?>')" 
-                            id="verify-account" 
-                            class="w-[150px] py-2.5 px-5 me-2 mb-2 text-xs font-medium text-white focus:outline-none bg-[#455A64] rounded-lg border border-gray-200 hover:bg-[#FF8A01] hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                            Verify Account
-                        </button>
                     </div>
                     <div class="flex flex-row justify-center items-center">
                         <img src="../src/img/star.svg" alt="star">&nbsp;&nbsp;
@@ -171,7 +164,7 @@
                             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Re-enter your new password</label>
                             <input type="password" name="confirm_password" id="confirm_password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"  pattern="(?=.*\d)(?=.*[A-Z]).{8,}" title="Password must contain at least one number, one uppercase letter, and be at least 8 characters long" required />
                         </div>
-                        <div id="error-cont" class=" w-full text-center text-red-500 text-sm border-red-500 border-2 bg-red-200 py-1 px-2 rounded-md">New password does not match</div>
+                        <div id="error-cont" class="hidden w-full text-center text-red-500 text-sm border-red-500 border-2 bg-red-200 py-1 px-2 rounded-md">Password does not match</div>
                         <div class="w-full flex flex-row gap-4">
                             <button type="submit" class="w-1/2 text-white bg-[#FF8A01] hover:bg-white-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="changePass">
                                 Confirm</button>
@@ -232,7 +225,6 @@
         const confPass = document.getElementById('confirm_password').value;
         if(newPass != confPass){
             errorContainer.classList.remove('hidden');
-            errorContainer.innerText = 'New password and confirmation do not match.';
         }else{
             errorContainer.classList.add('hidden');
             $.ajax({
@@ -242,6 +234,9 @@
                     oldPass,
                     newPass,
                     confPass
+                },
+                success: function(data){
+                    if(data === 'success') location.reload();
                 }
             });
         }
@@ -288,17 +283,6 @@
         input.classList.add('dark-input');
         input.disabled = true; // Disable editing
     });
-
-    function sendVerification(email){
-        $.ajax({
-            url: '../src/ajax/send_verification.php',
-            method: 'POST',
-            data: { email: LOGGED_EMAIL},
-            success:function(response){
-                alert(response);
-            }
-        });
-    }
 
     document.addEventListener('DOMContentLoaded', function () {
     const fileInput = document.getElementById('pict');

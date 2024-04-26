@@ -1,112 +1,53 @@
+<script>var ARRAY_OF_IDS = [];</script>
+
 <main class="container mx-auto lg:px-8 xl:px-32 flex flex-col gap-y-2 justify-center">
 
+<?php if($previousRes->num_rows > 0){ ?>
     <!-- SECTION FOR PREVIOUS READING -->
     <section class="pt-4 px-4">
         <h4 class="text-xl font-bold text-center md:text-start md:indent-8 my-3">Previous Reading</h4>
-        <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center">
-            <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
-                <img src="../src/img/BloodLink 2.png" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
-                <div class="flex flex-col justify-between">
-                    <p>Title</p>
-                    <p>Subtitle</p>
-                    <p>12 views</p>
-                </div>
-                <div class="absolute top-4 right-0">
-                    <svg width="64" height="26" viewBox="0 0 64 26" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <rect x="0.090332" y="0.33252" width="63" height="25" fill="url(#pattern0)"/>
-                        <defs>
-                        <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-                        <use xlink:href="#image0_77_2303" transform="matrix(0.0132275 0 0 0.0333333 0.301587 0)"/>
-                        </pattern>
-                        <image id="image0_77_2303" width="30" height="30" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABvUlEQVR4nNXWv0scQRQH8FUwXGE02gSLK4JKsBYCKYJYJP9AwEbrE+yjt++djGBz/0L+ACPYiEXSmj/gAgqC4P14b+wMiNepiPnK7frjdLPc7e7twg28bt58mDdvhnGcfhs4Mq9akT2s/BtK+1mj7yD8D8qA5cnsYEtrHurHanaw8J9HWKiSDWp5sm23ftRK0+nDQhyAhSl9WPkwACsdpIs2Su+D6MOuSzO9B8XkYItjENoMh2nTn2NyERZ256H8F8rN0IWTR9MzGu7cE3xanIKSpojivhc08OCgvjYK4Z3UUKE9nJrx8LJbKkDpuofgjffSwRnofOZ2fRbC1Z6UVoofu242Dz8xI1DeToDutro8Eto+ILTilStKaYVWnKQDdfcthG4jwLdQmkgON3g5cpktFZLDyr9inO/PZOiZGYbSZYzmumo1Z3zYugvhDcQbfoQ0nnUX4sNKP/57N6376XFOnT6E3PmteGilMASli+c75R2IeROYe/ztNYS/v4Cbsb6/aPCXZ4soL3bMUfoKofO2cn+ODguX70u7jyrnu86rct7L8StUjg7XStNQdwkwg5FzYQa93Cw+gU6/jDsXZjBoPWfVOQAAAABJRU5ErkJggg=="/>
-                        </defs>
-                    </svg>
-                </div>
-            </div>
+        <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-start">
 
-            <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
-                <img src="../src/img/pana.png" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
-                <div class="flex flex-col justify-between">
-                    <p>Title</p>
-                    <p>Subtitle</p>
-                    <p>12 views</p>
+            <?php while($row=$previousRes->fetch_assoc()){ ?>
+                <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
+                    <img src="../public/images/cover/<?=$row['cover']?>" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
+                    <div class="flex flex-col justify-between">
+                        <p class="text-md font-bold tracking-wider"><?=$row['project_title']?></p>
+                        <p class="text-xs text-gray-500"><?=$row['research_title']?></p>
+                        <!-- <p><?=$row['view_count']?> view/s</p> -->
+                    </div>
                 </div>
-            </div>
+                
+            <?php 
+                echo '<script>ARRAY_OF_IDS.push('.$row['id'].');</script>';
+            } ?>
 
-            <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
-                <img src="../src/img/BloodLink 2.png" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
-                <div class="flex flex-col justify-between">
-                    <p>Title</p>
-                    <p>Subtitle</p>
-                    <p>12 views</p>
-                </div>
-                <div class="absolute top-4 right-0">
-                    <svg width="64" height="26" viewBox="0 0 64 26" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <rect x="0.090332" y="0.33252" width="63" height="25" fill="url(#pattern0)"/>
-                        <defs>
-                        <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-                        <use xlink:href="#image0_77_2303" transform="matrix(0.0132275 0 0 0.0333333 0.301587 0)"/>
-                        </pattern>
-                        <image id="image0_77_2303" width="30" height="30" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABvUlEQVR4nNXWv0scQRQH8FUwXGE02gSLK4JKsBYCKYJYJP9AwEbrE+yjt++djGBz/0L+ACPYiEXSmj/gAgqC4P14b+wMiNepiPnK7frjdLPc7e7twg28bt58mDdvhnGcfhs4Mq9akT2s/BtK+1mj7yD8D8qA5cnsYEtrHurHanaw8J9HWKiSDWp5sm23ftRK0+nDQhyAhSl9WPkwACsdpIs2Su+D6MOuSzO9B8XkYItjENoMh2nTn2NyERZ256H8F8rN0IWTR9MzGu7cE3xanIKSpojivhc08OCgvjYK4Z3UUKE9nJrx8LJbKkDpuofgjffSwRnofOZ2fRbC1Z6UVoofu242Dz8xI1DeToDutro8Eto+ILTilStKaYVWnKQDdfcthG4jwLdQmkgON3g5cpktFZLDyr9inO/PZOiZGYbSZYzmumo1Z3zYugvhDcQbfoQ0nnUX4sNKP/57N6376XFOnT6E3PmteGilMASli+c75R2IeROYe/ztNYS/v4Cbsb6/aPCXZ4soL3bMUfoKofO2cn+ODguX70u7jyrnu86rct7L8StUjg7XStNQdwkwg5FzYQa93Cw+gU6/jDsXZjBoPWfVOQAAAABJRU5ErkJggg=="/>
-                        </defs>
-                    </svg>
-                </div>
-            </div>
         </div>
     </section>
 
+<?php } ?>
+
     <!-- SECTION FOR POPULAR STUDIES -->
     <section class="pt-4 px-4">
-        <h4 class="text-xl font-bold text-center md:text-start md:indent-8 my-3">Popular Studies</h4>
-        <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-center">
-            <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
-                <img src="../src/img/BloodLink 2.png" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
-                <div class="flex flex-col justify-between">
-                    <p>Title</p>
-                    <p>Subtitle</p>
-                    <p>12 views</p>
-                </div>
-                <div class="absolute top-4 right-0">
-                    <svg width="64" height="26" viewBox="0 0 64 26" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <rect x="0.090332" y="0.33252" width="63" height="25" fill="url(#pattern0)"/>
-                        <defs>
-                        <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-                        <use xlink:href="#image0_77_2303" transform="matrix(0.0132275 0 0 0.0333333 0.301587 0)"/>
-                        </pattern>
-                        <image id="image0_77_2303" width="30" height="30" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABvUlEQVR4nNXWv0scQRQH8FUwXGE02gSLK4JKsBYCKYJYJP9AwEbrE+yjt++djGBz/0L+ACPYiEXSmj/gAgqC4P14b+wMiNepiPnK7frjdLPc7e7twg28bt58mDdvhnGcfhs4Mq9akT2s/BtK+1mj7yD8D8qA5cnsYEtrHurHanaw8J9HWKiSDWp5sm23ftRK0+nDQhyAhSl9WPkwACsdpIs2Su+D6MOuSzO9B8XkYItjENoMh2nTn2NyERZ256H8F8rN0IWTR9MzGu7cE3xanIKSpojivhc08OCgvjYK4Z3UUKE9nJrx8LJbKkDpuofgjffSwRnofOZ2fRbC1Z6UVoofu242Dz8xI1DeToDutro8Eto+ILTilStKaYVWnKQDdfcthG4jwLdQmkgON3g5cpktFZLDyr9inO/PZOiZGYbSZYzmumo1Z3zYugvhDcQbfoQ0nnUX4sNKP/57N6376XFOnT6E3PmteGilMASli+c75R2IeROYe/ztNYS/v4Cbsb6/aPCXZ4soL3bMUfoKofO2cn+ODguX70u7jyrnu86rct7L8StUjg7XStNQdwkwg5FzYQa93Cw+gU6/jDsXZjBoPWfVOQAAAABJRU5ErkJggg=="/>
-                        </defs>
-                    </svg>
-                </div>
-            </div>
+        <h4 class="text-xl font-bold text-center md:text-start md:indent-8 my-3">Recommended Studies</h4>
 
-            <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
-                <img src="../src/img/pana.png" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
-                <div class="flex flex-col justify-between">
-                    <p>Title</p>
-                    <p>Subtitle</p>
-                    <p>12 views</p>
-                </div>
-            </div>
+        
 
-            <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
-                <img src="../src/img/BloodLink 2.png" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
-                <div class="flex flex-col justify-between">
-                    <p>Title</p>
-                    <p>Subtitle</p>
-                    <p>12 views</p>
+        <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-start">
+
+            <?php while($row=$res->fetch_assoc()){ ?>
+                <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
+                    <img src="../public/images/cover/<?=$row['cover']?>" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
+                    <div class="flex flex-col justify-between">
+                        <p class="text-md font-bold tracking-wider"><?=$row['project_title']?></p>
+                        <p class="text-xs text-gray-500"><?=$row['research_title']?></p>
+                        <p><?=$row['view_count']?> view/s</p>
+                    </div>
                 </div>
-                <div class="absolute top-4 right-0">
-                    <svg width="64" height="26" viewBox="0 0 64 26" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <rect x="0.090332" y="0.33252" width="63" height="25" fill="url(#pattern0)"/>
-                        <defs>
-                        <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-                        <use xlink:href="#image0_77_2303" transform="matrix(0.0132275 0 0 0.0333333 0.301587 0)"/>
-                        </pattern>
-                        <image id="image0_77_2303" width="30" height="30" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABvUlEQVR4nNXWv0scQRQH8FUwXGE02gSLK4JKsBYCKYJYJP9AwEbrE+yjt++djGBz/0L+ACPYiEXSmj/gAgqC4P14b+wMiNepiPnK7frjdLPc7e7twg28bt58mDdvhnGcfhs4Mq9akT2s/BtK+1mj7yD8D8qA5cnsYEtrHurHanaw8J9HWKiSDWp5sm23ftRK0+nDQhyAhSl9WPkwACsdpIs2Su+D6MOuSzO9B8XkYItjENoMh2nTn2NyERZ256H8F8rN0IWTR9MzGu7cE3xanIKSpojivhc08OCgvjYK4Z3UUKE9nJrx8LJbKkDpuofgjffSwRnofOZ2fRbC1Z6UVoofu242Dz8xI1DeToDutro8Eto+ILTilStKaYVWnKQDdfcthG4jwLdQmkgON3g5cpktFZLDyr9inO/PZOiZGYbSZYzmumo1Z3zYugvhDcQbfoQ0nnUX4sNKP/57N6376XFOnT6E3PmteGilMASli+c75R2IeROYe/ztNYS/v4Cbsb6/aPCXZ4soL3bMUfoKofO2cn+ODguX70u7jyrnu86rct7L8StUjg7XStNQdwkwg5FzYQa93Cw+gU6/jDsXZjBoPWfVOQAAAABJRU5ErkJggg=="/>
-                        </defs>
-                    </svg>
-                </div>
-            </div>
+            <?php 
+                echo '<script>ARRAY_OF_IDS.push('.$row['id'].');</script>';
+            } ?>
+
         </div>
 
     </section>
@@ -139,6 +80,7 @@
 
 <script>
 // Initial page load
+    console.log(ARRAY_OF_IDS);
     let count = 1;
     loadPage(count);
 
@@ -152,10 +94,11 @@
     });
 
     function loadPage(page, key='') {
+        const arrayId = ARRAY_OF_IDS;
         $.ajax({
             url: '../src/components/load_content2.php',
             type: 'GET',
-            data: {page, key},
+            data: {arrayId, page, key},
             success: function(response) {
                 $('#page-content').html(response);
             }

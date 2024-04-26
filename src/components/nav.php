@@ -6,7 +6,7 @@
 ?>
 
 <?php if (!$isLoggedIn){ ?>
-    <nav class="nav bg-white dark:bg-[#4D4D4D] fixed w-full z-50 top-0 start-0">
+    <nav class="nav bg-white dark:bg-[#4D4D4D] fixed w-full z-50 top-0 start-0 shadow">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="../src/img/logo.png" class="h-8" alt="Flowbite Logo">
@@ -42,7 +42,7 @@
     </nav>
 <?php }else{ ?>
     <nav class="nav bg-white border-gray-200 dark:bg-gray-900">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 shadow">
             <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="../src/img/logo.png" class="h-8" alt="pic"/>
                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white flex flex-row">

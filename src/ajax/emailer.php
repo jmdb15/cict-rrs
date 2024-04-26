@@ -22,7 +22,7 @@ function sendEmail(array $recipients, $subject, $body,array $fileDirs=[], $alt =
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;        
         $mail->Port       = 465;                                   
     
-        $mail->setFrom('lee04373@gmail.com', 'CICT-Files');
+        $mail->setFrom('lee04373@gmail.com', 'CICT-RRS');
         
         if(count($fileDirs) > 0){
             foreach ($fileDirs as $fileDir) {

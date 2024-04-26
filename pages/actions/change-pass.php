@@ -8,9 +8,9 @@ $res = $conn->query($sql);
 $row = $res->fetch_assoc();
 $curr_pass = $row['password'];
 
-$old = $_POST['old_password'];
-$new = $_POST['new_password'];
-$conf = $_POST['conf_password'];
+$old = $_POST['oldPass'];
+$new = $_POST['newPass'];
+$conf = $_POST['confpass'];
 
 $_SESSION['toast']['error'] = false;
 
@@ -19,13 +19,14 @@ if(verify_password($old, $curr_pass)){
     $sql_change = "UPDATE `account` SET `password`='$hashed_new_password' WHERE `number`=$uid";
     if($conn->query($sql_change)){
         $_SESSION['toast']['error'] = true;
-        $_SESSION['toast']['message'] = 'Password changed! You will now be logged out.';
+        $_SESSION['toast']['message'] = 'Changes have been saved successfully!';
         $_SESSION['toast']['logout'] = true;
+        echo 'success';
     }else{
         $_SESSION['toast']['message'] = 'Something went wrong! Please try again later.';
+        echo 'fail';
     }
 }else{
     $_SESSION['toast']['message'] = 'Wrong password. Please try again.';
+    echo 'fail';
 }
-
-header('Location:../profile.php');
