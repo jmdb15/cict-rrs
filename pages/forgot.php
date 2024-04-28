@@ -17,21 +17,7 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $('#send-btn').click(function(e){
-            const email = document.querySelector('#email').value;
-            var requestData = {
-                email : email
-            };
-            $.ajax({
-                url: '../src/ajax/send_token.php',
-                method: 'POST',
-                dataType: 'html',
-                data: requestData, 
-                success: function(response) {
-                    $('#status').html(`Email sent to ${response}!`)
-                }
-            });
-        })
+        
         
     </script>
 </body>

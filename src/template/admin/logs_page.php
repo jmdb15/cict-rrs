@@ -104,11 +104,20 @@
     </div>
     <div class="rounded bg-gray-50 max-h-[620px] overflow-auto">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <div class="sticky top-0 bg-white flex justify-between p-5 border-b-[1px] rounded w-full">
+            <div class="bg-white flex justify-between p-5 border-b-[1px] rounded w-full">
                 <h2 class="text-xl">File List</h2>
-                <button class="px-4 py-2 bg-orange-400 text-white hover:brightness-110 rounded-md">Upload File</button>
+                <form action="../actions/export-pdf-logs.php" method="POST" onsubmit="waitSubmit(this, event)">
+                    <input type="text" name="type" id="gen-when" hidden>
+                    <input type="text" name="key" id="gen-key" hidden>
+                    <button 
+                        id="export-btn" 
+                        type="submit"
+                        class="px-4 py-2 bg-[#4D4D4D] text-white hover:brightness-110 rounded-md">
+                        Generate Report
+                    </button>
+                </form>
             </div>
-            <thead class="sticky top-[81px] text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-1 sm:px-6 py-3">
                         Number

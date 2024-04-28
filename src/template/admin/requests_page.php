@@ -110,7 +110,17 @@
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <div class="sticky top-0 bg-white flex justify-between p-5 border-b-[1px] rounded w-full">
                 <h2 class="text-xl">File List</h2>
-                <button class="px-4 py-2 bg-orange-400 text-white hover:brightness-110 rounded-md">Upload File</button>
+                <form action="../actions/export-pdf-requests.php" method="POST" onsubmit="waitSubmit(this, event)">
+                    <input type="text" name="type" id="gen-when" hidden>
+                    <input type="text" name="key" id="gen-key" hidden>
+                    <input type="text" name="table" value="requests" hidden>
+                    <button 
+                        id="export-btn" 
+                        type="submit"
+                        class="hidden px-4 py-2 bg-[#4D4D4D] text-white hover:brightness-110 rounded-md">
+                        Generate Report
+                    </button>
+                </form>
             </div>
             <thead class="sticky top-[81px] text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -198,36 +208,36 @@
     initiateButtons(updatedAtPresent=true);
 
     function initiateButtons(updatedAtPresent=false) {
-  const optionButtons = document.querySelectorAll('.option-btns');
-  optionButtons.forEach((btn, index) => {
-    btn.addEventListener('click', function (event) {
-      const oppositeIndex = index == 0 ? 1 : 0;
-      const tbodies = document.getElementsByClassName('tbodies');
-      optionButtons[0].classList.toggle('active');
-      optionButtons[1].classList.toggle('active');
-      optionButtons[0].classList.toggle('btn-bordered');
-      optionButtons[1].classList.toggle('btn-bordered');
-      tbodies[0].classList.toggle('hidden');
-      tbodies[1].classList.toggle('hidden');
-      (updatedAtPresent) ? tbodies[2].classList.toggle('hidden') : null;
-      active = event.target.innerText.toLowerCase();
-      activeOnInput = document.querySelector('#active-type');
-      active === activeOnInput.value
-        ? activeOnInput.value = optionButtons[oppositeIndex].innerText.toLowerCase()
-        : activeOnInput.value = active;
-      const exportBtn = document.querySelector('#export-btn');
-      if (exportBtn != null) {
-        exportBtn.classList.toggle('hidden');
-      }
-    });
-  });
-}
+        const optionButtons = document.querySelectorAll('.option-btns');
+        optionButtons.forEach((btn, index) => {
+            btn.addEventListener('click', function (event) {
+            const oppositeIndex = index == 0 ? 1 : 0;
+            const tbodies = document.getElementsByClassName('tbodies');
+            optionButtons[0].classList.toggle('active');
+            optionButtons[1].classList.toggle('active');
+            optionButtons[0].classList.toggle('btn-bordered');
+            optionButtons[1].classList.toggle('btn-bordered');
+            tbodies[0].classList.toggle('hidden');
+            tbodies[1].classList.toggle('hidden');
+            (updatedAtPresent) ? tbodies[2].classList.toggle('hidden') : null;
+            active = event.target.innerText.toLowerCase();
+            activeOnInput = document.querySelector('#active-type');
+            active === activeOnInput.value
+                ? activeOnInput.value = optionButtons[oppositeIndex].innerText.toLowerCase()
+                : activeOnInput.value = active;
+            const exportBtn = document.querySelector('#export-btn');
+            if (exportBtn != null) {
+                exportBtn.classList.toggle('hidden');
+            }
+            });
+        });
+    }
 
     function requestFunction(id, toDo) {
         $.ajax({
             url: '../../src/ajax/app-deny-request.php',
             type: 'POST',
-            data: { id:id, toDo:toDo },
+            data: { id:id, toDo:toDo, is_admin: true },
             success: function (response) {
                 alert(response);
                 var formattedDate = getDateToday();
@@ -303,6 +313,17 @@
         }
         
         const radioFilter = selectedValue == 'yesterday' || selectedValue == 'all' ? capitalizeFirst(selectedValue) : `Last ${capitalizeFirst(selectedValue)}`;
+
+        function waitSubmit(form, event){
+            event.preventDefault();
+            const type = getSelectedDateValue();
+            const key = document.getElementById('table-search').value;
+
+            document.getElementById('gen-key').value = key;
+            document.getElementById('gen-when').value = type;
+
+            form.submit();
+        }
         
         $.ajax({
             url: '../../src/ajax/request-rows.php',

@@ -91,9 +91,6 @@
                 <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Abstract</label>
                 <textarea id="description" name="description" rows="4" class="txtarea" required placeholder="Enter short description"></textarea>
                 <div id="desc-error" class="text-gray-500 text-sm">Description must be greater than 300 words.</div>
-                
-        <!-- document.getElementById('desc-error').classList.remove('text-gray-500')
-        document.getElementById('desc-error').classList.add('text-red-500') -->
             </div>
 
 
@@ -210,6 +207,8 @@ addOption();
 
 form.addEventListener('submit', function (event) {
     event.preventDefault();
+    const desc = document.getElementById('description').value;
+    const descArray = desc.split(' ');
     let parentDiv = document.querySelector('#here');
     let childDivs = parentDiv.querySelectorAll('span');
     let texts = [];
@@ -217,7 +216,8 @@ form.addEventListener('submit', function (event) {
         texts.push(childDiv.innerText);
     });
     input.value = JSON.stringify(texts);
-    form.submit();
+    if(descArray.length >= 300) form.submit();
+    else document.getElementById('desc-error').classList = 'my-1 px-2 py-2 text-red-500 border border-red-500 bg-red-200 text-sm';
 });
 
 // Initialize Flatpickr for startDate input

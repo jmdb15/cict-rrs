@@ -14,11 +14,17 @@ if ($conn->connect_error) {
 
 function insertLog($conn, $id, $log, $res_id=null){
     if($res_id != null){
-        $sql = "INSERT INTO `logs`(`account_id`, `studies_id`, `activity`) VALUES('$id', '$res_id', '$log')";
+        // $sql = "INSERT INTO `logs`(`account_id`, `studies_id`, `activity`) VALUES('$id', '$res_id', '$log')";
+        $sql = "INSERT INTO `logs` (`account_id`, `studies_id`, `activity`) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iis", $id, $res_id, $log);
     }else{
-        $sql = "INSERT INTO `logs`(`account_id`, `activity`) VALUES('$id','$log')";
+        $sql = "INSERT INTO `logs`(`account_id`, `activity`) VALUES(?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("is", $id, $log);
     }
-    $conn->query($sql);
+    $stmt->execute();
+    // $conn->query($sql);
 }
 
 function generate_hash($password) {

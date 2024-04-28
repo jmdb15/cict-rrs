@@ -39,36 +39,49 @@ if(isset($_POST['project-title'])){
     $coverAllowed = array('png', 'jpg','jpeg', 'webp', 'jfif');
 
     $_SESSION['toast']['error'] = true;
+    $msg = '';
 
     if(in_array($fileActualExt, $allowed) && in_array($coverActualExt, $coverAllowed)){
         if(!$fileError && !$coverError){
-            if ($fileSize < 1000000 && $coverSize < 1000000){
+            if ($fileSize < 100000000 && $coverSize < 100000000){
                 $fileNameNew = uniqid('', true) . "." . $fileActualExt;
-                $fileDestination = '../public/pdfs/' . $fileNameNew;
+                $fileDestination = '../../public/pdfs/' . $fileNameNew;
 
                 $coverNameNew = uniqid('', true) . "." . $coverActualExt;
-                $coverDestination = '../public/images/cover/' . $coverNameNew;
+                $coverDestination = '../../public/images/cover/' . $coverNameNew;
 
                 move_uploaded_file($fileTmpName, $fileDestination);
                 move_uploaded_file($coverTmpName, $coverDestination);
 
-                $sql = "INSERT INTO `studies`(`project_title`, `research_title`, `authors`, `panels`, `accession`, `adviser`, `tags`, `month_yr`, `description`, `file`, `cover`, `account_id`) VALUES ('$pTitle', '$rTitle', '$authors', '$panels', '$accession', '$adviser', '$tags', '$month_yr', '$description', '$fileNameNew', '$coverNameNew', '$id')";
+                // $sql = "INSERT INTO studies(project_title, research_title, authors, panels, accession, adviser, tags, month_yr, description, file, cover, account_id) VALUES ('$pTitle', '$rTitle', '$authors', '$panels', '$accession', '$adviser', '$tags', '$month_yr', '$description', '$fileNameNew', '$coverNameNew', '$id')";
+
+                $sql = "INSERT INTO studies (project_title, research_title, authors, panels, accession, adviser, tags, month_yr, description, file, cover, account_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+                // Prepare the statement
+                $stmt = $conn->prepare($sql);
+
+                // Bind parameters to the placeholders
+                $stmt->bind_param("sssssssssssi", $pTitle, $rTitle, $authors, $panels, $accession, $adviser, $tags, $month_yr, $description, $fileNameNew, $coverNameNew, $id);
+
+                // Execute the statement
+                $stmt->execute();
                
-                if($conn->query($sql)){
-                    insertLog($conn, $id    , 'Uploaded a Research: '.$pTitle);   
+                if(!$stmt->errno){
+                    insertLog($conn, $id, 'Uploaded a Research: '.$pTitle);   
                     $_SESSION['toast']['error'] = false;
-                    $_SESSION['toast']['message'] = 'Changes have been saved successfully.';
+                    $msg = 'Your study have been published.';
                 }else{
-                    $_SESSION['toast']['message'] = 'Something went wrong. Please try again later.';
+                    $msg = 'Something went wrong. Please try again later.';
                 }
             }else {
-                $_SESSION['toast']['message'] = 'Files are too big.';
+                $msg = 'Files are too big.';
             }
         }else{
-            $_SESSION['toast']['message'] = 'There was an error uploading your file.';
+            $msg = 'There was an error uploading your file.';
         }
     }else{
-        $_SESSION['toast']['message'] = 'File is not supported. Please input valid file extension.';
+        $msg = 'File is not supported. Please input valid file extension.';
     }
+    $_SESSION['toast']['message'] = $msg;
     header("Location:../uploads.php");
 }

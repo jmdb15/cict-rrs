@@ -161,37 +161,40 @@
                     </tr>
                 </thead>
                 <tbody>
-        <?php   //if($requestResult->num_rows > 0){   
-            // while($row = $requestResult->fetch_assoc()){ 
-            // $dateTime = new DateTime($row['created_at']);
-            // $row['created_at'] = $dateTime->format("F j, Y");   
+        <?php   if($requestResult->num_rows > 0){   
+            while($row = $requestResult->fetch_assoc()){ 
+            $dateTime = new DateTime($row['created_at']);
+            $row['created_at'] = $dateTime->format("F j, Y");   
         ?>  <!-- PHP -->
-                    <!-- <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer" onclick="window.location.href = 'view_study.php';">
-                        <a href="view_study.php" class="my-4">
-                            <th scope="row" colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                01
-                            </th>
-                            <td colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
-                                An E-Commerce Website for Malolos Branch of UR OOTD’s Clothing Shop 
-                            </td>
-                            <td colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
-                                02/27/23 
-                            </td>
-                            <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
-                                Juan dela Cruz
-                            </td>
-                            <td colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
-                                Pending
-                            </td>
-                        </a>
-                    </tr> -->
-        <?php   //}}else{ ?> <!-- PHP -->
+                    <tr id="pend-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <th scope="row" colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
+                            <?=$row['id']?>
+                        </th>
+                        <td colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600  text-wrap">
+                            <?=$row['project_title']?>
+                        </td>
+                        <td colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
+                            <?=$row['created_at']?>
+                        </td>
+                        <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
+                            <?=$row['first_name']?> <?=$row['last_name']?>
+                        </td>
+                        <td colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600 flex items-center gap-3">
+                            <?php if($row['status'] == 0){ ?>
+                                <img src="../src/img/Ok.svg" alt="Approve" class="hover:brightness-110 cursor-pointer" onclick="requestFunction(<?=$row['id']?>, 1)">
+                                <img src="../src/img/Cancel.svg" alt="Reject" class="hover:brightness-110 cursor-pointer" onclick="requestFunction(<?=$row['id']?>, -1)">
+                            <?php }else{ ?>
+                                <?= ($row['status'] == 1) ? 'Approved' : 'Declined' ?>
+                            <?php } ?>
+                        </td>
+                    </tr>
+        <?php   }}else{ ?> <!-- PHP -->
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer">
                         <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] :max-w-none font-medium text-gray-900 dark:text-white">
                             NO RECORDS YET
                         </th>
                     </tr>
-        <?php   //} ?> <!-- PHP -->
+        <?php   } ?> <!-- PHP -->
                 </tbody>
             </table>
         </div>
@@ -234,5 +237,18 @@
                 link.click();
             }
         })
+    }
+
+    function requestFunction(id, toDo) {
+        $.ajax({
+            url: '../src/ajax/app-deny-request.php',
+            type: 'POST',
+            data: { id:id, toDo:toDo, is_admin: false},
+            success: function (response) {
+                alert(response);
+                const tr = document.getElementById(`pend-${id}`);
+                tr.lastElementChild.innerHTML = toDo === 1 ? 'Approved' : 'Declined';
+            }
+        });
     }
 </script>

@@ -112,10 +112,9 @@
                 <h2 class="text-xl">File List</h2>
                 <div class="flex justify-center items-center gap-2">
                     <button class="px-4 py-2 bg-orange-400 text-white hover:brightness-110 rounded-md">Upload File</button>
-                    <form action="export-pdf.php" method="POST" onsubmit="waitSubmit(this, event)">
+                    <form action="../actions/export-pdf-studies.php" method="POST" onsubmit="waitSubmit(this, event)">
                         <input type="text" name="type" id="gen-when" hidden>
                         <input type="text" name="key" id="gen-key" hidden>
-                        <input type="text" name="table" value="studies" hidden>
                         <button 
                             id="export-btn" 
                             type="submit"

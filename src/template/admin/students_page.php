@@ -149,69 +149,74 @@
             type: 'POST',
             data: {
                 key: key,
-                type: 'student'
+                type: 'student',
+                is_archived: activeType
             },
             success: function(response){
-                const parsed = JSON.parse(response);
-                const elemId = activeType == '1' ? 'archived-tbody' : 'not-archived-tbody';
-                let tbody = document.getElementById(elemId);
-                
-                if(parsed.length == 0){
-                    tbody.innerHTML = `
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer">
-                            <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] max-w-none font-medium text-gray-900 dark:text-white">
-                                NO RECORDS FOUND
-                            </th>
-                        </tr>
-                    `;
-                }else{
-                    renderedHTML = parsed.map(data => {
-                        let action = '';
-                        let newId = '';
-                        if(activeType == 0){
-                            newId = `id="tr-${data.id}"`;
-                            action = `
-                                <span onclick="archiveFile(${data.id}, 1, 'account')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
-                                    <img src="../../src/img/Archive.svg" alt="">
-                                    Archive
-                                </span>
-                            `;
-                        }else{
-                            newId = `id="atr-${data.id}"`;
-                            action = `
-                                <span onclick="archiveFile(${data.id}, 0, 'account')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
-                                        <img src="../../src/img/Restore Page.svg" alt="">
-                                        Unarchive
-                                    </span>   
-                            `;
-                        }
-                        return tr = `
-                            <tr ${newId} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    ${data.number}
+                if(response != 'none'){
+                    const parsed = JSON.parse(response);
+                    const elemId = activeType == '1' ? 'archived-tbody' : 'not-archived-tbody';
+                    let tbody = document.getElementById(elemId);
+                    
+                    if(parsed.length == 0){
+                        tbody.innerHTML = `
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer">
+                                <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] max-w-none font-medium text-gray-900 dark:text-white">
+                                    NO RECORDS FOUND
                                 </th>
-                                <td class="px-1 sm:px-6 py-4 text-gray-600">
-                                    ${data.first_name} ${data.last_name}
-                                </td>
-                                <td class="px-1 sm:px-6 py-4 text-gray-600">
-                                    ${data.email}
-                                </td>
-                                <td class="px-1 sm:px-6 py-4 text-gray-600">
-                                    ${data.contact}
-                                </td>
-                                <td class="px-1 sm:px-6 py-4 text-gray-600">
-                                    BSIT
-                                </td>
-                                <td class="px-1 sm:px-6 py-4 text-gray-600">
-                                    4E-G1
-                                </td>
-                                <td class="px-1 sm:px-6 py-4 text-gray-600">
-                                    ${action}
-                                </td>
                             </tr>
                         `;
-                    });
-                    tbody.innerHTML = renderedHTML.join('');
+                    }else{
+                        renderedHTML = parsed.map(data => {
+                            let action = '';
+                            let newId = '';
+                            if(activeType == 0){
+                                newId = `id="tr-${data.id}"`;
+                                action = `
+                                    <span onclick="archiveFile(${data.id}, 1, 'account')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                        <img src="../../src/img/Archive.svg" alt="">
+                                        Archive
+                                    </span>
+                                `;
+                            }else{
+                                newId = `id="atr-${data.id}"`;
+                                action = `
+                                    <span onclick="archiveFile(${data.id}, 0, 'account')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                            <img src="../../src/img/Restore Page.svg" alt="">
+                                            Unarchive
+                                        </span>   
+                                `;
+                            }
+                            return tr = `
+                                <tr ${newId} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        ${data.number}
+                                    </th>
+                                    <td class="px-1 sm:px-6 py-4 text-gray-600">
+                                        ${data.first_name} ${data.last_name}
+                                    </td>
+                                    <td class="px-1 sm:px-6 py-4 text-gray-600">
+                                        ${data.email}
+                                    </td>
+                                    <td class="px-1 sm:px-6 py-4 text-gray-600">
+                                        ${data.contact}
+                                    </td>
+                                    <td class="px-1 sm:px-6 py-4 text-gray-600">
+                                        BSIT
+                                    </td>
+                                    <td class="px-1 sm:px-6 py-4 text-gray-600">
+                                        4E-G1
+                                    </td>
+                                    <td class="px-1 sm:px-6 py-4 text-gray-600">
+                                        ${action}
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                        tbody.innerHTML = renderedHTML.join('');
+                    }
+                }else{
+                    alert(response)
                 }
             }
         })

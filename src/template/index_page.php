@@ -9,14 +9,16 @@
         <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-start">
 
             <?php while($row=$previousRes->fetch_assoc()){ ?>
-                <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
-                    <img src="../public/images/cover/<?=$row['cover']?>" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
-                    <div class="flex flex-col justify-between">
-                        <p class="text-md font-bold tracking-wider"><?=$row['project_title']?></p>
-                        <p class="text-xs text-gray-500"><?=$row['research_title']?></p>
-                        <!-- <p><?=$row['view_count']?> view/s</p> -->
+                <a href="view_study.php?id=<?=$row['id']?>" class="cursor-pointer w-[28%] min-w-[290px]">
+                    <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
+                        <img src="../public/images/cover/<?=$row['cover']?>" class="w-auto object-contain min-w-[120px] h-auto basis-[40%]" alt="">
+                        <div class="flex flex-col justify-between">
+                            <p class="text-md font-bold tracking-wider"><?=$row['project_title']?></p>
+                            <p class="text-xs text-gray-500"><?=$row['research_title']?></p>
+                            <!-- <p><?=$row['view_count']?> view/s</p> -->
+                        </div>
                     </div>
-                </div>
+                </a>
                 
             <?php 
                 echo '<script>ARRAY_OF_IDS.push('.$row['id'].');</script>';
@@ -27,7 +29,7 @@
 
 <?php } ?>
 
-    <!-- SECTION FOR POPULAR STUDIES -->
+    <!-- SECTION FOR RECOMMENDED STUDIES -->
     <section class="pt-4 px-4">
         <h4 class="text-xl font-bold text-center md:text-start md:indent-8 my-3">Recommended Studies</h4>
 
@@ -36,14 +38,16 @@
         <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-start">
 
             <?php while($row=$res->fetch_assoc()){ ?>
-                <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
-                    <img src="../public/images/cover/<?=$row['cover']?>" class="w-auto min-w-[120px] h-auto basis-[40%]" alt="">
-                    <div class="flex flex-col justify-between">
-                        <p class="text-md font-bold tracking-wider"><?=$row['project_title']?></p>
-                        <p class="text-xs text-gray-500"><?=$row['research_title']?></p>
-                        <p><?=$row['view_count']?> view/s</p>
+                <a href="view_study.php?id=<?=$row['id']?>" class="cursor-pointer w-[28%] min-w-[290px]">
+                    <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
+                        <img src="../public/images/cover/<?=$row['cover']?>" class="w-auto object-contain min-w-[120px] h-auto basis-[40%]" alt="">
+                        <div class="flex flex-col justify-between">
+                            <p class="text-md font-bold tracking-wider"><?=$row['project_title']?></p>
+                            <p class="text-xs text-gray-500"><?=$row['research_title']?></p>
+                            <p><?=$row['view_count']?> view/s</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             <?php 
                 echo '<script>ARRAY_OF_IDS.push('.$row['id'].');</script>';
             } ?>

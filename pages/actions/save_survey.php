@@ -11,7 +11,7 @@ if (!isset($_SESSION["id"])) {
   $description = $_POST["description"];
   $deadline = $_POST["deadline"];
   $uploader = $_SESSION['id'];
-  $upload_date = $_POST["upload_date"];
+  $upload_date = $_POST["upload-date"];
   $surveyFile = $_POST['filename'];
 
   $sql = "INSERT INTO surveys(survey_name, respondents, url, description, account_id, deadline, filename) VALUES('$name', '$respondents', '$url', '$description', '$uploader', '$deadline', '$surveyFile')";

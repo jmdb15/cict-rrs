@@ -145,7 +145,6 @@
 
         </section>
     </div>
-    <?php include('footerLP.php'); ?>
 
 <!-- FOR LOGIN MODAL -->
 <div id="login-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -183,7 +182,7 @@
                             <div class="mb-5">
                                 <input 
                                     type="email" 
-                                    id="email" 
+                                    id="login-email" 
                                     name="email" 
                                     pattern=".+@bulsu\.edu\.ph$" 
                                     placeholder="Enter Student Number" 
@@ -194,7 +193,7 @@
                             <div class="mb-5">
                                 <input 
                                     type="password" 
-                                    id="password" 
+                                    id="login-password" 
                                     name="password" 
                                     class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
                                     placeholder="Password" 
@@ -419,12 +418,25 @@
                             <img src="../src/img/forgot.png" alt="">
                         </div>
                         <div class="w-full lg:w-2/5 flex justify-center lg:justify-start ">
-                            <form action="" class="flex flex-col gap-y-4 items-center ">
+                            <form class="flex flex-col gap-y-4 items-center" id="send-reset-form">
                                 <label for="" class="text-sm md:text-md lg:text-lg flex text-center">We will send a link to your email to reset your password.</label>
-                                <input type="text" placeholder="Your Email" id="inputField" class="w-full shadow-md rounded-md p-1 md:p-2 text-sm md:text-md lg:text-lg" required>
-                                <button id="submitButton" data-modal-target="forgot2-modal" data-modal-toggle="forgot2-modal"
-                                    class="p-1 px-4 mt-4 lg:px-12 lg:p-2 lg:mt-8 shadow-xl rounded-md text-sm md:text-lg cursor-pointer bg-[#FF8A01] text-white" disabled>
-                                        Send Email</button>
+                                <input 
+                                    type="text" 
+                                    placeholder="Your Email" 
+                                    id="send-to-email" 
+                                    class="w-full shadow-md rounded-md p-1 md:p-2 text-sm md:text-md lg:text-lg" 
+                                    required
+                                />
+                                <button 
+                                    id="send-reset-btn" 
+                                    type="submit"
+                                    data-modal-target="forgot2-modal" 
+                                    data-modal-toggle="forgot2-modal"
+                                    class="p-1 px-4 mt-4 lg:px-12 lg:p-2 lg:mt-8 shadow-xl rounded-md text-sm md:text-lg cursor-pointer bg-[#FF8A01] text-white" 
+                                    
+                                >
+                                    Send Email
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -469,7 +481,7 @@
         plugins: [],
     }
 </script>
-<script>
+<!-- <script>
     // tailwind.config.js
     module.exports = {
         theme: {
@@ -480,18 +492,19 @@
             }
         }
     }
-</script>
+</script> -->
 <script>
-    const inputField = document.getElementById('inputField');
-    const submitButton = document.getElementById('submitButton');
+    // const inputField = document.getElementById('inputField');
+    // const submitButton = document.getElementById('submitButton');
+    const sendResetForm = document.getElementById('send-reset-form');
 
-    inputField.addEventListener('input', function() {
-        if (inputField.value.trim() !== '') {
-            submitButton.removeAttribute('disabled');
-        } else {
-            submitButton.setAttribute('disabled', 'disabled');
-        }
-    });
+    // inputField.addEventListener('input', function() {
+    //     if (inputField.value.trim() !== '') {
+    //         submitButton.removeAttribute('disabled');
+    //     } else {
+    //         submitButton.setAttribute('disabled', 'disabled');
+    //     }
+    // });
 
     function allowNumbersOnly(e){
         var value = e.target.value;
@@ -514,4 +527,21 @@
             form.submit();
         }
     }
+
+    sendResetForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        console.log('clicked');
+        const email = document.getElementById('send-to-email').value;
+        var requestData = {
+            email : email
+        };
+        $.ajax({
+            url: '../src/ajax/send_token.php',
+            method: 'POST',
+            data: requestData, 
+            success: function(response) {
+                console.log('Email sent.');
+            }
+        });
+    });
 </script>

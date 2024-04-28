@@ -94,8 +94,6 @@ function saveForm(event, form) {
             answers: []
         }
     ];
-    const desc = document.getElementById('survey-desc').value;
-    const descArray = desc.split(' ');
     $.ajax({
         url: '../src/ajax/upload_survey.php',
         type: 'POST',
@@ -148,6 +146,7 @@ function appendFormDiv() {
         `;
     myObject[count] = {
         type: 'text',
+        question: 'Question',
         options: {}
     };
     changeField(count, 'text');

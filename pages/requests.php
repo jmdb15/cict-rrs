@@ -10,8 +10,8 @@ $id = $_SESSION['id'];
 $requestSql = "SELECT * FROM `requests` WHERE account_id=$id";
 $requestResult = $conn->query($requestSql);
 
+$data = array();
 if($requestResult->num_rows > 0){   
-    $data = array();
     while($row = $requestResult->fetch_assoc()){ 
         $dateTime = new DateTime($row['created_at']);
         $row['created_at'] = $dateTime->format("F j, Y"); 

@@ -1,7 +1,7 @@
 <?php
 include("../../db/db.php");
 $key = $_GET['key'];
-$idArray = $_GET['arrayId'];
+$idArray = $_GET['arrayId'] ?? [];
 $idString = implode(",", $idArray);
 $sql_count = "SELECT COUNT(*) AS total FROM studies WHERE id NOT IN ($idString) AND (project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%')";
 $count_result = $conn->query($sql_count);
@@ -27,7 +27,7 @@ if($total_records <= 6){
     while($row = $result->fetch_assoc()) {
         echo '  <a href="view_study.php?id='.$row['id'].'" class="cursor-pointer w-[28%] min-w-[290px]">
                     <div class="relative flex gap-x-2 p-4 h-[120px] bg-white rounded-lg shadow-md">
-                        <img src="../public/images/cover/'.$row['cover'].'" class="w-auto min-w-[120px] h-auto basis-[40%] aspect-video" alt="Cover">
+                        <img src="../public/images/cover/'.$row['cover'].'" class="w-auto object-contain min-w-[120px] h-auto basis-[40%]" alt="Cover">
                         <div class="flex flex-col justify-between">
                             <p>'. $row['project_title'] .'</p>
                             <p class="text-base text-ellipsis overflow-hidden">'. $row['research_title'] .'</p>
@@ -77,7 +77,7 @@ if($total_records <= 6){
     while($row = $result->fetch_assoc()) {
         echo '  <a href="view_study.php?id='.$row['id'].'" class="cursor-pointer w-[28%]    min-w-[290px]">
                     <div class="relative flex gap-x-2 p-4 h-[120px] min-w-[290px] bg-white rounded-lg shadow-md hover:brightness-90">
-                        <img src="../public/images/cover/'.$row['cover'].'" class="w-auto min-w-[120px] h-auto basis-[40%] aspect-video" alt="Cover">
+                        <img src="../public/images/cover/'.$row['cover'].'" class="w-auto object-contain min-w-[120px] h-auto basis-[40%]" alt="Cover">
                         <div class="flex flex-col justify-between">
                             <p>'. $row['project_title'] .'</p>
                             <p class="text-base text-ellipsis overflow-hidden">'. $row['research_title'] .'</p>

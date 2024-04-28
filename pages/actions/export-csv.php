@@ -37,7 +37,7 @@ $row = $result->fetch_assoc();
 // }
 try{
     
-    $jsonData =  file_get_contents('../src/js/surveys/'.$row['filename']);
+    $jsonData =  file_get_contents('../../src/js/surveys/'.$row['filename']);
     // Decode JSON
     $data= json_decode(json_decode($jsonData));
 
