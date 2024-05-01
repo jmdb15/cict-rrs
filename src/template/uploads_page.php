@@ -255,7 +255,7 @@
         toastMsg.innerText = `We're processing your action, please wait.`;
         toast.classList.remove('hidden');
         toast.classList.add('flex');
-        const action = toDo == 1 ? 'approved' : 'declined';
+        const action = toDo == 1 ? 'approved' : 'declined'
         setTimeout(() => {
             toast.classList.remove('flex');
             toast.classList.add('hidden');
