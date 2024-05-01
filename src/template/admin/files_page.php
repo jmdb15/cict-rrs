@@ -111,7 +111,7 @@
             <div class="sticky top-0 bg-white flex justify-between p-5 border-b-[1px] rounded w-full">
                 <h2 class="text-xl">File List</h2>
                 <div class="flex justify-center items-center gap-2">
-                    <button class="px-4 py-2 bg-orange-400 text-white hover:brightness-110 rounded-md">Upload File</button>
+                    <a href="upload_research.php" class="px-4 py-2 bg-orange-400 text-white hover:brightness-110 rounded-md">Upload File</a>
                     <form action="../actions/export-pdf-studies.php" method="POST" onsubmit="waitSubmit(this, event)">
                         <input type="text" name="type" id="gen-when" hidden>
                         <input type="text" name="key" id="gen-key" hidden>
@@ -156,7 +156,7 @@
                                 <?=$row['created_at']?>
                             </td>
                             <td class="px-1 sm:px-6 py-4 text-gray-600 flex gap-x-4">
-                                <a href="view.php?id=<?=$row['id']?>" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                <a href="view_study.php?id=<?=$row['id']?>" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
                                     <img src="../../src/img/View.svg" alt="">
                                     View
                                 </a>
@@ -290,7 +290,7 @@
                         if(activeType == 0){
                             newId = `id="tr-${data.id}"`;
                             action = `
-                                <a href="view.php?id=${data.id}" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                <a href="view_study.php?id=${data.id}" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
                                     <img src="../../src/img/View.svg" alt="">
                                     View
                                 </a>

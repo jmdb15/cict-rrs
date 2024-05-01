@@ -5,7 +5,7 @@
             <img src="../../src/img/logo.png" class="h-auto w-full rounded" alt="">
         </div>
         <div class="card-text-cont">
-            <h1 class="card-text-number">100</h1>
+            <h1 class="card-text-number"><?=$row['request_row']?></h1>
             <p class="card-text-subheader">Total of Request</p>
         </div>
     </div>
@@ -14,8 +14,8 @@
             <img src="../../src/img/logo.png" class="h-auto w-full rounded" alt="">
         </div>
         <div class="card-text-cont">
-            <h1 class="card-text-number">100</h1>
-            <p class="card-text-subheader">Upload Files</p>
+            <h1 class="card-text-number"><?=$row['studies_row']?></h1>
+            <p class="card-text-subheader">Files</p>
         </div>
     </div>
     <div class="card">
@@ -23,8 +23,8 @@
             <img src="../../src/img/logo.png" class="h-auto w-full rounded" alt="">
         </div>
         <div class="card-text-cont">
-            <h1 class="card-text-number">100</h1>
-            <p class="card-text-subheader">Upload Surveys</p>
+            <h1 class="card-text-number"><?=$row['surveys_row']?></h1>
+            <p class="card-text-subheader">Surveys</p>
         </div>
     </div>
     <div class="card">
@@ -32,7 +32,7 @@
             <img src="../../src/img/logo.png" class="h-auto w-full rounded" alt="">
         </div>
         <div class="card-text-cont">
-            <h1 class="card-text-number">100</h1>
+            <h1 class="card-text-number"><?=$row['user_row']?></h1>
             <p class="card-text-subheader">User Registered</p>
         </div>
     </div>

@@ -109,7 +109,7 @@
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <div class="sticky top-0 bg-white flex justify-between p-5 border-b-[1px] rounded w-full">
                 <h2 class="text-xl">File List</h2>
-                <button class="px-4 py-2 bg-orange-400 text-white hover:brightness-110 rounded-md">Upload File</button>
+                <a href="upload_survey.php" class="px-4 py-2 bg-orange-400 text-white hover:brightness-110 rounded-md">Upload Survey</a>
             </div>
             <thead class="sticky top-[81px] text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                 <tr>

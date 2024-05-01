@@ -19,8 +19,14 @@ if($res->num_rows > 0)
         $_SESSION['verified'] = $row['verified_at'] != null ? true : false;
         $_SESSION['toast']['error'] = false;
         $_SESSION['toast']['message'] =  $row['verified_at'] != null ? "Hello! You're now logged in. Enjoy the journey!" : "Please verify your account to continue.";
-        insertLog($conn, $row['number'], 'Logged in');
-        header("Location:../index.php");
+        if($row['type'] == 'admin'){
+            $_SESSION['type'] = 'admin';
+            header("Location:../admin/dashboard.php");
+        }else{
+            $_SESSION['type'] = 'user';
+            insertLog($conn, $row['number'], 'Logged in');
+            header("Location:../index.php");
+        }
     }else{
         $_SESSION['toast']['message'] = "Wrong username or password.";
         header("Location:../landing.php");

@@ -6,10 +6,11 @@ use Dompdf\Dompdf;
 extract($_POST);
 
 // if(isset($submit)){
+  echo 'hello';
 if(true){
   $key = $_POST['key'];
   $type = $_POST['type'];
-  $table = "logs";
+  $table = $_POST['table'];
   $within = '';
   switch ($type) {
     case 'all':
@@ -28,31 +29,31 @@ if(true){
       break;
   }
 
-  $sql = "SELECT l.*, p.first_name, p.last_name FROM logs l JOIN profile p ON l.account_id=p.account_id WHERE CONCAT_WS(' ', p.first_name, p.last_name) LIKE '%$key%' $within";
+  $sql = "SELECT * FROM $table WHERE project_title LIKE '%$key%' AND is_archived = 0 $within";
   // $sql = "SELECT * FROM studies";
   $result = $conn->query($sql);
   $html = '';
   $html .= '
-    <h2 align="center">Activity Logs of Users</h2>
+    <h2 align="center">Export Data To PDF File Using PHP and MySQL</h2>
     <table style="width: 100%; border-collapse: collapse;">
       <tr> 
-        <th style="border:1px solid #ddd; padding:8px; text-align:left;">ID</th>
-        <th style="border:1px solid #ddd; padding:8px; text-align:left;">Name</th>
-        <th style="border:1px solid #ddd; padding:8px; text-align:left;">Activty</th>
-        <th style="border:1px solid #ddd; padding:8px; text-align:left;">Created at</th>
+        <th style="border:1px solid #ddd; padding:8px; text-align:left;">Serial No</th>
+        <th style="border:1px solid #ddd; padding:8px; text-align:left;">First Nanec/th>
+        <th style="border:1px solid #ddd; padding:8px; text-align:left;">Last Name</th> 
+        <th style="border:1px solid #ddd; padding:8px; text-align:left;">city</th>
+        <th style="border:1px solid #ddd; padding:8px; text-align:left;">Country</th>
       </tr>
   ';
   if($result->num_rows > 0){
     $count = 1;
     while($row = $result->fetch_assoc()){
-      $dateTime = new DateTime($row['created_at']);
-      $row['created_at'] = $dateTime->format("F j, Y");
       $html .= '
         <tr>
           <td style="border:1px solid #ddd; padding:8px; text-align:left;">'.$count.'</td>
-          <td style="border:1px solid #ddd; padding:8px; text-align:left;">'.$row['first_name'].' '.$row['last_name'].'</td>
-          <td style="border:1px solid #ddd; padding:8px; text-align:left;">'.$row['activity'].'</td>
+          <td style="border:1px solid #ddd; padding:8px; text-align:left;">'.$row['project_title'].'</td>
+          <td style="border:1px solid #ddd; padding:8px; text-align:left;">'.$row['research_title'].'</td>
           <td style="border:1px solid #ddd; padding:8px; text-align:left;">'.$row['created_at'].'</td>
+          <td style="border:1px solid #ddd; padding:8px; text-align:left;">hmm</td>
         </tr>
       ';
       $count++;

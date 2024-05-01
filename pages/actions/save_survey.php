@@ -1,7 +1,7 @@
 <?php 
 session_start();
 if (!isset($_SESSION["id"])) {
-  header("Location:landing.php");
+  header("Location:../landing.php");
 }
 
   include("../../db/db.php");
@@ -24,5 +24,6 @@ if (!isset($_SESSION["id"])) {
   }else{
     $_SESSION['toast']['message'] = "Hello! You're now logged in. Enjoy the journey!";
   }
-  header("Location:../surveys.php");
+  if($_SESSION['type'] == 'admin') header("Location:../admin/asurveys.php");
+  else header("Location:../asurveys.php");
 ?>

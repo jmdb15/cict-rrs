@@ -26,11 +26,11 @@ if($total_records <= 6){
     echo '<div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-start h-fit">';
     while($row = $result->fetch_assoc()) {
         echo '  <a href="view_study.php?id='.$row['id'].'" class="cursor-pointer w-[28%] min-w-[290px]">
-                    <div class="relative flex gap-x-2 p-4 h-[120px] bg-white rounded-lg shadow-md">
+                    <div class="relative flex gap-x-2 p-4 h-[120px] bg-white rounded-lg shadow-md hover:brightness-105">
                         <img src="../public/images/cover/'.$row['cover'].'" class="w-auto object-contain min-w-[120px] h-auto basis-[40%]" alt="Cover">
                         <div class="flex flex-col justify-between">
-                            <p>'. $row['project_title'] .'</p>
-                            <p class="text-base text-ellipsis overflow-hidden">'. $row['research_title'] .'</p>
+                            <p class="text-md font-bold tracking-wider">'. $row['project_title'] .'</p>
+                            <p class="text-xs text-gray-500 text-ellipsis overflow-hidden">'. $row['research_title'] .'</p>
                             <p class="text-sm text-gray-400">'. $row['view_count'] .' views</p>
                         </div>
                     </div>
@@ -75,12 +75,12 @@ if($total_records <= 6){
 
     echo '<div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-start h-fit">';
     while($row = $result->fetch_assoc()) {
-        echo '  <a href="view_study.php?id='.$row['id'].'" class="cursor-pointer w-[28%]    min-w-[290px]">
-                    <div class="relative flex gap-x-2 p-4 h-[120px] min-w-[290px] bg-white rounded-lg shadow-md hover:brightness-90">
+        echo '  <a href="view_study.php?id='.$row['id'].'" class="cursor-pointer w-[28%] min-w-[290px]">
+                    <div class="relative flex gap-x-2 p-4 h-[120px] min-w-[290px] bg-white rounded-lg shadow-md hover:brightness-105">
                         <img src="../public/images/cover/'.$row['cover'].'" class="w-auto object-contain min-w-[120px] h-auto basis-[40%]" alt="Cover">
                         <div class="flex flex-col justify-between">
-                            <p>'. $row['project_title'] .'</p>
-                            <p class="text-base text-ellipsis overflow-hidden">'. $row['research_title'] .'</p>
+                            <p class="text-md font-bold tracking-wider">'. $row['project_title'] .'</p>
+                            <p class="text-xs text-gray-500 text-ellipsis overflow-hidden">'. $row['research_title'] .'</p>
                             <p class="text-sm text-gray-400">'. $row['view_count'] .' view/s</p>
                         </div>
                     </div>

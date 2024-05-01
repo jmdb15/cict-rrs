@@ -1,4 +1,6 @@
 <?php
+session_start();
+if($_SESSION['type'] != 'admin') header('Location:../landing.php');
 require_once ('../../db/db.php');
 
 $sql = "SELECT a.*, p.* FROM account a JOIN profile p ON a.number = p.account_id WHERE a.is_archived = 0 AND type = 'student'";
@@ -14,6 +16,7 @@ $scripts = "
   document.getElementById('users').lastElementChild.classList.add('text-white');
 </script>
 ";
+$sessionMessage = $_SESSION['toast']['message'] ?? '';
 $content_template = "src/template/admin/students_page.php";
 include "../../admin_base.php";
 ?>

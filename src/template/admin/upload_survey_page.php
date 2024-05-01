@@ -1,7 +1,7 @@
 <main class="w-screen h-fit lg:h-[calc(100vh-80px)] bg-gray-100 dark:bg-slate-700 md:overflow-y-hidden">
     <div class="container h-full mx-auto">
         <!-- Survey Form -->
-        <form action="actions/save_survey.php" onsubmit="saveForm(event, this)" method="POST" id="upload-survey-form" 
+        <form action="../actions/save_survey.php" onsubmit="saveForm(event, this)" method="POST" id="upload-survey-form" 
             class="h-full overflow-y-auto lg:overflow-hidden flex flex-col justify-center p-3 gap-6 lg:flex-row">
 
             <div class="w-full lg:w-1/2 h-full lg:h-[800px] flex flex-col p-6 mb-4 gap-y-3 flex-2 bg-white rounded-lg lg:overflow-auto">
@@ -95,7 +95,7 @@ function saveForm(event, form) {
         }
     ];
     $.ajax({
-        url: '../src/ajax/upload_survey.php',
+        url: '../../src/ajax/upload_survey.php',
         type: 'POST',
         data: { json: JSON.stringify(newObject) },
         success: function (data) {
@@ -259,6 +259,13 @@ function addFormItem(elem, count, row, addTo) {
             </div>
         `;
         newDiv.classList = 'grid-form';
+        // newDiv.onfocus = function (event) {
+        //     addFormItem(this, count, row, addTo);
+        //     this.onfocus = null;
+        // };
+        // newDiv.oninput = function (event) {
+        //     insertOptions(event.target);
+        // }
         const parent = elem.parentElement.parentElement;
         const index = Array.from(parent.children).indexOf(elem.parentElement);
         elem.parentNode.parentNode.insertBefore(newDiv, elem.parentNode.nextSibling);

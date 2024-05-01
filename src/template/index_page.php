@@ -6,11 +6,11 @@
     <!-- SECTION FOR PREVIOUS READING -->
     <section class="pt-4 px-4">
         <h4 class="text-xl font-bold text-center md:text-start md:indent-8 my-3">Previous Reading</h4>
-        <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-start">
+        <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-start h-fit">
 
             <?php while($row=$previousRes->fetch_assoc()){ ?>
-                <a href="view_study.php?id=<?=$row['id']?>" class="cursor-pointer w-[28%] min-w-[290px]">
-                    <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
+                <a href="view_study.php?id=<?=$row['id']?>" class="cursor-pointer w-[28%] min-w-[290px] hover:brightness-105">
+                    <div class="relative flex gap-x-2 p-4 h-[120px] min-w-[290px] bg-white rounded-lg shadow-md">
                         <img src="../public/images/cover/<?=$row['cover']?>" class="w-auto object-contain min-w-[120px] h-auto basis-[40%]" alt="">
                         <div class="flex flex-col justify-between">
                             <p class="text-md font-bold tracking-wider"><?=$row['project_title']?></p>
@@ -32,19 +32,16 @@
     <!-- SECTION FOR RECOMMENDED STUDIES -->
     <section class="pt-4 px-4">
         <h4 class="text-xl font-bold text-center md:text-start md:indent-8 my-3">Recommended Studies</h4>
-
-        
-
-        <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-start">
+        <div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-start h-fit">
 
             <?php while($row=$res->fetch_assoc()){ ?>
-                <a href="view_study.php?id=<?=$row['id']?>" class="cursor-pointer w-[28%] min-w-[290px]">
-                    <div class="relative flex gap-x-2 p-4 h-[120px] w-[28%] min-w-[290px] bg-white rounded-lg shadow-md">
+                <a href="view_study.php?id=<?=$row['id']?>" class="cursor-pointer w-[28%] min-w-[290px] hover:brightness-105">
+                    <div class="relative flex gap-x-2 p-4 h-[120px] min-w-[290px] bg-white rounded-lg shadow-md">
                         <img src="../public/images/cover/<?=$row['cover']?>" class="w-auto object-contain min-w-[120px] h-auto basis-[40%]" alt="">
                         <div class="flex flex-col justify-between">
                             <p class="text-md font-bold tracking-wider"><?=$row['project_title']?></p>
                             <p class="text-xs text-gray-500"><?=$row['research_title']?></p>
-                            <p><?=$row['view_count']?> view/s</p>
+                            <p class="text-orange-400 text-sm"><?=$row['view_count']?> view/s</p>
                         </div>
                     </div>
                 </a>
@@ -58,8 +55,8 @@
 
     <!-- SECTION FOR RESEARCH LISTING -->
     <section class="p-4 relative">
-        <div class="flex justify-between flex-col sm:flex-row gap-y-1 items-center mb-4 sm:mb-0">
-            <h4 class="text-xl font-bold text-orange-400 text-center md:text-start md:indent-8 my-3">Research Title</h4>
+        <div class="flex justify-between flex-col sm:flex-row gap-y-1 items-center mb-4 px-8 sm:mb-0">
+            <h4 class="text-xl font-bold text-orange-400 text-center md:text-start my-3">Research Title</h4>
             <div class="relative max-w-[240px]">
                 <div class="absolute border-r-2 px-2 h-[37px] top-0 start-0 flex items-center pointer-events-none">
                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -74,7 +71,7 @@
             </div>
         </div>
         <!-- DYNAMIC RESEARCH LISTING CONTAINER WITH PAGINATION -->
-        <div class="flex flex-col h-fit" id="page-content"></div>
+        <div class="border" id="page-content"></div>
     </section>
 </main>
 

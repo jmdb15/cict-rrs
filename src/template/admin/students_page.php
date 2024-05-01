@@ -41,9 +41,6 @@
                         Email
                     </th>
                     <th scope="col" class="px-1 sm:px-6 py-3">
-                        Contact No.
-                    </th>
-                    <th scope="col" class="px-1 sm:px-6 py-3">
                         Course
                     </th>
                     <th scope="col" class="px-1 sm:px-6 py-3">
@@ -65,9 +62,6 @@
                         </td>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
                             <?=$row['email']?>
-                        </td>
-                        <td class="px-1 sm:px-6 py-4 text-gray-600">
-                            <?=$row['contact']?>
                         </td>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
                             BSIT

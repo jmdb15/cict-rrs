@@ -1,4 +1,6 @@
 <?php
+session_start();
+if($_SESSION['type'] != 'admin') header('Location:../landing.php');
 include ('../../db/db.php'); 
 
 $sql = "SELECT s.*, a.email FROM surveys s JOIN account a ON s.account_id = a.number WHERE s.is_archived = 0";
@@ -14,6 +16,7 @@ $scripts = "
   document.getElementById('surveys').lastElementChild.classList.add('text-white');
 </script>
 ";
+$sessionMessage = $_SESSION['toast']['message'] ?? '';
 $content_template = "src/template/admin/surveys_page.php";
 include "../../admin_base.php";
 ?>

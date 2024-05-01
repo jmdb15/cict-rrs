@@ -6,7 +6,7 @@
 ?>
 
 <?php if (!$isLoggedIn){ ?>
-    <nav class="nav bg-white dark:bg-[#4D4D4D] fixed w-full z-50 top-0 start-0 shadow">
+    <nav class="bg-white fixed w-full z-50 top-0 start-0 shadow">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="../src/img/logo.png" class="h-8" alt="Flowbite Logo">
@@ -41,8 +41,8 @@
         </div>
     </nav>
 <?php }else{ ?>
-    <nav class="nav bg-white border-gray-200 dark:bg-gray-900">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 shadow">
+    <nav class="bg-white border-gray-200 shadow">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="../src/img/logo.png" class="h-8" alt="pic"/>
                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white flex flex-row">
@@ -132,11 +132,11 @@
                 <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to log out?</h3>
                 <div class="w-full flex flex-col justify-center items-center gap-2">
                     <a href="actions/logout.php" class="w-1/2">
-                        <button type="button" style="background-color: #FF8A01;" class="w-full py-2.5 px-5 text-sm font-medium text-white focus:outline-none rounded-3xl border-2 border-black hover:bg-gray-100  focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                        <button type="button" style="background-color: #FF8A01;" class="w-full py-2.5 px-5 text-sm font-medium text-white focus:outline-none rounded-3xl hover:bg-gray-100  focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                             Yes, Log Me Out
                         </button>
                     </a>
-                    <button data-modal-hide="logout-modal" type="button" class="w-1/2 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-3xl border-2 border-black hover:bg-gray-100  focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                    <button data-modal-hide="logout-modal" type="button" class="w-1/2 py-2.5 px-5 text-sm font-medium text-gray-50 focus:outline-none bg-gray-600 rounded-3xl hover:bg-gray-100  focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                         Cancel  
                     </button>
                 </div>

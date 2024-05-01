@@ -30,6 +30,7 @@ view_count DESC,
 s.created_at DESC
 LIMIT 3;
 ";
+
 $res = $conn->query($sql);
 
 $previousSql = "SELECT l.*, s.* FROM logs l LEFT JOIN studies s ON l.studies_id=s.id WHERE l.account_id='$uid' AND l.studies_id != '' AND l.activity LIKE '%Viewed%'";

@@ -1,4 +1,4 @@
-<div class="relative overflow-x-auto p-2 lg:p-24 xl:px-48">
+<div class="container mx-auto relative overflow-x-auto p-2 lg:p-24 xl:px-48">
 
     <div class="rounded bg-gray-50 max-h-[620px] overflow-auto">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">

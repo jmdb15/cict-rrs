@@ -1,4 +1,4 @@
-<div class="conatiner mx-auto flex justify-center items-center mt-28 md:mt-32 p-2">
+<div class="container mx-auto flex justify-center items-center mt-28 md:mt-32 p-2">
     <div class="w-full md:w-1/2 lg:w-1/5 flex flex-col justify-center items-center shadow-lg rounded-sm p-8 bg-white">
         <section class="flex flex-col justify-center items-center">
             <img src="../src/img/ver1.png" alt="">

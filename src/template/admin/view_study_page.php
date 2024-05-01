@@ -3,15 +3,18 @@
     <main class="container h-[596px] mx-auto overflow-y-auto rounded-lg flex flex-col-reverse gap-6 justify-end items-center md:items-start lg:justify-around lg:flex-row z-10 lg:mb-0">
         <!-- LEFT SIDE -->
         <div class="w-[90%] sm:basis-[30%] sticky top-0 mx-auto flex flex-col items-center justify-center gap-y-20 h-[596px] border py-4 md:px-3 lg:px-20 bg-white rounded-lg z-10">
-            <img src="../public/images/cover/<?=$row['cover']?>" class="w-full h-auto max-w-[370px] aspect-video rounded" alt="" class="rounded">
+            <img src="../../public/images/cover/<?=$row['cover']?>" class="w-full h-auto max-w-[370px] aspect-video rounded" alt="" class="rounded">
             <div class="flex w-full">
-                <img src="../src/img/PDF.png" class="w-auto max-h-[50px] max-w-[50px]" alt="">
+                <img src="../../src/img/PDF.png" class="w-auto max-h-[50px] max-w-[50px]" alt="">
                 <div class="flex flex-col">
                 <h6 class="text-xl font-bold"><?=$row['project_title']?></h6>
                 <p class="text-gray-400 text-sm"><?=$row['month_yr']?></p>
                 </div>
             </div>
-            <button class="text-white bg-gray-700 px-5 py-2.5 rounded-lg disabled:cursor-not-allowed" <?=($btnDisable)? 'disabled' : ''?> onclick="sendRequest(this, <?=$id?>)">Request Download</button>
+            <form action="../actions/download-paper.php">
+                <input type="hidden" name="id" value="<?=$id?>">
+                <button class="text-white bg-gray-700 px-5 py-2.5 rounded-lg" type="submit">Download</button>
+            </form>
         </div>
 
         <!-- RIGHT SIDE -->
@@ -50,10 +53,6 @@
                 <a href="view_pdf.php?id=<?=$id?>" target="_blank" class="self-center">
                     <button class="px-5 py-2.5 w-fit text-white bg-orange-400 rounded-lg">View Document</button>
                 </a>
-                <p class="text-sm self-center flex items-center mt-4">
-                    <img src="../src/img/Rating.png" height="24px" width="24px" alt="">  
-                    My points: <?=$_SESSION['points']?>
-                </p>
             </div>
         </div>
     </main>
@@ -69,21 +68,14 @@
     elem.innerText= (abs.classList.contains('hidden')) ? 'Show Abstract' : 'Hide Abstract';
   }
 
-  function sendRequest(btn, id){
-    btn.setAttribute('disabled', '');
-    $.ajax({
-        url: '../src/ajax/request_dl.php',
-        type: 'POST',
-        data: { id : id},
-        success: function (data){
-            const toast = document.getElementById('toast-default');
-            const toastMsg = document.getElementById('toast-msg');
-            toast.classList.remove('hidden');
-            toastMsg.innerText = data;
-            setTimeout(() => {
-                toast.classList.add('hidden');
-            }, 3000);
-        }
-    });
-  }
+//   function downloadPaper(id){
+//     $.ajax({
+//         url: '../../../src/ajax/download-paper.php',
+//         type: 'POST',
+//         data: { id : id},
+//         success: function (data){
+            
+//         }
+//     });
+//   }
 </script>

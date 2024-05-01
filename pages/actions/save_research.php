@@ -1,6 +1,9 @@
 <?php
 include('../../db/db.php');
 session_start();
+if (!isset($_SESSION["id"])) {
+  header("Location:../landing.php");
+}
 
 if(isset($_POST['project-title'])){
     $id = $_SESSION['id'];
@@ -83,5 +86,7 @@ if(isset($_POST['project-title'])){
         $msg = 'File is not supported. Please input valid file extension.';
     }
     $_SESSION['toast']['message'] = $msg;
-    header("Location:../uploads.php");
+    if($_SESSION['type'] == 'admin') header("Location:../admin/asurveys.php");
+    else header("Location:../uploads.php");
+    
 }

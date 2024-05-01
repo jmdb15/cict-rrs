@@ -16,12 +16,12 @@ if(isset($_POST['reset'])){
                     $res = $conn->query($sql);
                     $_SESSION['toast']['error'] = false;
                     $_SESSION['toast']['message'] = "You're password has been changed! Try logging in now.";
-                    header ('landing.php');
+                    header ('Location:landing.php');
                 }
             }else{
                 $_SESSION['toast']['error'] = true;
                 $_SESSION['toast']['message'] = "Something wnet wrong, please try again later.";
-                header ('landing.php');
+                header ('Location:landing.php');
             }
         }   
     }else{
@@ -30,7 +30,7 @@ if(isset($_POST['reset'])){
         $res = $conn->query($sql);
         $_SESSION['toast']['error'] = true;
         $_SESSION['toast']['message'] = "Your token has expired. Please try again later.";
-        header ('landing.php');
+        header ('Location:landing.php');
     }
 }
 

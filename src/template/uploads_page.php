@@ -1,4 +1,4 @@
-<div class="relative overflow-x-auto p-2 lg:p-24 xl:px-48">
+<div class="container mx-auto relative overflow-x-auto p-2 lg:p-24 xl:px-48">
     <!-- SEARCH -->
     <div class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 justify-center sm:justify-between items-center pb-4">
         <div>
@@ -21,7 +21,12 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
             </div>
-            <input type="text" id="table-search" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
+            <input 
+                onkeypress="searchUploads(event)"
+                type="text" 
+                id="table-search" 
+                class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                placeholder="Search for items">
         </div>
     </div>
     <div class="w-full relative border">
@@ -48,13 +53,13 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="docs-tbody">
         <?php   if($docResult->num_rows > 0){   
                     while($row = $docResult->fetch_assoc()){ 
                     $dateTime = new DateTime($row['created_at']);
                     $row['created_at'] = $dateTime->format("F j, Y");   
         ?> <!-- PHP -->
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer" onclick="window.location.href = 'view_study.php';">
+                    <tr id="docs-tr-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer" onclick="window.location.href = 'view_study.php';">
                         <a href="view_study.php" class="my-4">
                             <th scope="row" colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <?=$row['project_title']?>
@@ -103,13 +108,13 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="surveys-tbody">
         <?php   if($surveyResult->num_rows > 0){   
                     while($row = $surveyResult->fetch_assoc()){ 
                     $dateTime = new DateTime($row['created_at']);
                     $row['created_at'] = $dateTime->format("F j, Y");   
         ?>  <!-- PHP -->
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <tr id="survey-tr-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] :max-w-none font-medium text-gray-900 dark:text-white">
                             <?=$row['survey_name']?>
                         </th>
@@ -160,13 +165,13 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="requests-tbody">
         <?php   if($requestResult->num_rows > 0){   
             while($row = $requestResult->fetch_assoc()){ 
             $dateTime = new DateTime($row['created_at']);
             $row['created_at'] = $dateTime->format("F j, Y");   
         ?>  <!-- PHP -->
-                    <tr id="pend-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <tr id="reqs-tr-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="row" colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
                             <?=$row['id']?>
                         </th>
@@ -204,6 +209,9 @@
 </div>
 
 <script>
+    let currentActiveTable = '';
+    let tableToUpdate ='docs';
+
     function showTable(id){
         const tables = document.querySelectorAll('.upload-tables');
         const lists = document.querySelectorAll('.selections');
@@ -219,6 +227,8 @@
         });
         document.getElementById(`${id}-table`).classList.remove('hidden');
         document.getElementById(`${id}-list`).classList.add('text-orange-400');
+        currentActiveTable = id === 'requests' ? id : id === 'surveys' ? id :'studies';
+        tableToUpdate = id;
     }
 
     function downloadResponses(id){
@@ -240,15 +250,143 @@
     }
 
     function requestFunction(id, toDo) {
+        const toast =document.getElementById('toast-default');
+        const toastMsg = document.getElementById('toast-msg');
+        toastMsg.innerText = `We're processing your action, please wait.`;
+        toast.classList.remove('hidden');
+        toast.classList.add('flex');
+        const action = toDo == 1 ? 'approved' : 'declined';
+        setTimeout(() => {
+            toast.classList.remove('flex');
+            toast.classList.add('hidden');
+        }, 2000);
         $.ajax({
             url: '../src/ajax/app-deny-request.php',
             type: 'POST',
             data: { id:id, toDo:toDo, is_admin: false},
             success: function (response) {
-                alert(response);
-                const tr = document.getElementById(`pend-${id}`);
+                if(response === 'Message has been sentsuccess') response2 = `Request has been ${action}, we have informed the user.`
+                toastMsg.innerText = response2;
+                toast.classList.remove('hidden');
+                toast.classList.add('flex');
+                const tr = document.getElementById(`reqs-tr-${id}`);
                 tr.lastElementChild.innerHTML = toDo === 1 ? 'Approved' : 'Declined';
+                setTimeout(() => {
+                    toast.classList.remove('flex');
+                    toast.classList.add('hidden');
+                }, 3000);
             }
+        });
+    }
+
+    function searchUploads(event){
+        if(event.keyCode === 13){
+            const key = event.target.value;
+            if(tableToUpdate == 'docs') url = '../src/ajax/search-upl-file.php';
+            else if(tableToUpdate == 'requests') url = '../src/ajax/search-their-reqs.php';
+            else if(tableToUpdate == 'surveys') url = '../src/ajax/search-upl-survey.php';
+            $.ajax({
+                url: url,
+                type:'POST',
+                data: {key},
+                success:function(response){
+                    const tbody = document.getElementById(`${tableToUpdate}-tbody`);
+                    tbody.innerHTML = '';
+                    if(response !== 'null'){
+                        const parsed = JSON.parse(response);
+                        if(tableToUpdate == 'docs') updateDocs(parsed, tbody);
+                        else if(tableToUpdate == 'requests') updateReqs(parsed, tbody);
+                        else if(tableToUpdate == 'surveys') updateSurveys(parsed, tbody);
+                    }else{
+                        tbody.innerHTML = `
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer" onclick="window.location.href = 'view_study.php';">
+                                <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] :max-w-none font-medium text-gray-900 dark:text-white">
+                                    NO RECORDS FOUND
+                                </th>
+                            </tr>
+                        `;
+                    }
+                }
+            });
+        }
+    }
+
+    function updateDocs(data, tbody){
+        data.map(d => {
+            tbody.innerHTML += `
+                <tr id="docs-tr-${d.id}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer" onclick="window.location.href = 'view_study.php';">
+                    <a href="view_study.php" class="my-4">
+                        <th scope="row" colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            ${d.project_title}
+                        </th>
+                        <td colspan="6" class="px-1 sm:px-6 py-1 sm:py-4 text-xs sm:text-sm text-gray-600">
+                            ${d.research_title}
+                        </td>
+                        <td colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
+                            200
+                        </td>
+                        <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
+                            ${d.created_at}                           
+                        </td>
+                    </a>
+                </tr>
+            `;
+        });
+    }
+
+    function updateReqs(data, tbody){
+        data.map(d => {
+            let condition = '';
+            if(d.status == 0){ 
+                condition = `
+                    <img src="../src/img/Ok.svg" alt="Approve" class="hover:brightness-110 cursor-pointer" onclick="requestFunction(${d.id}, 1)">
+                    <img src="../src/img/Cancel.svg" alt="Reject" class="hover:brightness-110 cursor-pointer" onclick="requestFunction(${d.id}, -1)">
+                `;
+            }else{ 
+                condition = (d.id == 1) ? 'Approved' : 'Declined' 
+            } 
+            tbody.innerHTML += `
+                <tr id="reqs-tr-${d.id}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
+                        ${d.id}
+                    </th>
+                    <td colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600  text-wrap">
+                        ${d.project_title}
+                    </td>
+                    <td colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
+                        ${d.created_at}
+                    </td>
+                    <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
+                        ${d.first_name} ${d.last_name}
+                    </td>
+                    <td colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600 flex items-center gap-3">
+                        ${condition}
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    function updateSurveys(data, tbody){
+        data.map(d => {
+            tbody.innerHTML += `
+                <tr id="survey-tr-${d.id}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] :max-w-none font-medium text-gray-900 dark:text-white">
+                        ${d.survey_name}
+                    </th>
+                    <td colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
+                        ${d.responses} / ${d.respondents}
+                    </td>
+                    <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
+                        ${d.created_at}
+                    </td>
+                    <td colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
+                        <span onclick="downloadResponses(${d.id})" class="w-fit h-fit cursor-pointer">
+                            <img src="../src/img/dlres.png" alt="">
+                        </span>
+                    </td>
+                </tr>
+            `;
         });
     }
 </script>
