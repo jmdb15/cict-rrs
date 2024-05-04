@@ -33,6 +33,7 @@ if(true){
   $result = $conn->query($sql);
   $html = '';
   $html .= '
+  <img src="../../src/img/logo.png" style="position:absolute; top: 20px; right: 20px;" height=200 width=200 />
     <h2 align="center">Export Transactions</h2>
     <table style="width: 100%; border-collapse: collapse;">
       <tr> 

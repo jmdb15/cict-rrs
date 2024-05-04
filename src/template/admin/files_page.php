@@ -1,7 +1,8 @@
 <div class="relative overflow-x-auto p-2 lg:px-24 xl:px-48 min-h-[390px]">
     <div class="flex justify-center items-center gap-4 md:gap-12 p-8 ">
-        <button class="active option-btns">Files</button>
-        <button class="btn-bordered option-btns">Archived</button>
+        <button id="btn-pending" class="active option-btns">Pending</button>
+        <button id="btn-files" class="btn-bordered option-btns">Files</button>
+        <button id="btn-arch" class="btn-bordered option-btns">Archived</button>
     </div>
     <div >
         <form class="flex flex-col sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4" onsubmit="formSubmit(this, event)">
@@ -118,7 +119,7 @@
                         <button 
                             id="export-btn" 
                             type="submit"
-                            class="px-4 py-2 bg-[#4D4D4D] text-white hover:brightness-110 rounded-md">
+                            class="hidden px-4 py-2 bg-[#4D4D4D] text-white hover:brightness-110 rounded-md">
                             Generate Report
                         </button>
                     </form>
@@ -136,11 +137,42 @@
                         Date Upload
                     </th>
                     <th scope="col" class="px-1 sm:px-6 py-3">
+                        Status
+                    </th>
+                    <th scope="col" class="px-1 sm:px-6 py-3">
                         Action
                     </th>
                 </tr>
             </thead>
-            <tbody class="tbodies" id="not-archived-tbody">
+            <tbody class="tbodies" id="pending-tbody">
+                <?php   while($row = $presult->fetch_assoc()){ 
+                        $dateTime = new DateTime($row['created_at']);
+                        $row['created_at'] = $dateTime->format("F j, Y");    
+                ?>
+                        <tr id="ptr-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <?=$row['project_title']?>
+                            </th>
+                            <td class="px-1 sm:px-6 py-4 text-gray-600">
+                                <?=$row['email']?>
+                            </td>
+                            <td class="px-1 sm:px-6 py-4 text-gray-600">
+                                <?=$row['created_at']?>
+                            </td>
+                            <td class="px-1 sm:px-6 py-4 text-gray-600">
+                                Pending
+                            </td>
+                            <td class="px-1 sm:px-6 py-4 text-gray-600 flex gap-x-4">
+                                <a href="view_study.php?id=<?=$row['id']?>" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                    <img src="../../src/img/View.svg" alt="" title="View">
+                                </a>
+                                <img src="../../src/img/Ok.svg" alt="Approve" title="Approve" class="hover:brightness-110 cursor-pointer" onclick="uploadFunction(<?=$row['id']?>, 1)">
+                                <img src="../../src/img/Cancel.svg" alt="Reject" title="Deny" class="hover:brightness-110 cursor-pointer" onclick="uploadFunction(<?=$row['id']?>, -1)">            
+                            </td>
+                        </tr>
+                <?php } ?>
+            </tbody>
+            <tbody class="hidden tbodies" id="not-archived-tbody">
                 <?php   while($row = $result->fetch_assoc()){ 
                         $dateTime = new DateTime($row['created_at']);
                         $row['created_at'] = $dateTime->format("F j, Y");    
@@ -154,6 +186,9 @@
                             </td>
                             <td class="px-1 sm:px-6 py-4 text-gray-600">
                                 <?=$row['created_at']?>
+                            </td>
+                            <td class="px-1 sm:px-6 py-4 text-gray-600">
+                                Approved
                             </td>
                             <td class="px-1 sm:px-6 py-4 text-gray-600 flex gap-x-4">
                                 <a href="view_study.php?id=<?=$row['id']?>" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
@@ -184,6 +219,9 @@
                                 <?=$row['created_at']?>
                             </td>
                             <td class="px-1 sm:px-6 py-4 text-gray-600">
+                                <?= ($row['is_approved'] == 1) ? 'Approved' : 'Declined' ?>
+                            </td>
+                            <td class="px-1 sm:px-6 py-4 flex text-gray-600">
                                 <span onclick="archiveFile(<?=$row['id']?>, 0, 'studies')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
                                     <img src="../../src/img/Restore Page.svg" alt="">
                                     Unarchive
@@ -200,7 +238,7 @@
 <script>
     let active = 'files';
     setActiveNav('files');
-    initiateButtons();
+    initiateFileButtons();
 
     const radioInputs = document.querySelectorAll('input[type="radio"][name="date"]');
     const span = document.getElementById('radio-filter');
@@ -208,6 +246,7 @@
     radioInputs.forEach(input => {
         input.addEventListener('change', updateSelectedFilter);
     });
+    
     
     function getSelectedDateValue(){
         const type = document.getElementsByName("date");
@@ -332,23 +371,120 @@
         })
     }
 
-//     function initiateButtons(){
-//   const optionButtons = document.querySelectorAll('.option-btns');
-//   optionButtons.forEach((btn) => {
-//       btn.addEventListener('click', function(event){
-//           optionButtons[0].classList.toggle('active');
-//           optionButtons[1].classList.toggle('active');
-//           optionButtons[0].classList.toggle('btn-bordered');
-//           optionButtons[1].classList.toggle('btn-bordered');
-//         tbodies[0].classList.toggle('hidden');
-//         tbodies[1].classList.toggle('hidden');
-//           active = event.target.innerText.toLowerCase();
-//           document.querySelector('#active-type').value = active;
-//           const exportBtn = document.querySelector('#export-btn');
-//           if(exportBtn != null){
-//               exportBtn.classList.toggle('hidden');
-//           }
-//       });
-//   });
-// }
+    function initiateFileButtons(){
+        const optionButtons = document.querySelectorAll('.option-btns');
+        const tbodies = document.querySelectorAll('.tbodies');
+        optionButtons.forEach((btn, index) => {
+            btn.addEventListener('click', function(event){
+                const currBtn = event.target;
+                optionButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.classList.add('btn-bordered');
+                })
+                currBtn.classList.add('active');
+                currBtn.classList.remove('btn-bordered');
+                tbodies.forEach(tbody => tbody.classList.add('hidden'));
+                tbodies[index].classList.remove('hidden')
+
+                active = currBtn.innerText.toLowerCase();
+                document.querySelector('#active-type').value = active;
+                const exportBtn = document.querySelector('#export-btn');
+                if(index !== 1) exportBtn.classList.add('hidden');
+                else exportBtn.classList.remove('hidden');
+            });
+        });
+    }
+
+    function uploadFunction(id, action){
+        const insertInto = action === 1 ? 'not-archived-tbody' : 'archived-tbody'; 
+        const tbody = document.getElementById(insertInto);
+        const tr =  document.getElementById(`ptr-${id}`);
+        tr.remove();
+        $.ajax({
+            url: '../../src/ajax/app-deny-file.php',
+            type: 'POST',
+            data: {id, action},
+            success: function(response){
+                if(response === 'success'){
+                    tr.id = action === 1 ? `tr-${id}` : `atr-${id}`; 
+                    const lastTd = action === 1 
+                        ? `
+                            <a href="view_study.php?id=${id}" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                <img src="../../src/img/View.svg" alt="">
+                                View
+                            </a>
+                            <span onclick="archiveFile(${id}, 1, 'studies')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                <img src="../../src/img/Archive.svg" alt="">
+                                Archive
+                            </span>
+                        `
+                        : `
+                            <span onclick="archiveFile(${id}, 0, 'studies')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                <img src="../../src/img/Restore Page.svg" alt="">
+                                Unarchive
+                            </span> 
+                        `;
+                    tr.lastElementChild.previousElementSibling.innerText = action === 1 ? 'Approved' : 'Declined';
+                    tr.lastElementChild.classList.add('flex');
+                    tr.lastElementChild.classList.add('gap-x-4');
+                    tr.lastElementChild.innerHTML = lastTd;
+                    tbody.appendChild(tr);
+                }else{
+                    console.log('Something went wrong');
+                }
+                    
+            }
+        });
+    }
+
+    function updateTableWhenArchived(id, archive, table, isUser=false) {
+  if (archive !== 0) {
+    var tr = document.querySelector(`#tr-${id}`);
+    tr.id = `atr-${id}`;
+    tr.lastElementChild.innerHTML = `
+      <span onclick="archiveFile(${id}, 0, '${table}')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+        <img src="../../src/img/Restore Page.svg" alt="">
+        Unarchive 
+      </span>        
+    `;
+    tbody = 'archived-tbody';
+    
+  } else {
+    var tr = document.querySelector(`#atr-${id}`);
+
+    if(tr.lastElementChild.previousElementSibling.innerText === 'Approved'){
+      console.log(tr.lastElementChild.previousElementSibling.innerText, 'should be approved');
+      tr.id = `tr-${id}`;
+      tr.lastElementChild.innerHTML = `
+      ${ isUser ? '' :
+        `<a href="view.php?id=${id}" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+            <img src="../../src/img/View.svg" alt="">
+            View
+        </a>`
+      }
+        <span onclick="archiveFile(${id}, 1, '${table}')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+            <img src="../../src/img/Archive.svg" alt="">
+            Archive
+        </span>   
+      `;
+      tbody = 'not-archived-tbody';
+    }else{
+      console.log(tr.lastElementChild.previousElementSibling.innerText, 'should be pending');
+      tr.id = `ptr-${id}`;
+      tr.lastElementChild.innerHTML = `
+        <a href="view_study.php?id=${id}" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+          <img src="../../src/img/View.svg" alt="" title="View">
+        </a>
+        <img src="../../src/img/Ok.svg" alt="Approve" title="Approve" class="hover:brightness-110 cursor-pointer" onclick="uploadFunction(${id}, 1)">
+        <img src="../../src/img/Cancel.svg" alt="Reject" title="Deny" class="hover:brightness-110 cursor-pointer" onclick="uploadFunction(${id}, -1)">            
+      `;
+      tbody = 'pending-tbody';
+    }
+  }
+  tr.remove();
+  tr.lastElementChild.classList.add('flex');
+  tr.lastElementChild.classList.add('gap-x-4');
+  trHtml = tr.outerHTML;
+  document.getElementById(tbody).innerHTML += trHtml;
+}
 </script>

@@ -3,7 +3,7 @@ include("../../db/db.php");
 $key = $_GET['key'];
 $idArray = $_GET['arrayId'] ?? [];
 $idString = implode(",", $idArray);
-$sql_count = "SELECT COUNT(*) AS total FROM studies WHERE id NOT IN ($idString) AND (project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%')";
+$sql_count = "SELECT COUNT(*) AS total FROM studies WHERE id NOT IN ($idString) AND is_approved = 1 AND (project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%')";
 $count_result = $conn->query($sql_count);
 $count_row = $count_result->fetch_assoc();
 $total_records = $count_row['total'];
@@ -20,7 +20,7 @@ if($total_records <= 6){
     FROM studies s 
     LEFT JOIN (SELECT studies_id, COUNT(id) AS view_count FROM logs WHERE activity LIKE '%Viewed%' GROUP BY studies_id) AS viewed_logs 
     ON s.id = viewed_logs.studies_id  
-    WHERE s.id NOT IN ($idString) AND (project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%')";
+    WHERE s.id NOT IN ($idString) AND is_approved = 1 AND (project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%')";
     $result = $conn->query($sql);
 
     echo '<div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-start h-fit">';
@@ -64,7 +64,7 @@ if($total_records <= 6){
     FROM studies s 
     LEFT JOIN (SELECT studies_id, COUNT(id) AS view_count FROM logs WHERE activity LIKE '%Viewed%' GROUP BY studies_id) AS viewed_logs 
     ON s.id = viewed_logs.studies_id  
-    WHERE s.id NOT IN ($idString) AND (project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%') LIMIT $start, $perpage";
+    WHERE s.id NOT IN ($idString) AND is_approved = 1 AND (project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%') LIMIT $start, $perpage";
     $result = $conn->query($sql);
 
     $limit = $total_records / $perpage;

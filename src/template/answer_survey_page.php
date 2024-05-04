@@ -24,7 +24,7 @@
         </div>
 
         <div class="bg-white rounded-lg p-2 sm:p-6 mx-auto max-w-[946px] h-fit z-10">
-            <form action="actions/try_save_answer.php?id=<?=$id?>&file=<?=$row['filename']?>" method="POST">
+            <form action="actions/try_save_answer.php?id=<?=$id?>&file=<?=$row['filename']?>" id="survey-form" onsubmit="checkAllFields(event, this)" method="POST">
                 <div class="w-full mb-5">
                     <label for="survey-name">Survey Name</label>
                     <input type="text" id="survey-name" name="survey-name" value="<?=$row['survey_name']?>" class="input-text" disabled>
@@ -98,6 +98,7 @@
     //         showObject(formObject);
     //     }
     // });
+    let checkAllCbFields = {};//THIS
     showObject(formObject);
     function showObject(object){
         for (const key in object[0].questionnaire) {
@@ -105,14 +106,18 @@
                 const type = object[0].questionnaire[key].type;
                 let newDiv = document.createElement('div');
                 newDiv.classList = 'w-full mb-5 border shadow rounded p-2';
+                newDiv.id = `div-question-${key}`;
                 if(type !== 'grid' && type !== 'textarea' && type !== 'text'){
                     let options = object[0].questionnaire[key].options.map((option, index) => {
                         if(type == 'checkbox'){
                             name = `name="question-${key}[]"`;
+                            checkAllCbFields[key] = `div-question-${key}`; //THIS
+                            return (`<div><input type="${type}" ${name} value="${object[0].questionnaire[key].options[index]}" id="${option.toLowerCase()}-${key}"><label for="${option.toLowerCase()}-${key}">${option}</label></div>`);
                         }else{
                             name = `name="question-${key}"`;
+                            return (`<div><input required type="${type}" ${name} value="${object[0].questionnaire[key].options[index]}" id="${option.toLowerCase()}-${key}"><label for="${option.toLowerCase()}-${key}">${option}</label></div>`);
                         }
-                        return (`<div><input required type="${type}" ${name} value="${object[0].questionnaire[key].options[index]}" id="${option.toLowerCase()}-${key}"><label for="${option.toLowerCase()}-${key}">${option}</label></div>`);
+                        // return (`<div><input required type="${type}" ${name} value="${object[0].questionnaire[key].options[index]}" id="${option.toLowerCase()}-${key}"><label for="${option.toLowerCase()}-${key}">${option}</label></div>`);
                     });
                     const showOpts = options.map(option => option).join('');    
                     newDiv.innerHTML = (
@@ -162,5 +167,30 @@
                 document.querySelector('#form-container').append(newDiv);
             }
         }
+    }
+
+    function checkAllFields(event, form){
+        e.preventDefault();
+        let shouldSubmit = false;
+        for (const key in checkAllCbFields) {
+            if (Object.hasOwnProperty.call(checkAllCbFields, key)) {
+                const checkboxes = document.querySelectorAll(`input[name="question-${key}[]"]`);
+                if(!atLeastOneCheckboxChecked(checkboxes)) 
+                    document.querySelector(`#${checkAllCbFields[key]}`).classList.add('border-2 border-red-400');
+                else 
+                    shouldSubmit = true;
+            }
+        }
+        if(shouldSubmit) form.submit();
+    }
+
+    // Function to check if at least one checkbox is checked
+    function atLeastOneCheckboxChecked(checkboxes) {
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                return true;
+            }
+        }
+        return false;
     }
 </script>

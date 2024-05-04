@@ -25,5 +25,5 @@ if (!isset($_SESSION["id"])) {
     $_SESSION['toast']['message'] = "Hello! You're now logged in. Enjoy the journey!";
   }
   if($_SESSION['type'] == 'admin') header("Location:../admin/asurveys.php");
-  else header("Location:../asurveys.php");
+  else header("Location:../surveys.php");
 ?>

@@ -18,6 +18,7 @@ if(!$res->num_rows > 0){
         if($conn->query($sql)){
             $conn->query($sql2);
             $_SESSION["id"] = $num;
+            $_SESSION["course"] = $row['course'];
             $_SESSION["email"] = $email;
             $_SESSION['points'] = 0;
             $_SESSION["fullname"] = $row['first_name'].' '.$row['last_name'];
