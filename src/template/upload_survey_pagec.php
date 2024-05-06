@@ -12,23 +12,34 @@
                 </div>
                 <div class="w-full mb-5 flex gap-2">
                     <div class="flex-1">
-                        <label for="url">URL <span class="text-gray-400">(if applicable)</span></label>
-                        <input type="text" id="url" placeholder="Sample Survey Name" class="input-text">
-                    </div>
-                    <div class="flex-1">
                         <label for="respondents">Target Respondents </label>
                         <input type="text" name="respondents" id="survey-name" placeholder="Enter a number" class="input-text" oninput="allowNumbersOnly(event)" required>
+                    </div>
+                    <div class="flex-1">
+                        <label for="deadline">Deadline</label>
+                        <input type="date" class="input-text" name="deadline" id="deadline" required>
                     </div>
                 </div>
                 <div class="w-full mb-5">
                     <label for="survey-desc">Survey Description</label>
                     <textarea name="description" id="survey-desc" rows="4" class="txtarea" required></textarea>
                 </div>
-                <div class="w-1/2 mb-5">
-                    <label for="deadline">Deadline</label>
-                    <input type="date" class="input-text" name="deadline" id="deadline" required>
+                <div class="w-full mb-5 flex gap-2">
+                    <div class="w-1/2 mb-5">
+                        <div>
+                            <input type="checkbox" id="url-cb" name="url-cb" class="scale-90" onchange="useUrl(this)">
+                            <label for="url-cb" class="text-sm cursor-pointer">I'll be using Google Forms</label>
+                        </div>
+                        <div>
+                            <input type="text" id="survey-code" name="survey-code" class="input-text disabled:cursor-not-allowed disabled:bg-gray-300" placeholder="Enter your survey code" disabled>
+                        </div>
+                    </div>
+                    <div class="w-1/2 mb-5">
+                            <label for="url">URL <span class="text-gray-400 text-xs">(if applicable)</span></label>
+                            <input type="text" id="url" placeholder="Sample Survey Name" class="input-text">
+                    </div>
                 </div>
-
+                
                 <div class="w-full my-4 bg-orange-300 p-2">
                     Questions
                 </div>
@@ -69,10 +80,8 @@
 
 <!-- <script src="../src/js/forms.js"></script> -->
 <script>
-    let cont = document.querySelector('#form-container');
-    const closeIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="opacity-60 hover:opacity-100" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>`;
-const closeGridSpan = `<button type="button" class="remove-option" title="Remove" onclick="removeGridOption(this)" >${closeIcon}</button>`;
-const closeSpan = `<button type="button" class="remove-option" title="Remove" onclick="removeOption(this)" >${closeIcon}</button>`;
+let cont = document.querySelector('#form-container');
+let contHTML = '';
 let divcount = 1;
 let myObject = {};
 appendFormDiv();
@@ -85,29 +94,49 @@ function allowNumbersOnly(e){
     }
 }
 
+function useUrl(cb){
+    const inputCode =document.getElementById('survey-code');
+    if(cb.checked) {
+        inputCode.removeAttribute('disabled');
+        contHTML = cont.innerHTML;
+        cont.innerHTML = urlDiv;
+        inputCode.removeAttribute('required');
+    }else{
+        inputCode.setAttribute('disabled', '');
+        inputCode.setAttribute('required', '');
+        cont.innerHTML = contHTML;
+    }
+}
+
 function saveForm(event, form) {
     event.preventDefault();
-    newObject = [
-        {
-            questionnaire: myObject
-        }, {
-            answers: []
-        }
-    ];
-    $.ajax({
-        url: '../src/ajax/upload_survey.php',
-        type: 'POST',
-        data: { json: JSON.stringify(newObject) },
-        success: function (data) {
-            var input = document.createElement("input");
-            input.type = "hidden";
-            input.name = "filename";
-            input.value = data;
-            form.appendChild(input);
-            form.submit();
-        }
-    });
-        
+    const cb = document.getElementById('url-cb');
+    //check what to do
+    if(cb.checked){
+        form.action = 'actions/save-gform.php';
+        form.submit();
+    }else{
+        newObject = [
+            {
+                questionnaire: myObject
+            }, {
+                answers: []
+            }
+        ];
+        $.ajax({
+            url: '../src/ajax/upload_survey.php',
+            type: 'POST',
+            data: { json: JSON.stringify(newObject) },
+            success: function (data) {
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "filename";
+                input.value = data;
+                form.appendChild(input);
+                form.submit();
+            }
+        });
+    }
 }
 function appendFormDiv() {
     let count = divcount++;
@@ -389,4 +418,32 @@ function updateButtonPosition(elem) {
         btn.style.top = `${topp + 70}px`;
     }
 }
+
+// PRE-DEFINED VARIABLES
+
+const closeIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="opacity-60 hover:opacity-100" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>`;
+const closeGridSpan = `<button type="button" class="remove-option" title="Remove" onclick="removeGridOption(this)" >${closeIcon}</button>`;
+const closeSpan = `<button type="button" class="remove-option" title="Remove" onclick="removeOption(this)" >${closeIcon}</button>`;
+const urlDiv = `
+<div 
+    data-id="url-data-id" 
+    id="url-id" 
+    class="custom-div relative m-4 mr-auto p-4 border border-gray-300 rounded-lg w-[88%] transition-all focus:outline-none" 
+    tabindex="1"
+>
+    <div class="flex items-center justify-between">
+        <div 
+            id="editable-" 
+            class="w-full" 
+        >
+            Code given after submitting the survey
+        </div>
+    </div>
+    <div id="input-cont" class="p-1">
+        <div class="w-full h-fit flex border-b">
+            <input type="type" id="0-type-1" class="w-full border-none " placeholder="Short answer" disabled> 
+        </div>
+    </div>
+</div>
+`;
 </script>

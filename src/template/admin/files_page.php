@@ -424,7 +424,7 @@
                                 Unarchive
                             </span> 
                         `;
-                    tr.lastElementChild.previousElementSibling.innerText = action === 1 ? 'Approved' : 'Declined';
+                    tr.lastElementChild.previousElementSibling.innerText = 'Approved';
                     tr.lastElementChild.classList.add('flex');
                     tr.lastElementChild.classList.add('gap-x-4');
                     tr.lastElementChild.innerHTML = lastTd;
@@ -436,55 +436,4 @@
             }
         });
     }
-
-    function updateTableWhenArchived(id, archive, table, isUser=false) {
-  if (archive !== 0) {
-    var tr = document.querySelector(`#tr-${id}`);
-    tr.id = `atr-${id}`;
-    tr.lastElementChild.innerHTML = `
-      <span onclick="archiveFile(${id}, 0, '${table}')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
-        <img src="../../src/img/Restore Page.svg" alt="">
-        Unarchive 
-      </span>        
-    `;
-    tbody = 'archived-tbody';
-    
-  } else {
-    var tr = document.querySelector(`#atr-${id}`);
-
-    if(tr.lastElementChild.previousElementSibling.innerText === 'Approved'){
-      console.log(tr.lastElementChild.previousElementSibling.innerText, 'should be approved');
-      tr.id = `tr-${id}`;
-      tr.lastElementChild.innerHTML = `
-      ${ isUser ? '' :
-        `<a href="view.php?id=${id}" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
-            <img src="../../src/img/View.svg" alt="">
-            View
-        </a>`
-      }
-        <span onclick="archiveFile(${id}, 1, '${table}')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
-            <img src="../../src/img/Archive.svg" alt="">
-            Archive
-        </span>   
-      `;
-      tbody = 'not-archived-tbody';
-    }else{
-      console.log(tr.lastElementChild.previousElementSibling.innerText, 'should be pending');
-      tr.id = `ptr-${id}`;
-      tr.lastElementChild.innerHTML = `
-        <a href="view_study.php?id=${id}" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
-          <img src="../../src/img/View.svg" alt="" title="View">
-        </a>
-        <img src="../../src/img/Ok.svg" alt="Approve" title="Approve" class="hover:brightness-110 cursor-pointer" onclick="uploadFunction(${id}, 1)">
-        <img src="../../src/img/Cancel.svg" alt="Reject" title="Deny" class="hover:brightness-110 cursor-pointer" onclick="uploadFunction(${id}, -1)">            
-      `;
-      tbody = 'pending-tbody';
-    }
-  }
-  tr.remove();
-  tr.lastElementChild.classList.add('flex');
-  tr.lastElementChild.classList.add('gap-x-4');
-  trHtml = tr.outerHTML;
-  document.getElementById(tbody).innerHTML += trHtml;
-}
 </script>

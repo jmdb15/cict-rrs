@@ -52,6 +52,7 @@ function updateSelectedFilter() {
 
 // UPDATE TABLE ROW WHEN ARCHIVED
 function updateTableWhenArchived(id, archive, table, isUser=false) {
+  
   if (archive !== 0) {
     var tr = document.querySelector(`#tr-${id}`);
     tr.id = `atr-${id}`;

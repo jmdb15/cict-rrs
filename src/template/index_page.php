@@ -71,7 +71,7 @@
             </div>
         </div>
         <!-- DYNAMIC RESEARCH LISTING CONTAINER WITH PAGINATION -->
-        <div class="border" id="page-content"></div>
+        <div id="page-content"></div>
     </section>
 </main>
 

@@ -4,7 +4,7 @@ if (!isset($_SESSION["id"])) header("Location:landing.php");
 if(!$_SESSION['verified']) header("Location:verify.php");
 require_once('../db/db.php');
 $uid = $_SESSION['id'];
-$course = $_SESSION['course'];
+$course = $_SESSION['course'] ?? 'none';
 echo $course;
 
 $sql = '';

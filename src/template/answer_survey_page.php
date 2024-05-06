@@ -24,14 +24,16 @@
         </div>
 
         <div class="bg-white rounded-lg p-2 sm:p-6 mx-auto max-w-[946px] h-fit z-10">
-            <form action="actions/try_save_answer.php?id=<?=$id?>&file=<?=$row['filename']?>" id="survey-form" onsubmit="checkAllFields(event, this)" method="POST">
+            <form action="actions/save_answer.php?id=<?=$id?>&file=<?=$row['filename']?>" id="survey-form" onsubmit="checkAllFields(event, this, <?=$id?>)" method="POST">
                 <div class="w-full mb-5">
                     <label for="survey-name">Survey Name</label>
                     <input type="text" id="survey-name" name="survey-name" value="<?=$row['survey_name']?>" class="input-text" disabled>
                 </div>
                 <div class="w-1/2 min-w-80">
                     <label for="url">URL <span class="text-gray-400">(if applicable)</span></label>
-                    <input type="text" id="url" value="<?=$row['url']?>" class="input-text" disabled>
+                    <p class="input-text">
+                        <a href="<?=$row['url']?>" target="_blank"><?=$row['url']?></a>
+                    </p>
                 </div>
                 <div class="w-full mb-5">
                     <h3 class="text-xl">Survey Description</h3>
@@ -84,9 +86,18 @@
 </div>
 
 <?php 
-    $js =  file_get_contents('../src/js/surveys/'.$row['filename']);
-    echo '<script>let formObject = '.json_decode($js).';</script>';
+    if($row['is_gforms'] == 0){
+        $js =  file_get_contents('../src/js/surveys/'.$row['filename']);
+        echo '<script>
+                let formObject = '.json_decode($js).'; 
+            </script>';
+    }else{
+        echo '<script>
+                let SURVEY_CODE = "'.$row['filename'].'"; 
+            </script>';
+    }
 ?>
+
 <script>
     // let formObject = {};
     // $.ajax({
@@ -99,7 +110,19 @@
     //     }
     // });
     let checkAllCbFields = {};//THIS
-    showObject(formObject);
+
+    if(SURVEY_CODE) createCodeForm();
+    else showObject(formObject); 
+
+    function createCodeForm(){
+        document.querySelector('#form-container').innerHTML = `
+        <input value="${SURVEY_CODE}" type="hidden" name="code-verification">
+        <div class="w-full my-5 border shadow rounded p-2">
+            <h3 class="text-xl">Code given after submitting the survey</h3>
+            <input required type="text" class="input-text" name="code">
+        </div>
+        `;
+    }
     function showObject(object){
         for (const key in object[0].questionnaire) {
             if (Object.hasOwnProperty.call(object[0].questionnaire, key)) {
@@ -169,19 +192,24 @@
         }
     }
 
-    function checkAllFields(event, form){
-        e.preventDefault();
-        let shouldSubmit = false;
-        for (const key in checkAllCbFields) {
-            if (Object.hasOwnProperty.call(checkAllCbFields, key)) {
-                const checkboxes = document.querySelectorAll(`input[name="question-${key}[]"]`);
-                if(!atLeastOneCheckboxChecked(checkboxes)) 
-                    document.querySelector(`#${checkAllCbFields[key]}`).classList.add('border-2 border-red-400');
-                else 
-                    shouldSubmit = true;
+    function checkAllFields(event, form, id){
+        event.preventDefault();
+        if(SURVEY_CODE) {
+            form.action = `actions/verify-gform-response.php?id=${id}`;
+            form.submit();
+        }else{
+            let shouldSubmit = false;
+            for (const key in checkAllCbFields) {
+                if (Object.hasOwnProperty.call(checkAllCbFields, key)) {
+                    const checkboxes = document.querySelectorAll(`input[name="question-${key}[]"]`);
+                    if(!atLeastOneCheckboxChecked(checkboxes)) 
+                        document.querySelector(`#${checkAllCbFields[key]}`).classList.add('border-2 border-red-400');
+                    else 
+                        shouldSubmit = true;
+                }
             }
+            if(shouldSubmit) form.submit();
         }
-        if(shouldSubmit) form.submit();
     }
 
     // Function to check if at least one checkbox is checked
