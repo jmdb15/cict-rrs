@@ -95,6 +95,8 @@
 <!-- flowbite -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 <script>
+    setActiveNav('cms');
+
     const buttons = [document.getElementById("A1"), document.getElementById("A2"), document.getElementById("A3")];
     // Add "active" class to btn1 initially
     buttons[0].classList.add("active");

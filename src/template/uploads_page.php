@@ -68,7 +68,7 @@
                                 <?=$row['research_title']?>
                             </td>
                             <td colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
-                                200
+                                <?=$row['view_count']?>
                             </td>
                             <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
                                 <?=$row['created_at']?>

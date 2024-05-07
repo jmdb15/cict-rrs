@@ -32,6 +32,7 @@
                                     type="radio" 
                                     value="all" 
                                     name="date" 
+                                    onclick="clickSubmitBtn()"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                 <label for="filter-radio-example-5" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">All</label>
                             </div>
@@ -44,7 +45,7 @@
                                     type="radio" 
                                     value="yesterday" 
                                     name="date" 
-                                    onchange="()=>console.log(2)"
+                                    onclick="clickSubmitBtn()"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                 <label for="filter-radio-example-1" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">Yesterday</label>
                             </div>
@@ -57,6 +58,7 @@
                                     type="radio" 
                                     value="week" 
                                     name="date" 
+                                    onclick="clickSubmitBtn()"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                 <label for="filter-radio-example-2" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">Last Week</label>
                             </div>
@@ -69,6 +71,7 @@
                                     type="radio" 
                                     value="month" 
                                     name="date" 
+                                    onclick="clickSubmitBtn()"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                 <label for="filter-radio-example-3" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">Last Month</label>
                             </div>
@@ -81,6 +84,7 @@
                                     type="radio" 
                                     value="year" 
                                     name="date" 
+                                    onclick="clickSubmitBtn()"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                 <label for="filter-radio-example-4" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">Last Year</label>
                             </div>
@@ -100,8 +104,9 @@
                     type="text" 
                     id="table-search" 
                     name="key" 
+                    oninput="handleSearchInputs(event)"
                     class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 " placeholder="Search for items">
-                <button type="submit">Submit</button>
+                <button type="submit" id="search-form-btn" hidden>submit</button>
             </div>
         </form>
     </div>
@@ -243,6 +248,16 @@
                 link.click();
             }
         })
+    }
+
+    function handleSearchInputs(e){
+        if(e.keyCode == 13){
+            clickSubmitBtn();
+        }
+    }
+
+    function clickSubmitBtn(){
+        document.getElementById('search-form-btn').click();
     }
 
     function formSubmit(form, event){

@@ -4,7 +4,7 @@
         <div>
             <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5" type="button">
                 <!-- svg here -->
-                Default
+                <span id="ddRadioBtnSpan">Default</span>
                 <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                 </svg>
@@ -14,19 +14,19 @@
                 <ul class="p-3 space-y-1 text-sm text-gray-700" aria-labelledby="dropdownRadioButton">
                     <li>
                         <div class="flex items-center p-2 rounded hover:bg-gray-100 ">
-                            <input id="filter-radio-example-1" type="radio" value="approved" name="filter-status" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
+                            <input checked id="filter-radio-example-1" onchange="searchAllRequests()" type="radio" value="Approved" name="filter-status" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
                             <label for="filter-radio-example-1" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">Approved</label>
                         </div>
                     </li>
                     <li>
                         <div class="flex items-center p-2 rounded hover:bg-gray-100 ">
-                            <input checked="" id="filter-radio-example-2" type="radio" value="declined" name="filter-status" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
+                            <input id="filter-radio-example-2" onchange="searchAllRequests()" type="radio" value="Declined" name="filter-status" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
                             <label for="filter-radio-example-2" class="w-full ms-2 text-sm font-medium text-gray-900 rounded ">Declined</label>
                         </div>
                     </li>
                     <li>
                         <div class="flex items-center p-2 rounded hover:bg-gray-100 ">
-                            <input id="filter-radio-example-3" type="radio" value="pending" name="filter-status" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
+                            <input id="filter-radio-example-3" type="radio" onchange="searchAllRequests()" value="Pending" name="filter-status" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
                             <label for="filter-radio-example-3" class="w-full ms-2 text-sm font-medium text-gray-900 rounded ">Pending</label>
                         </div>
                     </li>
@@ -47,7 +47,6 @@
                     id="search-reqs" 
                     class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
                     placeholder="Search for items" />
-                <input type="button" value="Submit" class="btn bg-orange-400" onclick="searchAllRequests()">
             </div>
         </div>
     </div>
@@ -118,7 +117,8 @@
         const key = document.getElementById('search-reqs').value;
         const radios = document.querySelectorAll('input[name="filter-status"]');
         radios.forEach(r => {if(r.checked) selected = r.value});
-        console.log(selected);
+        document.getElementById('ddRadioBtnSpan').innerText = selected;
+        selected =selected.toLowerCase();
         ajaxSearchCall(key, selected);
     }
 
