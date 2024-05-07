@@ -34,7 +34,7 @@ if (isset ($_POST['start'])) {
         break;
     }
     // $sql = "SELECT r.*, a.email FROM requests r JOIN account a ON r.account_id = a.number WHERE $condition $within"; // LIKE '%$searchKey%'
-    $sql = "SELECT r.*, s.project_title, a.email FROM requests r JOIN studies s ON r.studies_id = s.id JOIN account a ON r.account_id = a.number WHERE s.project_title LIKE '%$key%' AND $condition $within"; // LIKE '%$searchKey%'
+    $sql = "SELECT r.*, s.project_title, p.first_name, p.last_name FROM requests r JOIN studies s ON r.studies_id = s.id JOIN profile p ON r.account_id = p.account_id WHERE (s.project_title LIKE '%$key%' OR CONCAT_WS(' ', p.first_name, p.last_name) LIKE '%$key%')AND $condition $within"; // LIKE '%$searchKey%'
 }
 
 $result = $conn->query($sql);

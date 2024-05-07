@@ -14,22 +14,22 @@
         <label for="table-search" class="sr-only">Search</label>
         <div class="relative">
             <div class="absolute border-r-[1px] border-gray-300 px-2.5 h-[36.5px] top-0 start-0 flex items-center pointer-events-none">
-                <svg class="w-3 h-3 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <svg class="w-3 h-3 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
             </div>
             <form action="" onsubmit="searchUser(this, event)">
-                <input type="text" id="table-search" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
+                <input type="text" id="table-search" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search for items">
             </form>
         </div>
     </div>
     <div class="rounded bg-gray-50 max-h-[620px] overflow-auto">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
             <div class="sticky top-0 bg-white flex justify-between p-5 border-b-[1px] rounded w-full">
                 <h2 class="text-xl">File List</h2>
                 <button class="px-4 py-2 bg-orange-400 text-white hover:brightness-110 rounded-md">Upload File</button>
             </div>
-            <thead class="sticky top-[81px] text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+            <thead class="sticky top-[81px] text-xs text-gray-700 uppercase bg-gray-100">
                 <tr>
                     <th scope="col" class="px-1 sm:px-6 py-3">
                         Student No.
@@ -53,8 +53,8 @@
             </thead>
             <tbody class="tbodies" id="not-archived-tbody">
                 <?php   while($row = $result->fetch_assoc()){  ?>
-                    <tr id="tr-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <tr id="tr-<?=$row['id']?>" class="bg-white border-b">
+                        <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                             <?=$row['number']?>
                         </th>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
@@ -70,7 +70,7 @@
                             4E-G1
                         </td>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
-                            <span onclick="archiveFile(<?=$row['id']?>, 1, 'account')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                            <span onclick="archiveFile(<?=$row['id']?>, 1, 'account')" class="flex gap-1 items-center font-medium text-gray-500 hover:underline">
                                 <img src="../../src/img/Archive.svg" alt="">
                                 Archive
                             </span>
@@ -80,8 +80,8 @@
             </tbody>
             <tbody class="hidden tbodies" id="archived-tbody">
                 <?php   while($row = $aresult->fetch_assoc()){  ?>
-                    <tr id="atr-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <tr id="atr-<?=$row['id']?>" class="bg-white border-b hover:bg-gray-50 ">
+                        <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                             <?=$row['number']?>
                         </th>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
@@ -100,7 +100,7 @@
                             4E-G1
                         </td>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
-                            <span onclick="archiveFile(<?=$row['id']?>, 0, 'account')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                            <span onclick="archiveFile(<?=$row['id']?>, 0, 'account')" class="flex gap-1 items-center font-medium text-gray-500 hover:underline">
                                 <img src="../../src/img/Restore Page.svg" alt="">
                                 Unarchive
                             </span> 
@@ -154,8 +154,8 @@
                     
                     if(parsed.length == 0){
                         tbody.innerHTML = `
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer">
-                                <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] max-w-none font-medium text-gray-900 dark:text-white">
+                            <tr class="bg-white border-b hover:bg-gray-50 cursor-pointer">
+                                <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] max-w-none font-medium text-gray-900">
                                     NO RECORDS FOUND
                                 </th>
                             </tr>
@@ -167,7 +167,7 @@
                             if(activeType == 0){
                                 newId = `id="tr-${data.id}"`;
                                 action = `
-                                    <span onclick="archiveFile(${data.id}, 1, 'account')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                    <span onclick="archiveFile(${data.id}, 1, 'account')" class="flex gap-1 items-center font-medium text-gray-500 hover:underline">
                                         <img src="../../src/img/Archive.svg" alt="">
                                         Archive
                                     </span>
@@ -175,15 +175,15 @@
                             }else{
                                 newId = `id="atr-${data.id}"`;
                                 action = `
-                                    <span onclick="archiveFile(${data.id}, 0, 'account')" class="flex gap-1 items-center font-medium text-gray-500 dark:text-blue-500 hover:underline">
+                                    <span onclick="archiveFile(${data.id}, 0, 'account')" class="flex gap-1 items-center font-medium text-gray-500 hover:underline">
                                             <img src="../../src/img/Restore Page.svg" alt="">
                                             Unarchive
                                         </span>   
                                 `;
                             }
                             return tr = `
-                                <tr ${newId} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <tr ${newId} class="bg-white border-b hover:bg-gray-50-600">
+                                    <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         ${data.number}
                                     </th>
                                     <td class="px-1 sm:px-6 py-4 text-gray-600">

@@ -76,7 +76,13 @@
                 <p class="text-lg md:text-4xl text-[#4D4D4D] font-bold my-3">About Us</p>
                 <div class="flex flex-col justify-center items-center w-4/5 p-0 sm:p-6 md:px-10 gap-2">
                     <p class="text-md md:text-lg font-base text-center">College of information and Communication Technology - Research Repository System</p>
-                    <p class="text-center text-[#4D4D4D] text-xs md:text-base">CICT-RRS is designed to assist the entire college community with their research endeavors. Our platform empowers students and faculty members alike to effortlessly discover pertinent topics for their studies, anytime and anywhere. Additionally, researchers can utilize our website to efficiently gather respondents by uploading their questionnaires, streamlining the data collection process. With this website, the college can now preserve all completed studies conducted by the entire college community, ensuring that valuable research contributions are archived and accessible for future reference and knowledge dissemination.</p>
+                    <p class="text-center text-[#4D4D4D] text-xs md:text-base">
+                        <?php 
+                            $xml = simplexml_load_file('../public/info.xml');
+                            $abt = $xml->xpath('//element[@attr="about"]');
+                        echo $abt[0][0];
+                        ?>
+                    </p>
                 </div>
             </div>
         </section>
@@ -118,10 +124,10 @@
         <!-- Modal content -->
         <div class="relative bg-white h-4/5 md:h-full w-full md:w-full rounded-lg shadow-xl overflow-y-auto">
             <!-- Modal header -->
-            <div class="flex items-center justify-between p-4 md:p-5 rounded-t dark:border-gray-600">
+            <div class="flex items-center justify-between p-4 md:p-5 rounded-t">
                 <img src="../src/img/logo.png" class="h-8" alt="Flowbite Logo" />
-                <span class="self-center text-2xl flex flex-row font-semibold whitespace-nowrap dark:text-white">CICT- <p class="text-[#FF8A01]">RRS</p></span>
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="login-modal">
+                <span class="self-center text-2xl flex flex-row font-semibold whitespace-nowrap">CICT- <p class="text-[#FF8A01]">RRS</p></span>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="login-modal">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>

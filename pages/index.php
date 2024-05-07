@@ -5,7 +5,6 @@ if(!$_SESSION['verified']) header("Location:verify.php");
 require_once('../db/db.php');
 $uid = $_SESSION['id'];
 $course = $_SESSION['course'] ?? 'none';
-echo $course;
 
 $sql = '';
 if($course == 'none'){

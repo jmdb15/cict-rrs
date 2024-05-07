@@ -11,7 +11,7 @@ $total_records = $count_row['total'];
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
 $active = '<li>
-<button onclick="loadPage('.($page).')" aria-current="page" class="z-10 pointer-events-none flex items-center justify-center px-4 py-6 h-10 leading-tight text-white border border-gray-800 bg-gray-800 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">'.($page).'</button>
+<button onclick="loadPage('.($page).')" aria-current="page" class="z-10 pointer-events-none flex items-center justify-center px-4 py-6 h-10 leading-tight text-white border border-gray-800 bg-gray-800 hover:bg-blue-100 hover:text-blue-700">'.($page).'</button>
 </li>';
 
 if($total_records <= 6){
@@ -42,13 +42,13 @@ if($total_records <= 6){
     <div id="pagination" aria-label="Page navigation example" class="mt-10">
         <ul class="flex items-center justify-center -space-x-px h-10 text-base">
             <li>
-                <button onclick="loadPage('.($page - 1).')" disabled class="flex disabled:cursor-not-allowed disabled:hover:bg-gray-300 disabled:hover:text-gray-500 disabled:bg-gray-300 disabled:dark:hover:text-gray-400 items-center justify-center px-4 py-6 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                <button onclick="loadPage('.($page - 1).')" disabled class="flex disabled:cursor-not-allowed disabled:hover:bg-gray-300 disabled:hover:text-gray-500 disabled:bg-gray-300 items-center justify-center px-4 py-6 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
                 Previous
                 </button>
             </li>';
                 echo $active;
     echo '
-            <button onclick="loadPage('.($page + 1).')" disabled class="flex disabled:cursor-not-allowed disabled:hover:bg-gray-300 disabled:hover:text-gray-500 disabled:bg-gray-300 disabled:dark:hover:text-gray-400 items-center justify-center px-4 py-6 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            <button onclick="loadPage('.($page + 1).')" disabled class="flex disabled:cursor-not-allowed disabled:hover:bg-gray-300 disabled:hover:text-gray-500 disabled:bg-gray-300 items-center justify-center px-4 py-6 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
                 Next
             </button>
             </li>
@@ -98,7 +98,7 @@ if($total_records <= 6){
     <div id="pagination" aria-label="Page navigation example" class="mt-10">
         <ul class="flex items-center justify-center -space-x-px h-10 text-base">
             <li>
-                <button onclick="loadPage('.($page - 1).')"'. $isPrevDisabled .' class="flex disabled:cursor-not-allowed disabled:hover:bg-gray-300 disabled:hover:text-gray-500 disabled:bg-gray-300 disabled:dark:hover:text-gray-400 items-center justify-center px-4 py-6 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                <button onclick="loadPage('.($page - 1).')"'. $isPrevDisabled .' class="flex disabled:cursor-not-allowed disabled:hover:bg-gray-300 disabled:hover:text-gray-500 disabled:bg-gray-300 items-center justify-center px-4 py-6 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
                 Previous
                 </button>
             </li>';
@@ -128,14 +128,14 @@ if($total_records <= 6){
                         echo $active;
                     }else{
                         echo '<li>
-                            <button onclick="loadPage('.($i).')" class="flex items-center justify-center px-4 py-6 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">'.($i).'</button>
+                            <button onclick="loadPage('.($i).')" class="flex items-center justify-center px-4 py-6 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">'.($i).'</button>
                             </li>';
                     }
                     $breaker++;
                 }
 
     echo '
-            <button onclick="loadPage('.($page + 1).')"'. $isNextDisabled .' class="flex disabled:cursor-not-allowed disabled:hover:bg-gray-300 disabled:hover:text-gray-500 disabled:bg-gray-300 disabled:dark:hover:text-gray-400 items-center justify-center px-4 py-6 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            <button onclick="loadPage('.($page + 1).')"'. $isNextDisabled .' class="flex disabled:cursor-not-allowed disabled:hover:bg-gray-300 disabled:hover:text-gray-500 disabled:bg-gray-300 items-center justify-center px-4 py-6 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
                 Next
             </button>
             </li>

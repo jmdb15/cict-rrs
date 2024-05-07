@@ -32,14 +32,71 @@ if(true){
   // $sql = "SELECT * FROM studies";
   $result = $conn->query($sql);
   $html = '';
+  $imagePath = '../../src/img/images.jpeg';
   $html .= '
-    <h2 align="center">List of Files</h2>
+    <style>
+      .div{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .one{
+        top: 0;
+        left: 0;
+        position: absolute;
+      }
+      .two{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        font-size: 1rem;
+        justify-content: center;
+        align-items: center;
+        border: solid 1px red;
+        margin: 0 auto;
+      }
+      .two h1{
+        margin: 0;
+      }
+      .two p{
+        font-size: 14px;
+      }
+      .three{
+        top: 0;
+        right: 0;
+        position: absolute;
+      }
+      .four{
+        top: 30;
+        right: 40;
+        position: absolute;
+      }
+    </style>
+    <div class="div">
+      
+      <div class="one">
+        <img src="data:image/jpeg;base64,'.base64_encode(file_get_contents($imagePath)).'" style="position:absolute; top: 10px; left: 5px;" height="70" width="80">
+      </div>
+      <div class="two" align="center">
+        <h1>Bulacan State University </h1>
+        <p style="margin: 0;">College of Information and Communications Technology</p>
+        <p>Research Repository System<p/>
+      </div>
+      <div class="three">
+        <img src="data:image/jpeg;base64,'.base64_encode(file_get_contents($imagePath)).'" style="position:absolute; top: 10px; left: 5px;" height="100" width="110">
+      </div>
+      <div class="four">
+        <img src="data:image/jpeg;base64,'.base64_encode(file_get_contents($imagePath)).'" style="position:absolute; top: 10px; left: 5px;" height="100" width=110">
+      </div>
+
+    </div>
+    <h4 align="center">Activity Logs of Users</h4>
     <table style="width: 100%; border-collapse: collapse;">
       <tr> 
         <th style="border:1px solid #ddd; padding:8px; text-align:left;">ID</th>
-        <th style="border:1px solid #ddd; padding:8px; text-align:left;">Uploader</th>
-        <th style="border:1px solid #ddd; padding:8px; text-align:left;">Project Title</th>
-        <th style="border:1px solid #ddd; padding:8px; text-align:left;">Research Title</th> 
+        <th style="border:1px solid #ddd; padding:8px; text-align:left;">Name</th>
+        <th style="border:1px solid #ddd; padding:8px; text-align:left;">Activty</th>
         <th style="border:1px solid #ddd; padding:8px; text-align:left;">Created at</th>
       </tr>
   ';
@@ -66,7 +123,12 @@ if(true){
       </tr>
     ';
   }
-  $html .= '</table>';
+  date_default_timezone_set('Asia/Shanghai');
+  $currentDateTime = date('M d, Y h:i a');
+  
+  $html .= '</table>
+    <h5>Report generated on: '.$currentDateTime.'</h5>
+  ';
   $dompdf = new DOMPDF();
   $dompdf->loadHtml($html);
   $dompdf->setPaper('A4', 'portrait');

@@ -6,15 +6,15 @@
         <div class="flex flex-col relative rounded-lg mx-auto mb-5 bg-white lg:hidden px-8 py-6 gap-y-4 max-w-sm w-[98%] min-w-72 min-h-[446px] z-10">
             <div class="w-full">
                 <h3>Survey Title</h3>
-                <input type="text" value="<?=$row['survey_name']?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <input type="text" value="<?=$row['survey_name']?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
             </div>
             <div class="w-full">
                 <h3>Survey Creator</h3>
-                <input type="text" value="<?=$row['id']?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <input type="text" value="<?=$row['id']?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
             </div>
             <div class="w-full">
                 <h3>Date Published</h3>
-                <input type="text" value="<?=$row['created_at']?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <input type="text" value="<?=$row['created_at']?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
             </div>  
 
             <p class="absolute bottom-4 text-sm self-center flex items-center mt-4">
@@ -63,15 +63,15 @@
             <div class="hidden relative rounded-lg bg-white lg:flex lg:flex-col px-8 py-6 gap-y-4 max-w-sm w-[98%] min-w-72 min-h-[446px]">
                 <div class="w-full">
                     <h3>Survey Title</h3>
-                    <input type="text" value="<?=$row['survey_name']?>"  placeholder="Sample Survey Name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <input type="text" value="<?=$row['survey_name']?>"  placeholder="Sample Survey Name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 </div>
                 <div class="w-full">
                     <h3>Survey Creator</h3>
-                    <input type="text" value="<?=$row['id']?>"  placeholder="User Full Name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <input type="text" value="<?=$row['id']?>"  placeholder="User Full Name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 </div>
                 <div class="w-full">
                     <h3>Date Published</h3>
-                    <input type="text" value="<?=$row['created_at']?>"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <input type="text" value="<?=$row['created_at']?>"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 </div>  
 
                 <p class="absolute bottom-4 text-sm self-center flex items-center mt-4">

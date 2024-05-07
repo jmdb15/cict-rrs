@@ -1,4 +1,4 @@
-<main class="w-screen h-fit lg:h-[calc(100vh-80px)] bg-gray-100 dark:bg-slate-700 md:overflow-y-hidden">
+<main class="w-screen h-fit lg:h-[calc(100vh-80px)] bg-gray-100 md:overflow-y-hidden">
     <div class="container h-full mx-auto">
         <!-- Survey Form -->
         <form action="actions/save_survey.php" onsubmit="saveForm(event, this)" method="POST" id="upload-survey-form" 
@@ -258,7 +258,7 @@ function changeField(count, type) {
             div.classList.remove('flex');
             div.innerHTML = `
                 <div class="w-full h-fit flex">
-                    <textarea id="${count}-${type}-1" disabled rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+                    <textarea id="${count}-${type}-1" disabled rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
                 </div>
                 `;
         }

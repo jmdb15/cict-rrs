@@ -32,7 +32,7 @@ if(true){
   // $sql = "SELECT * FROM studies";
   $result = $conn->query($sql);
   $html = '';
-  $imagePath = '../../src/img/cict.png';
+  $imagePath = '../../src/img/images.jpeg';
   $html .= '
     <style>
       .div{
@@ -76,7 +76,7 @@ if(true){
     <div class="div">
       
       <div class="one">
-        <img src="data:image/png;base64,'.base64_encode(file_get_contents($imagePath)).'" style="position:absolute; top: 10px; left: 5px;" height="70" width="80">
+        <img src="data:image/jpeg;base64,'.base64_encode(file_get_contents($imagePath)).'" style="position:absolute; top: 10px; left: 5px;" height="70" width="80">
       </div>
       <div class="two" align="center">
         <h1>Bulacan State University </h1>
@@ -84,10 +84,10 @@ if(true){
         <p>Research Repository System<p/>
       </div>
       <div class="three">
-        <img src="data:image/png;base64,'.base64_encode(file_get_contents($imagePath)).'" style="position:absolute; top: 10px; left: 5px;" height="100" width="110">
+        <img src="data:image/jpeg;base64,'.base64_encode(file_get_contents($imagePath)).'" style="position:absolute; top: 10px; left: 5px;" height="100" width="110">
       </div>
       <div class="four">
-        <img src="data:image/png;base64,'.base64_encode(file_get_contents($imagePath)).'" style="position:absolute; top: 10px; left: 5px;" height="100" width=110">
+        <img src="data:image/jpeg;base64,'.base64_encode(file_get_contents($imagePath)).'" style="position:absolute; top: 10px; left: 5px;" height="100" width=110">
       </div>
 
     </div>
@@ -122,7 +122,12 @@ if(true){
       </tr>
     ';
   }
-  $html .= '</table>';
+  date_default_timezone_set('Asia/Shanghai');
+  $currentDateTime = date('M d, Y h:i a');
+  
+  $html .= '</table>
+    <h5>Report generated on: '.$currentDateTime.'</h5>
+  ';
   $dompdf = new DOMPDF();
   $dompdf->loadHtml($html);
   $dompdf->setPaper('A4', 'portrait');

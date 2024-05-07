@@ -2,7 +2,7 @@
     <!-- SEARCH -->
     <div class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 justify-center sm:justify-between items-center pb-4">
         <div>
-            <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200 flex items-center gap-x-8" aria-labelledby="dropdownRadioButton">
+            <ul class="p-3 space-y-1 text-sm text-gray-700 flex items-center gap-x-8" aria-labelledby="dropdownRadioButton">
                 <li id="docs-list" class="selections cursor-pointer transition-colors uppercase hover:text-orange-400 text-orange-400" onclick="showTable('docs')">
                     Documents
                 </li>
@@ -17,7 +17,7 @@
         <label for="table-search" class="sr-only">Search</label>
         <div class="relative">
             <div class="absolute border-r-[1px] border-gray-300 px-2.5 h-[36.5px] top-0 start-0 flex items-center pointer-events-none">
-                <svg class="w-3 h-3 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <svg class="w-3 h-3 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
             </div>
@@ -25,7 +25,7 @@
                 onkeypress="searchUploads(event)"
                 type="text" 
                 id="table-search" 
-                class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 " 
                 placeholder="Search for items">
         </div>
     </div>
@@ -33,11 +33,11 @@
 
         <!-- DOCUMENTS TABLE -->
         <div id="docs-table" class="upload-tables">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                 <div class="flex p-2.5 sm:p-5 border-b-[1px] rounded w-full">
                     <h2 class="text-base sm:text-xl">Documents</h2>
                 </div>
-                <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                     <tr>
                         <th scope="col" colspan="2" class="px-1 sm:px-6 py-3">
                             Title
@@ -59,9 +59,9 @@
                     $dateTime = new DateTime($row['created_at']);
                     $row['created_at'] = $dateTime->format("F j, Y");   
         ?> <!-- PHP -->
-                    <tr id="docs-tr-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer" onclick="window.location.href = 'view_study.php';">
+                    <tr id="docs-tr-<?=$row['id']?>" class="bg-white border-b hover:bg-gray-50 cursor-pointer" onclick="window.location.href = 'view_study.php';">
                         <a href="view_study.php" class="my-4">
-                            <th scope="row" colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <th scope="row" colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 whitespace-nowrap ">
                                 <?=$row['project_title']?>
                             </th>
                             <td colspan="6" class="px-1 sm:px-6 py-1 sm:py-4 text-xs sm:text-sm text-gray-600">
@@ -76,8 +76,8 @@
                         </a>
                     </tr>
         <?php   }}else{ ?> <!-- PHP -->
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer">
-                        <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] :max-w-none font-medium text-gray-900 dark:text-white">
+                    <tr class="bg-white border-b hover:bg-gray-50 cursor-pointer">
+                        <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] :max-w-none font-medium text-gray-900 ">
                             NO RECORDS YET
                         </th>
                     </tr>
@@ -88,11 +88,11 @@
 
         <!-- SURVEYS TABLE -->
         <div id="surveys-table" class="hidden upload-tables">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                 <div class="flex p-2.5 sm:p-5 border-b-[1px] rounded w-full">
                     <h2 class="text-base sm:text-xl">Surveys</h2>
                 </div>
-                <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                     <tr>
                         <th scope="col" colspan="6" class="px-1 sm:px-6 py-3">
                             Survey Title
@@ -114,8 +114,8 @@
                     $dateTime = new DateTime($row['created_at']);
                     $row['created_at'] = $dateTime->format("F j, Y");   
         ?>  <!-- PHP -->
-                    <tr id="survey-tr-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] :max-w-none font-medium text-gray-900 dark:text-white">
+                    <tr id="survey-tr-<?=$row['id']?>" class="bg-white border-b hover:bg-gray-50">
+                        <th colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] :max-w-none font-medium text-gray-900 ">
                             <?=$row['survey_name']?>
                         </th>
                         <td colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
@@ -131,8 +131,8 @@
                         </td>
                     </tr>
         <?php   }}else{ ?> <!-- PHP -->
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer">
-                        <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] :max-w-none font-medium text-gray-900 dark:text-white">
+                    <tr class="bg-white border-b hover:bg-gray-50 cursor-pointer">
+                        <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] :max-w-none font-medium text-gray-900 ">
                             NO RECORDS YET
                         </th>
                     </tr>
@@ -143,11 +143,11 @@
 
         <!-- REQUESTS TABLE -->
         <div id="requests-table" class="hidden upload-tables">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                 <div class="flex p-2.5 sm:p-5 border-b-[1px] rounded w-full">
                     <h2 class="text-base sm:text-xl">Requests</h2>
                 </div>
-                <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                     <tr>
                         <th scope="col" colspan="1" class="px-1 sm:px-6 py-3">
                             ID
@@ -171,8 +171,8 @@
             $dateTime = new DateTime($row['created_at']);
             $row['created_at'] = $dateTime->format("F j, Y");   
         ?>  <!-- PHP -->
-                    <tr id="reqs-tr-<?=$row['id']?>" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
+                    <tr id="reqs-tr-<?=$row['id']?>" class="bg-white border-b hover:bg-gray-50">
+                        <th scope="row" colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 ">
                             <?=$row['id']?>
                         </th>
                         <td colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600  text-wrap">
@@ -194,8 +194,8 @@
                         </td>
                     </tr>
         <?php   }}else{ ?> <!-- PHP -->
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer">
-                        <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] :max-w-none font-medium text-gray-900 dark:text-white">
+                    <tr class="bg-white border-b hover:bg-gray-50 cursor-pointer">
+                        <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] :max-w-none font-medium text-gray-900 ">
                             NO RECORDS YET
                         </th>
                     </tr>
@@ -299,8 +299,8 @@
                         else if(tableToUpdate == 'surveys') updateSurveys(parsed, tbody);
                     }else{
                         tbody.innerHTML = `
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer" onclick="window.location.href = 'view_study.php';">
-                                <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] :max-w-none font-medium text-gray-900 dark:text-white">
+                            <tr class="bg-white border-b hover:bg-gray-50 cursor-pointer" onclick="window.location.href = 'view_study.php';">
+                                <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] :max-w-none font-medium text-gray-900 ">
                                     NO RECORDS FOUND
                                 </th>
                             </tr>
@@ -314,9 +314,9 @@
     function updateDocs(data, tbody){
         data.map(d => {
             tbody.innerHTML += `
-                <tr id="docs-tr-${d.id}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer" onclick="window.location.href = 'view_study.php';">
+                <tr id="docs-tr-${d.id}" class="bg-white border-b hover:bg-gray-50 cursor-pointer" onclick="window.location.href = 'view_study.php';">
                     <a href="view_study.php" class="my-4">
-                        <th scope="row" colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="row" colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 whitespace-nowrap ">
                             ${d.project_title}
                         </th>
                         <td colspan="6" class="px-1 sm:px-6 py-1 sm:py-4 text-xs sm:text-sm text-gray-600">
@@ -346,8 +346,8 @@
                 condition = (d.id == 1) ? 'Approved' : 'Declined' 
             } 
             tbody.innerHTML += `
-                <tr id="reqs-tr-${d.id}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
+                <tr id="reqs-tr-${d.id}" class="bg-white border-b hover:bg-gray-50">
+                    <th scope="row" colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 ">
                         ${d.id}
                     </th>
                     <td colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600  text-wrap">
@@ -370,8 +370,8 @@
     function updateSurveys(data, tbody){
         data.map(d => {
             tbody.innerHTML += `
-                <tr id="survey-tr-${d.id}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] :max-w-none font-medium text-gray-900 dark:text-white">
+                <tr id="survey-tr-${d.id}" class="bg-white border-b hover:bg-gray-50">
+                    <th colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] :max-w-none font-medium text-gray-900 ">
                         ${d.survey_name}
                     </th>
                     <td colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">

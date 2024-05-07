@@ -18,7 +18,7 @@
                         </li>
                         <li class="flex items-center cursor-pointer gap-x-1 px-0 p-0 md:gap-x-2 md:px-8 md:p-2 hover:bg-gray-100 text-sm md:text-lg" id="A3">
                             <img src="../img/terms.png" alt="">
-                            Terms & Conditions
+                            Academic Rank
                         </li>                                                
                     </ul>
                 </div>
@@ -26,14 +26,17 @@
 
                 <!-- START RIGHT -->
                 <div class="w-full md:w-3/4 p-2">
+                    <form action="../actions/update-xml.php" class="w-full" method="POST">
                     <!-- START ABOUT -->
                     <div class="w-full flex justify-center border-t-2 md:border-t-0 md:border-l-2" id="showA1">
                         <div class="w-full md:w-4/5 flex flex-col place-self-center gap-10 md:gap-y-36">
                             <div class="w-full flex flex-col gap-y-2">
                                 <p class="text-sm md:text-md lg:text-lg">About Us (Landing Page)</p>
-                                <textarea name="" id="" cols="30" rows="10" class="rounded-md text-justify p-2 md:px-4 border-2 text-sm border-gray-500">
-Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero accusamus autem suscipit! Repellendus incidunt, soluta odit a, tenetur eveniet in ratione, delectus repudiandae animi quod molestias odio doloremque! Asperiores odit tempora laborum voluptas at unde enim? Excepturi cupiditate temporibus obcaecati perspiciatis sit illum laboriosam, pariatur culpa nisi ipsum facilis ex. Recusandae voluptatum delectus iusto aspernatur ipsa labore qui dolor numquam ut quia, ea ullam. Eos, at vitae! Provident accusamus cupiditate qui optio iste. Debitis praesentium recusandae eveniet ab ex ipsam sapiente officia perspiciatis vel non harum expedita quibusdam rerum doloremque odio consectetur, temporibus autem minus doloribus explicabo fugit odit! Veniam consectetur officia laborum assumenda odit, incidunt accusantium culpa soluta vel quasi, debitis blanditiis velit. Cupiditate neque architecto sed eos, impedit, illo aliquam, animi mollitia id quo repellat nihil. Ipsum minus nemo, totam et, magni voluptatibus enim doloremque quas obcaecati omnis delectus perspiciatis tempora eius ratione unde nisi vero asperiores distinctio repellat soluta. Quam sint illum accusantium voluptates necessitatibus vero eveniet pariatur quos nemo earum mollitia dicta ut sed quia voluptatem dolorem voluptatibus distinctio, officia libero vel deserunt suscipit neque recusandae. Reiciendis maxime autem ea nam nemo perferendis perspiciatis consectetur vitae itaque libero tempora ullam minus minima provident soluta saepe repellat, voluptas vero ducimus veniam accusantium totam repellendus laborum? Quos sit itaque asperiores illum aspernatur accusantium ullam quo. Earum nisi dolorum deleniti nobis dolore hic molestiae ab nihil, id asperiores blanditiis. Corrupti odit distinctio eveniet commodi odio ad vero! Iste modi non nesciunt tenetur ipsum sapiente nostrum ad cumque rem neque quos, deleniti quas veniam, dicta asperiores ratione earum eum, corporis numquam mollitia recusandae quasi magnam dolorum! Ipsam nulla dignissimos assumenda accusantium nesciunt quisquam est perferendis amet recusandae illum vel placeat temporibus, doloremque voluptates perspiciatis quaerat quod expedita possimus. Quos esse vitae rerum. Reiciendis dolorum nostrum nobis perferendis eaque, soluta aut.
-                                </textarea>                            
+                                <textarea name="about" id="about" cols="30" rows="10" class="rounded-md text-justify p-2 md:px-4 border-2 text-sm border-gray-500"><?php 
+                                        $xml = simplexml_load_file('../../public/info.xml');
+                                        $about = $xml->xpath('//element[@attr="about"]');
+                                        echo $about[0][0];
+                                    ?></textarea>                            
                             </div>
                             <div class="w-full flex justify-end items-end">
                                 <button type="submit" class="bg-[#FF8A01] text-white p-1 px-5 text-sm md:text-md md:p-2 md:px-10 rounded-md">Update</button>
@@ -47,11 +50,13 @@ Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero accusamus autem
                         <div class="w-full flex flex-col justify-center items-center gap-10 md:gap-y-36">
                             <div class="w-full md:w-4/5 flex flex-col gap-y-2">
                                 <p class="text-sm md:text-md lg:text-lg">CICT Courses / Program</p>
-                                <textarea name="" id="" cols="30" rows="10" class="rounded-md text-justify p-2 md:px-4 border-2 text-sm border-gray-500">
-Bachelor of Science in Information Technology
-Bachelor of Science in Information Systems
-Bachelor of Library and Information Science
-                                </textarea>                            
+                                <textarea name="courses" id="courses" cols="30" rows="10" class="rounded-md text-justify p-2 md:px-4 border-2 text-sm border-gray-500"><?php 
+    $xml = simplexml_load_file('../../public/info.xml');
+    $courses = $xml->xpath('//element[@attr="course"]/course');
+    foreach ($courses as $course) {
+        echo $course.'&#13;&#10;';
+    }
+?></textarea>                            
                             </div>
                             <div class="w-full md:w-4/5 flex justify-end items-end">
                                 <button type="submit" class="bg-[#FF8A01] text-white p-1 px-5 text-sm md:text-md md:p-2 md:px-10 rounded-md">Update</button>
@@ -64,17 +69,22 @@ Bachelor of Library and Information Science
                     <div class="w-full hidden border-l-2" id="showA3">
                         <div class="w-full flex flex-col justify-center items-center gap-10 md:gap-y-36">
                             <div class="w-full md:w-4/5 flex flex-col gap-y-2">
-                                <p class="text-sm md:text-md lg:text-lg">Terms and Conditions</p>
-                                <textarea name="" id="" cols="30" rows="10" class="rounded-md text-justify p-2 md:px-4 border-2 text-sm border-gray-500">
-Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero accusamus autem suscipit! Repellendus incidunt, soluta odit a, tenetur eveniet in ratione, delectus repudiandae animi quod molestias odio doloremque! Asperiores odit tempora laborum voluptas at unde enim? Excepturi cupiditate temporibus obcaecati perspiciatis sit illum laboriosam, pariatur culpa nisi ipsum facilis ex. Recusandae voluptatum delectus iusto aspernatur ipsa labore qui dolor numquam ut quia, ea ullam. Eos, at vitae! Provident accusamus cupiditate qui optio iste. Debitis praesentium recusandae eveniet ab ex ipsam sapiente officia perspiciatis vel non harum expedita quibusdam rerum doloremque odio consectetur, temporibus autem minus doloribus explicabo fugit odit! Veniam consectetur officia laborum assumenda odit, incidunt accusantium culpa soluta vel quasi, debitis blanditiis velit. Cupiditate neque architecto sed eos, impedit, illo aliquam, animi mollitia id quo repellat nihil. Ipsum minus nemo, totam et, magni voluptatibus enim doloremque quas obcaecati omnis delectus perspiciatis tempora eius ratione unde nisi vero asperiores distinctio repellat soluta. Quam sint illum accusantium voluptates necessitatibus vero eveniet pariatur quos nemo earum mollitia dicta ut sed quia voluptatem dolorem voluptatibus distinctio, officia libero vel deserunt suscipit neque recusandae. Reiciendis maxime autem ea nam nemo perferendis perspiciatis consectetur vitae itaque libero tempora ullam minus minima provident soluta saepe repellat, voluptas vero ducimus veniam accusantium totam repellendus laborum? Quos sit itaque asperiores illum aspernatur accusantium ullam quo. Earum nisi dolorum deleniti nobis dolore hic molestiae ab nihil, id asperiores blanditiis. Corrupti odit distinctio eveniet commodi odio ad vero! Iste modi non nesciunt tenetur ipsum sapiente nostrum ad cumque rem neque quos, deleniti quas veniam, dicta asperiores ratione earum eum, corporis numquam mollitia recusandae quasi magnam dolorum! Ipsam nulla dignissimos assumenda accusantium nesciunt quisquam est perferendis amet recusandae illum vel placeat temporibus, doloremque voluptates perspiciatis quaerat quod expedita possimus. Quos esse vitae rerum. Reiciendis dolorum nostrum nobis perferendis eaque, soluta aut.
-                                </textarea>                            
+                                <p class="text-sm md:text-md lg:text-lg">Academic Rank</p>
+                                <textarea name="ranks" id="ranks" cols="30" rows="10" class="rounded-md text-justify p-2 md:px-4 border-2 text-sm border-gray-500"><?php 
+    $xml = simplexml_load_file('../../public/info.xml');
+    $ranks = $xml->xpath('//element[@attr="rank"]/rank');
+    foreach ($ranks as $rank) {
+        echo $rank.'&#13;&#10;';
+    }
+?></textarea>                            
                             </div>
                             <div class="w-full md:w-4/5 flex justify-end items-end">
                                 <button type="submit" class="bg-[#FF8A01] text-white p-1 px-5 text-sm md:text-md md:p-2 md:px-10 rounded-md">Update</button>
                             </div>
                         </div>                        
                     </div>
-                    <!-- END TERMS -->                                        
+                    <!-- END TERMS -->     
+                    </form>                                   
                 </div>
                 <!-- END RIGHT -->
             </section>

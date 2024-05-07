@@ -17,6 +17,7 @@ if($res->num_rows > 0)
         $_SESSION["email"] = $row['email'];
         $_SESSION["fullname"] = $row['first_name'].' '.$row['last_name'];
         $_SESSION["points"] = $row['points'];
+        $_SESSION["acc_type"] = $row['type'];
         $_SESSION['verified'] = $row['verified_at'] != null ? true : false;
         $_SESSION['toast']['error'] = false;
         $_SESSION['toast']['message'] =  $row['verified_at'] != null ? "Hello! You're now logged in. Enjoy the journey!" : "Please verify your account to continue.";

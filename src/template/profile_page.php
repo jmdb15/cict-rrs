@@ -15,7 +15,7 @@
                         <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="w-[150px] cursor-pointer py-2 md:py-2.5 px-5 me-2 mb-2 text-xs md:text-md font-medium text-white focus:outline-none bg-[#263238] rounded-lg border border-gray-200 hover:bg-orange-400 focus:z-10 focus:ring-4 focus:ring-gray-100" >
                             Update
                         </button>
-                        <button type="button" class="w-[150px] py-2 md:py-2.5 px-5 me-2 mb-2 text-xs md:text-md font-medium text-white focus:outline-none bg-[#455A64] rounded-lg border border-gray-200 hover:bg-orange-400 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                        <button type="button" class="w-[150px] py-2 md:py-2.5 px-5 me-2 mb-2 text-xs md:text-md font-medium text-white focus:outline-none bg-[#455A64] rounded-lg border border-gray-200 hover:bg-orange-400 focus:z-10 focus:ring-4 focus:ring-gray-100"
                             data-modal-target="changePassword-modal" data-modal-toggle="changePassword-modal">
                             Change Password
                         </button>
@@ -38,80 +38,110 @@
                         <section class="pt-6 flex w-full disabled">
                             <div class="w-full flex flex-wrap justify-between items-center">
                                 <div class="w-full sm:w-[31%] min-w-[180px]">
-                                    <label for="message" class="block mb-2 text-sm md:text-md font-medium text-gray-900 dark:text-white">First Name</label>
+                                    <label for="message" class="block mb-2 text-sm md:text-md font-medium text-gray-900">First Name</label>
                                     <input id="first_name" name="first_name" type="text" value="<?=$row['first_name']?>" class="myInput w-full rounded-xl border p-1 md:p-2 text-sm md:text-md bg-gray-100 disabled:bg-transparent" disabled>
                                 </div>
                                 <div class="w-full sm:w-[31%] min-w-[180px]">
-                                    <label for="message" class="flex flex-row mb-2 text-sm md:text-md font-medium text-gray-900 dark:text-white">Middle Initial <span class="italic text-gray-400">(optional)</span></label>
+                                    <label for="message" class="flex flex-row mb-2 text-sm md:text-md font-medium text-gray-900">Middle Initial <span class="italic text-gray-400">(optional)</span></label>
                                     <input id="middle_name" name="middle_name" type="text" value="<?=$row['middle_name'] ?? ''?>" class="myInput w-full rounded-xl border p-1 md:p-2 text-sm md:text-md bg-gray-100 disabled:bg-transparent" disabled>
                                 </div>
                                 <div class="w-full sm:w-[31%] min-w-[180px]">
-                                    <label for="message" class="block mb-2 text-sm md:text-md font-medium text-gray-900 dark:text-white">Last Name</label>
+                                    <label for="message" class="block mb-2 text-sm md:text-md font-medium text-gray-900">Last Name</label>
                                     <input id="last_name" name="last_name" type="text" value="<?=$row['last_name']?>" class="myInput w-full rounded-xl border p-1 md:p-2 text-sm md:text-md bg-gray-100 disabled:bg-transparent" disabled>
                                 </div>
                             </div>
                         </section>
 
                         <!-- COURSE & SECTION -->
-                        <section class="pt-6 flex flex-col gap-4 w-full disabled">
-                            <div class="flex flex-wrap gap-x-4">
-                                <div>
-                                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course</label>
-                                    <select name="course" id="" class="myInput w-full rounded-xl p-1 md:p-2 text-sm md:text-md bg-gray-100 disabled:bg-transparent" disabled>
-                                        <option value="none" selected disabled>None</option>
-                                        <option value="bsit" <?=$row['course'] == 'bsit' ? 'selected' : ''?> >Bachelor of Science in Information Technology (BSIT)</option>
-                                        <option value="blis" <?=$row['course'] == 'blis' ? 'selected' : ''?> >Bachelor of Library and Information Science (BLIS)</option>
-                                        <option value="bsis" <?=$row['course'] == 'bsis' ? 'selected' : ''?> >Bachelor of Science and Information Systems (BSIS)</option>
+                        <?php if($row['type'] == 'student'){ ?>
+
+                            <section class="pt-6 flex flex-col gap-4 w-full disabled">
+                                <div class="flex flex-wrap gap-x-4">
+                                    <div>
+                                        <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Course</label>
+                                        <select name="course" id="" class="myInput w-full rounded-xl p-1 md:p-2 text-sm md:text-md bg-gray-100 disabled:bg-transparent" disabled>
+                                            <option value="none" selected disabled>None</option>
+                                            <?php 
+                                                $xml = simplexml_load_file('../public/info.xml');
+                                                $courseElements = $xml->xpath('//element[@attr="course"]/course');
+                                                foreach ($courseElements as $course) {
+                                                $is_selected = $crs == $course ? "selected" : "";
+                                                    echo "
+                                                        <option value='$course' $is_selected>$course</option>
+                                                    ";
+                                                }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="specs" class="block mb-2 text-sm font-medium text-gray-900">Specialization</label>
+                                        <select name="specs" id="specs" class="myInput rounded-xl p-1 md:p-2 text-sm md:text-md bg-gray-100 disabled:bg-transparent" disabled>
+                                            <option value="none" <?=$row['specialization'] == 'none' || $row['specialization'] == '' ? 'selected' : ''?> >None</option>
+                                            <option value="wmad" <?=$row['specialization'] == 'wmad' ? 'selected' : ''?> >Web Dev</option>
+                                            <option value="ba" <?=$row['specialization'] == 'ba' ? 'selected' : ''?> >Bussiness Analytics</option>
+                                            <option value="sm" <?=$row['specialization'] == 'sm' ? 'selected' : ''?> >Service Management</option>
+                                        </select>
+                                    </div>
+                                    <div>   
+                                        <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Year</label>
+                                        <select name="year" id="" class="myInput rounded-xl p-1 md:p-2 text-sm md:text-md bg-gray-100 disabled:bg-transparent" disabled>
+                                            <option value="1" <?=$row['year'] == '1' ? 'selected' : ''?> >1st</option>
+                                            <option value="2" <?=$row['year'] == '2' ? 'selected' : ''?> >2nd</option>
+                                            <option value="3" <?=$row['year'] == '3' ? 'selected' : ''?> >3rd</option>
+                                            <option value="4" <?=$row['year'] == '4' ? 'selected' : ''?> >4th</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="section" class="block mb-2 text-sm font-medium text-gray-900">Section</label>
+                                        <input id="section" name="section" type="text" value="<?=$row['section']?>" class="myInput rounded-xl border p-1 md:p-2 text-sm md:text-md bg-gray-100 disabled:bg-transparent" disabled>
+                                    </div>                                                                
+                                </div>
+                            </section>
+                            
+                        <?php }else{ ?>
+                                <div class="pt-6 w-1/2">
+                                    <label for="acad_rank" class="block mb-2 text-sm font-medium text-gray-900">Academic Rank</label>
+                                    <select name="acad_rank" id="acad_rank" class="myInput w-full rounded-xl p-1 md:p-2 text-sm md:text-md bg-gray-100 disabled:bg-transparent" disabled>
+                                        <?php 
+                                            $xml = simplexml_load_file('../public/info.xml');
+                                            $ranks = $xml->xpath('//element[@attr="rank"]/rank');
+                                            foreach ($ranks as $rank) {
+                                            $is_selected = $acad_rank == $rank ? "selected" : "";
+                                                echo "
+                                                    <option value='$rank' $is_selected>$rank</option>
+                                                ";
+                                            }
+                                        ?>
                                     </select>
                                 </div>
-                                <div>
-                                    <label for="specs" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Specialization</label>
-                                    <select name="specs" id="specs" class="myInput rounded-xl p-1 md:p-2 text-sm md:text-md bg-gray-100 disabled:bg-transparent" disabled>
-                                        <option value="none" <?=$row['specialization'] == 'none' || $row['specialization'] == '' ? 'selected' : ''?> >None</option>
-                                        <option value="wmad" <?=$row['specialization'] == 'wmad' ? 'selected' : ''?> >Web Dev</option>
-                                        <option value="ba" <?=$row['specialization'] == 'ba' ? 'selected' : ''?> >Bussiness Analytics</option>
-                                        <option value="sm" <?=$row['specialization'] == 'sm' ? 'selected' : ''?> >Service Management</option>
-                                    </select>
-                                </div>
-                                <div>   
-                                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Year</label>
-                                    <select name="year" id="" class="myInput rounded-xl p-1 md:p-2 text-sm md:text-md bg-gray-100 disabled:bg-transparent" disabled>
-                                        <option value="1" <?=$row['year'] == '1' ? 'selected' : ''?> >1st</option>
-                                        <option value="2" <?=$row['year'] == '2' ? 'selected' : ''?> >2nd</option>
-                                        <option value="3" <?=$row['year'] == '3' ? 'selected' : ''?> >3rd</option>
-                                        <option value="4" <?=$row['year'] == '4' ? 'selected' : ''?> >4th</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="section" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Section</label>
-                                    <input id="section" name="section" type="text" value="<?=$row['section']?>" class="myInput rounded-xl border p-1 md:p-2 text-sm md:text-md bg-gray-100 disabled:bg-transparent" disabled>
-                                </div>                                                                
-                            </div>
-                        </section>
+
+                        <?php } ?>
+
+                
 
                         <!-- SEX - STUDENT NUMBER - EMAIL -->
                         <section class="pt-6 flex flex-col md:flex-row gap-4 w-full">
                             <!-- INPUT FIELDS -->
                             <div class="flex-1 sm:min-w-[430px]">
                                 <div class="flex flex-wrap w-full gap-4">
+                                    <!-- STUDENT NUMBER -->
+                                    <div class="flex flex-col gap-x-8 w-full flex-1">
+                                        <label for="message" class="flex flex-row mb-2 text-sm font-medium text-gray-900"><?=($row['type'] == 'student') ? 'Student' : 'Employee'?> Number</label>
+                                        <input type="number" value="<?=$_SESSION['id']?>" class="rounded-xl border p-1 md:p-2 text-sm md:text-md" disabled name="#_number" max="10">
+                                    </div>
                                     <!-- SEX DROPDOWN -->
-                                    <div class="flex flex-col gap-x-8 w-full md:w-[160px]">
-                                        <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sex</label>
+                                    <div class="flex flex-col gap-x-8 w-full flex-1">
+                                        <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Sex</label>
                                         <select name="sex" id="sex" class="myInput rounded-xl border p-1 md:p-2 text-sm md:text-md bg-gray-100 disabled:bg-transparent" disabled>
                                             <option value="male" <?=$row['sex'] == 'male' ? 'selected' : ''?> >Male</option>
                                             <option value="female" <?=$row['sex'] == 'female' ? 'selected' : ''?> >Female</option>
                                         </select>
                                     </div>
-                                    <!-- STUDENT NUMBER -->
-                                    <div class="flex flex-col gap-x-8 w-full md:w-[250px]">
-                                        <label for="message" class="flex flex-row mb-2 text-sm font-medium text-gray-900 dark:text-white">Student Number</label>
-                                        <input type="number" placeholder="<?=$_SESSION['id']?>" class="rounded-xl border p-1 md:p-2 text-sm md:text-md" disabled name="#_number" max="10">
-                                    </div>
                                 </div>
                                 <!-- EMAIL FIELD -->
-                                <div class="flex flex-col gap-x-8 w-full md:w-[430px]">
-                                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                                    <input type="email" id="email" value="<?=$row['email']?>" class="myInput rounded-xl border p-1 md:p-2 text-sm md:text-md bg-gray-100 disabled:bg-transparent" disabled>
+                                <div class="pt-6 flex flex-col gap-x-8 w-full md:w-[430px]">
+                                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
+                                    <input type="email" name="email" id="email" value="<?=$row['email']?>" class="myInput rounded-xl border p-1 md:p-2 text-sm md:text-md bg-gray-100 disabled:bg-transparent" disabled>
                                 </div>
                             </div>
                             <!-- BUTTONS -->
@@ -120,13 +150,13 @@
                                     class="w-full sm:w-[180px] max-h-[46px] py-2 px-3 text-base text-white focus:outline-none bg-orange-400 rounded-lg border border-gray-200 ">
                                     Edit
                                 </button>
-                                <div id="editSection" class="hidden h-full w-full flex-col lg:flex-row justify-end gap-2">
+                                <div id="editSection" class="hidden h-full w-full flex-col lg:flex-row justify-end items-end gap-2">
                                     <button id="saveBtn"
                                         type="submit"
-                                        class="w-full sm:w-[180px] max-h-[46px] justify-center items-center cursor-pointer py-2 px-3 rounded-lg border text-sm border-gray-200 text-white bg-[#ff8a01]">Save</button>
+                                        class="w-full sm:w-[180px] max-h-[46px] justify-center items-center cursor-pointer py-2.5 px-3 rounded-lg border text-sm border-gray-200 text-white bg-[#ff8a01]">Save</button>
                                     <button id="cancelBtn"
                                         type="button"
-                                        class="w-full sm:w-[180px] max-h-[46px] justify-center items-center cursor-pointer py-2 px-3 rounded-lg border text-sm border-gray-200 text-white bg-[#263238]">Cancel</button>
+                                        class="w-full sm:w-[180px] max-h-[46px] justify-center items-center cursor-pointer py-2.5 px-3 rounded-lg border text-sm border-gray-200 text-white bg-[#263238]">Cancel</button>
                                 </div>
                             </div>
                         </section>
@@ -140,13 +170,13 @@
     <div id="changePassword-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-md max-h-full">
             <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="relative bg-white rounded-lg shadow">
                 <!-- Modal header -->
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                    <h3 class="text-sm lg:text-lg font-semibold text-gray-900 dark:text-white">
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                    <h3 class="text-sm lg:text-lg font-semibold text-gray-900">
                         Change Password
                     </h3>
-                    <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="changePassword-modal">
+                    <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="changePassword-modal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
@@ -157,22 +187,22 @@
                 <div class="p-4 md:p-5">
                     <form class="space-y-4" onsubmit="changePassAjax(event)">
                         <div>
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter your old password</label>
-                            <input type="password" name="current_password" id="current_password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Enter your old password</label>
+                            <input type="password" name="current_password" id="current_password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                         </div>
                         <div>
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter your new password</label>
-                            <input type="password" name="new_password" id="new_password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"  pattern="(?=.*\d)(?=.*[A-Z]).{8,}" title="Password must contain at least one number, one uppercase letter, and be at least 8 characters long" required />
+                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Enter your new password</label>
+                            <input type="password" name="new_password" id="new_password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"  pattern="(?=.*\d)(?=.*[A-Z]).{8,}" title="Password must contain at least one number, one uppercase letter, and be at least 8 characters long" required />
                         </div>
                         <div>
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Re-enter your new password</label>
-                            <input type="password" name="confirm_password" id="confirm_password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"  pattern="(?=.*\d)(?=.*[A-Z]).{8,}" title="Password must contain at least one number, one uppercase letter, and be at least 8 characters long" required />
+                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Re-enter your new password</label>
+                            <input type="password" name="confirm_password" id="confirm_password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"  pattern="(?=.*\d)(?=.*[A-Z]).{8,}" title="Password must contain at least one number, one uppercase letter, and be at least 8 characters long" required />
                         </div>
                         <div id="error-cont" class="hidden w-full text-center text-red-500 text-sm border-red-500 border bg-red-200 py-1 px-2 rounded-md">Password does not match</div>
                         <div class="w-full flex flex-row gap-4">
-                            <button type="submit" class="w-1/2 text-white bg-[#FF8A01] hover:bg-white-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="changePass">
+                            <button type="submit" class="w-1/2 text-white bg-[#FF8A01] hover:bg-white-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" name="changePass">
                                 Confirm</button>
-                            <button type="submit" class="w-1/2 text-white bg-gray-500 hover:bg-white-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            <button type="submit" class="w-1/2 text-white bg-gray-500 hover:bg-white-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                                 data-modal-hide="changePassword-modal">Cancel</button>   
                         </div>
                     </form>  
@@ -184,7 +214,7 @@
     <!-- CHANGE PROFILE Modal -->
     <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-xl max-h-full">
-            <div class="relative bg-white rounded-lg drop-shadow-2xl dark:bg-gray-700">
+            <div class="relative bg-white rounded-lg drop-shadow-2xl ">
                 <div class="p-4 md:p-5 text-center gap-4">
                     <h3 class="mb-5 text-lg font-normal text-gray-900 uppercase">Change Profile Picture</h3>                    
                     <form action="actions/change-dp.php" method="POST" enctype="multipart/form-data" class="w-full flex flex-col gap-16 justify-center items-center">
@@ -371,11 +401,6 @@ function setBackgroundWhenEditing() {
             inputField.setAttribute('disabled', 'disabled');
         });
     });
-
-    // document.getElementById('saveBtn').addEventListener('click', function () {
-    //     // Add your save logic here
-    //     alert("Saving changes...");
-    // });
 
     // Set default background color initially
     setDefaultBackgroundColor();

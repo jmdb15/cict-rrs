@@ -22,6 +22,7 @@ if(!$res->num_rows > 0){
             $_SESSION["email"] = $email;
             $_SESSION['points'] = 0;
             $_SESSION["fullname"] = $row['first_name'].' '.$row['last_name'];
+            $_SESSION["acc_type"] = $type;
             $_SESSION['verified'] = false;
             $_SESSION['toast']['error'] = false;
             $_SESSION['toast']['message'] = "Hello! You're now logged in. Enjoy the journey!";
