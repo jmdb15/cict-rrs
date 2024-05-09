@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <elements> 
-  <element attr="about">CICT-RRS is designed to assist the entire college community with their research endeavors. Our platform empowers students and faculty members alike to effortlessly discover pertinent topics for their studies, anytime and anywhere. Additionally, researchers can utilize our website to efficiently gather respondents by uploading their questionnaires, streamlining the data collection process. With this website, the college can now preserve all completed studies conducted by the entire college community, ensuring that valuable research contributions are archived and accessible for future reference and knowledge dissemination.                               &#xD;
+  <element attr="about">CICT-Files is designed to assist the entire college community with their research endeavors. Our platform empowers students and faculty members alike to effortlessly discover pertinent topics for their studies, anytime and anywhere. Additionally, researchers can utilize our website to efficiently gather respondents by uploading their questionnaires, streamlining the data collection process. With this website, the college can now preserve all completed studies conducted by the entire college community, ensuring that valuable research contributions are archived and accessible for future reference and knowledge dissemination.                               &#xD;
 </element>
   <element attr="course">
   <course>Bachelor of Science in Information Technology</course><course>Bachelor of Library and Information Science</course><course>Bachelor of Science and Information Systems</course></element>
   <element attr="rank">
-  <rank>Instructor I</rank><rank>Instructor II</rank><rank>Instructor III</rank><rank>Instructor IV</rank><rank>Instructor V</rank><rank>Associate Professor</rank><rank>Professor I</rank><rank>Professor II</rank><rank>Professor III</rank><rank>Professor IV</rank><rank>Professor V</rank><rank>Professor VI</rank><rank>University Professor</rank></element>
+  <rank>Instructor I</rank><rank>Instructor II</rank><rank>Instructor III</rank><rank>Associate Professor</rank><rank>Professor I</rank><rank>Professor II</rank><rank>Professor III</rank><rank>Professor IV</rank><rank>Professor V</rank><rank>Professor VI</rank><rank>University Professor</rank></element>
 </elements>

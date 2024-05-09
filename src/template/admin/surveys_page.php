@@ -1,5 +1,5 @@
 <div class="relative overflow-x-auto p-2 lg:px-24 xl:px-48">
-    <div class="flex justify-center items-center gap-4 md:gap-12 p-8">
+    <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-12 p-8">
         <button class="active option-btns">Surveys</button>
         <button class="btn-bordered option-btns">Archived</button>
     </div>
@@ -189,7 +189,7 @@
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
                             <span onclick="archiveFile(<?= $row['id'] ?>, 0, 'surveys')" class="flex gap-1 items-center font-medium text-gray-500 hover:underline">
                                 <img src="../../src/img/Restore Page.svg" alt="">
-                                Unarchive
+                                Restore
                             </span>                            
                         </td>
                     </tr>
@@ -320,7 +320,7 @@
                             action = `
                                 <span onclick="archiveFile(${data.id}, 0, 'surveys')" class="flex gap-1 items-center font-medium text-gray-500  hover:underline">
                                     <img src="../../src/img/Restore Page.svg" alt="">
-                                    Unarchivee
+                                    Restoree
                                 </span>    
                             `;
                         }

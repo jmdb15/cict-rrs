@@ -1,100 +1,162 @@
 <div class="relative overflow-x-auto p-2 lg:px-24 xl:px-48 min-h-[390px]">
-    <div class="flex justify-center items-center gap-4 md:gap-12 p-8 ">
-        <button id="btn-pending" class="active option-btns">Pending</button>
-        <button id="btn-files" class="btn-bordered option-btns">Files</button>
-        <button id="btn-arch" class="btn-bordered option-btns">Archived</button>
+    <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-12 p-8 ">
+        <button id="btn-pending" class="active option-btns min-w-[260px]">Pending</button>
+        <button id="btn-files" class="btn-bordered option-btns min-w-[260px]">Files</button>
+        <button id="btn-arch" class="btn-bordered option-btns min-w-[260px]">Archived</button>
     </div>
     <div >
-        <form class="flex flex-col sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4" id="search-form" onsubmit="formSubmit(this, event)">
+        <form class="flex flex-row space-y-4 sm:space-y-0 items-center justify-around md:justify-between pb-4" id="search-form" onsubmit="formSubmit(this, event)">
             <input 
                 id="active-type"
                 type="text"
                 value="files" 
                 name="active" 
                 hidden 
-                />
-            <div>
-                <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5" type="button">
-                    <svg class="w-3 h-3 text-gray-500me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
+            />
+            <!-- DATE FILTER -->
+            <div class="flex gap-x-2">
+                <div>
+                    <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5" type="button">
+                        <svg class="w-3 h-3 text-gray-500me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
+                            </svg>
+                        <span id="radio-filter">All</span>
+                        <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                         </svg>
-                    <span id="radio-filter">All</span>
-                    <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                    </svg>
-                </button>
-                <!-- Dropdown menu -->
-                <div id="dropdownRadio" class="z-50 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-                    <ul class="p-3 space-y-1 text-sm text-gray-700" aria-labelledby="dropdownRadioButton">
-                        <li onclick="()=>{document.querySelector('#radio-filter').innerText='All'}">
-                            <div class="flex items-center p-2 rounded hover:bg-gray-100">
-                                <input 
-                                    <?= (!isset($_GET['type']) ? 'checked' : $_GET['type'] == 'all' ) ? 'checked' : '' ?> 
-                                    id="filter-radio-example-5" 
-                                    type="radio" 
-                                    value="all" 
-                                    name="date" 
-                                    onclick="clickSubmitBtn()"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                                <label for="filter-radio-example-5" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">All</label>
-                            </div>
-                        </li>
-                        <li >
-                            <div class="flex items-center p-2 rounded hover:bg-gray-100">
-                                <input 
-                                    <?= (!isset($_GET['type']) ? '' : $_GET['type'] == 'day' ) ? 'checked' : '' ?>
-                                    id="filter-radio-example-1" 
-                                    type="radio" 
-                                    value="yesterday" 
-                                    name="date"
-                                    onclick="clickSubmitBtn()"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                                <label for="filter-radio-example-1" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">Yesterday</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex items-center p-2 rounded hover:bg-gray-100">
-                                <input 
-                                    <?= (!isset($_GET['type']) ? '' : $_GET['type'] == 'week' ) ? 'checked' : '' ?>
-                                    id="filter-radio-example-2" 
-                                    type="radio" 
-                                    value="week" 
-                                    name="date" 
-                                    onclick="clickSubmitBtn()"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                                <label for="filter-radio-example-2" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">Last Week</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex items-center p-2 rounded hover:bg-gray-100">
-                                <input 
-                                    <?= (!isset($_GET['type']) ? '' : $_GET['type'] == 'month' ) ? 'checked' : '' ?>
-                                    id="filter-radio-example-3" 
-                                    type="radio" 
-                                    value="month" 
-                                    name="date" 
-                                    onclick="clickSubmitBtn()"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                                <label for="filter-radio-example-3" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">Last Month</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex items-center p-2 rounded hover:bg-gray-100">
-                                <input 
-                                    <?= (!isset($_GET['type']) ? '' : $_GET['type'] == 'year' ) ? 'checked' : '' ?>
-                                    id="filter-radio-example-4" 
-                                    type="radio" 
-                                    value="year" 
-                                    name="date" 
-                                    onclick="clickSubmitBtn()"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                                <label for="filter-radio-example-4" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">Last Year</label>
-                            </div>
-                        </li>
-                    </ul>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div id="dropdownRadio" class="z-50 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
+                        <ul class="p-3 space-y-1 text-sm text-gray-700" aria-labelledby="dropdownRadioButton">
+                            <li onclick="()=>{document.querySelector('#radio-filter').innerText='All'}">
+                                <div class="flex items-center p-2 rounded hover:bg-gray-100">
+                                    <input 
+                                        <?= (!isset($_GET['type']) ? 'checked' : $_GET['type'] == 'all' ) ? 'checked' : '' ?> 
+                                        id="filter-radio-example-5" 
+                                        type="radio" 
+                                        value="all" 
+                                        name="date" 
+                                        onclick="clickSubmitBtn()"
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <label for="filter-radio-example-5" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">All</label>
+                                </div>
+                            </li>
+                            <li >
+                                <div class="flex items-center p-2 rounded hover:bg-gray-100">
+                                    <input 
+                                        <?= (!isset($_GET['type']) ? '' : $_GET['type'] == 'day' ) ? 'checked' : '' ?>
+                                        id="filter-radio-example-1" 
+                                        type="radio" 
+                                        value="yesterday" 
+                                        name="date"
+                                        onclick="clickSubmitBtn()"
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <label for="filter-radio-example-1" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">Yesterday</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="flex items-center p-2 rounded hover:bg-gray-100">
+                                    <input 
+                                        <?= (!isset($_GET['type']) ? '' : $_GET['type'] == 'week' ) ? 'checked' : '' ?>
+                                        id="filter-radio-example-2" 
+                                        type="radio" 
+                                        value="week" 
+                                        name="date" 
+                                        onclick="clickSubmitBtn()"
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <label for="filter-radio-example-2" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">Last Week</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="flex items-center p-2 rounded hover:bg-gray-100">
+                                    <input 
+                                        <?= (!isset($_GET['type']) ? '' : $_GET['type'] == 'month' ) ? 'checked' : '' ?>
+                                        id="filter-radio-example-3" 
+                                        type="radio" 
+                                        value="month" 
+                                        name="date" 
+                                        onclick="clickSubmitBtn()"
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <label for="filter-radio-example-3" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">Last Month</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="flex items-center p-2 rounded hover:bg-gray-100">
+                                    <input 
+                                        <?= (!isset($_GET['type']) ? '' : $_GET['type'] == 'year' ) ? 'checked' : '' ?>
+                                        id="filter-radio-example-4" 
+                                        type="radio" 
+                                        value="year" 
+                                        name="date" 
+                                        onclick="clickSubmitBtn()"
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <label for="filter-radio-example-4" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">Last Year</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- COURSE FILTER -->
+                <div>
+                    <button id="courseDropdownRadioButton" data-dropdown-toggle="courseDropdownRadio" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5" type="button">
+                        <span id="radio-filter">All</span>
+                        <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                    </button>
+                    <div id="courseDropdownRadio" class="z-50 hidden w-fit bg-white divide-y divide-gray-100 rounded-lg shadow" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
+                        <ul class="p-3 space-y-1 text-sm text-gray-700" aria-labelledby="courseDropdownRadioButton">
+                            <li onclick="()=>{document.querySelector('#radio-filter').innerText='All'}">
+                                <div class="flex items-center p-2 rounded hover:bg-gray-100">
+                                    <input 
+                                        checked
+                                        id="filter-course-0" 
+                                        type="radio" 
+                                        value="all" 
+                                        name="course" 
+                                        onclick="clickSubmitBtn()"
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <label for="filter-course-0" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">All</label>
+                                </div>
+                            </li>
+                            <!-- XML COURSE -->
+                            <?php 
+                                $xml = simplexml_load_file('../../public/info.xml');
+                                $courseElements = $xml->xpath('//element[@attr="course"]/course');
+                                $index = 1;
+                                foreach ($courseElements as $course) { ?>
+                                    <li>
+                                        <div class="flex items-center p-2 rounded hover:bg-gray-100">
+                                            <input 
+                                                id="filter-course-<?=$index?>" 
+                                                type="radio" 
+                                                value="<?=$course?>" 
+                                                name="course" 
+                                                onclick="clickSubmitBtn()"
+                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                                            />
+                                            <label for="filter-course-<?=$index?>" class="w-full ms-2 text-sm font-medium text-gray-900 rounded"><?=$course?></label>
+                                        </div>
+                                    </li>
+                            <?php $index++; } ?>
+                            <!-- NONE-FILTER -->
+                            <li onclick="()=>{document.querySelector('#radio-filter').innerText='All'}">
+                                <div class="flex items-center p-2 rounded hover:bg-gray-100">
+                                    <input 
+                                        id="filter-course-<?=$index?>" 
+                                        type="radio" 
+                                        value="none" 
+                                        name="course" 
+                                        onclick="clickSubmitBtn()"
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <label for="filter-course-<?=$index?>" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">None</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div class="relative flex">
+            <div class="relative flex w-[240px] md:w-auto min-w-[240px]">
                 <label for="table-search" class="sr-only">Search</label>
                 <div class="absolute border-r-[1px] border-gray-300 px-2.5 h-[36.5px] top-0 start-0 flex items-center pointer-events-none">
                     <svg class="w-3 h-3 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -155,8 +217,8 @@
                         $row['created_at'] = $dateTime->format("F j, Y");    
                 ?>
                         <tr id="ptr-<?=$row['id']?>" class="bg-white border-b hover:bg-gray-50">
-                            <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                <?=$row['project_title']?>
+                            <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 text-wrap max-w-[400px]">
+                                <?=$row['research_title']?>
                             </th>
                             <td class="px-1 sm:px-6 py-4 text-gray-600">
                                 <?=$row['email']?>
@@ -183,8 +245,8 @@
                         $row['created_at'] = $dateTime->format("F j, Y");    
                 ?>
                         <tr id="tr-<?=$row['id']?>" class="bg-white border-b hover:bg-gray-50">
-                            <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                <?=$row['project_title']?>
+                            <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 text-wrap max-w-[400px]">
+                                <?=$row['research_title']?>
                             </th>
                             <td class="px-1 sm:px-6 py-4 text-gray-600">
                                 <?=$row['email']?>
@@ -214,8 +276,8 @@
                         $row['created_at'] = $dateTime->format("F j, Y");    
                 ?>
                         <tr id="atr-<?=$row['id']?>" class="bg-white border-b hover:bg-gray-50">
-                            <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                <?=$row['project_title']?>
+                            <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 text-wrap max-w-[400px]">
+                                <?=$row['research_title']?>
                             </th>
                             <td class="px-1 sm:px-6 py-4 text-gray-600">
                                 <?=$row['email']?>
@@ -229,7 +291,7 @@
                             <td class="px-1 sm:px-6 py-4 flex text-gray-600">
                                 <span onclick="archiveFile(<?=$row['id']?>, 0, 'studies')" class="flex gap-1 items-center font-medium text-gray-500 hover:underline">
                                     <img src="../../src/img/Restore Page.svg" alt="">
-                                    Unarchive
+                                    Restore
                                 </span>                            
                             </td>
                         </tr>
@@ -241,7 +303,7 @@
 
 
 <script>
-    let active = 'files';
+    let active = 'pending';
     setActiveNav('files');
     initiateFileButtons();
 
@@ -252,9 +314,20 @@
         input.addEventListener('change', updateSelectedFilter);
     });
     
-    
     function getSelectedDateValue(){
         const type = document.getElementsByName("date");
+        let selectedValue = "";
+        for (var i = 0; i < type.length; i++) {
+            if (type[i].checked) {
+                selectedValue = type[i].value;
+                break;
+            }
+        }
+        return selectedValue;
+    }
+
+    function getSelectedCourseValue(){
+        const type = document.getElementsByName("course");
         let selectedValue = "";
         for (var i = 0; i < type.length; i++) {
             if (type[i].checked) {
@@ -309,9 +382,11 @@
     function formSubmit(form, event){
         event.preventDefault();
         const selectedValue = getSelectedDateValue();
-        const activeType = document.getElementById('active-type').value == 'archived' ? 1 : 0 ;
+        const activeType = document.getElementById('active-type').value == 'archived' ? 1 : 0;
         const key = document.getElementById('table-search').value;
-        
+        const status = active;
+        const course = getSelectedCourseValue();
+
         const radioFilter = selectedValue == 'yesterday' || selectedValue == 'all' ? capitalizeFirst(selectedValue) : `Last ${capitalizeFirst(selectedValue)}`;
         
         $.ajax({
@@ -320,12 +395,14 @@
             data:{
                 key: key,
                 active:activeType,
+                status:status,
                 date:selectedValue,
+                course: course,
                 table: 'studies'
             },
             success: function(response){
                 const parsed = JSON.parse(response);
-                const elemId = activeType == '1' ? 'archived-tbody' : 'not-archived-tbody';
+                const elemId = active == 'pending' ? 'pending-tbody' : active == 'files' ? 'not-archived-tbody' : 'archived-tbody';
                 let tbody = document.getElementById(elemId);
                 
                 if(parsed.length == 0){
@@ -340,7 +417,7 @@
                     renderedHTML = parsed.map(data => {
                         let action = '';
                         let newId = '';
-                        if(activeType == 0){
+                        if(active == 'files'){
                             newId = `id="tr-${data.id}"`;
                             action = `
                                 <a href="view_study.php?id=${data.id}" class="flex gap-1 items-center font-medium text-gray-500 hover:underline">
@@ -352,19 +429,28 @@
                                     Archive
                                 </span>
                             `;
-                        }else{
+                        }else if(active == 'archived'){
                             newId = `id="atr-${data.id}"`;
                             action = `
                                 <span onclick="archiveFile(${data.id}, 0, 'studies')" class="flex gap-1 items-center font-medium text-gray-500 hover:underline">
                                     <img src="../../src/img/Restore Page.svg" alt="">
-                                    Unarchive
+                                    Restore
                                 </span>    
+                            `;
+                        }else{
+                            newId = `id="ptr-${data.id}"`;
+                            action = `
+                                <a href="view_study.php?id=${data.id}" class="flex gap-1 items-center font-medium text-gray-500 hover:underline">
+                                    <img src="../../src/img/View.svg" alt="" title="View">
+                                </a>
+                                <img src="../../src/img/Ok.svg" alt="Approve" title="Approve" class="hover:brightness-110 cursor-pointer" onclick="uploadFunction(${data.id}, 1)">
+                                <img src="../../src/img/Cancel.svg" alt="Reject" title="Deny" class="hover:brightness-110 cursor-pointer" onclick="uploadFunction(${data.id}, -1)">     
                             `;
                         }
                         return tr = `
                             <tr ${newId} class="bg-white border-b hover:bg-gray-50">
-                                <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                    ${data.project_title}
+                                <th scope="row" class="px-1 sm:px-6 py-4 font-medium text-gray-900 text-wrap max-w-[400px]">
+                                    ${data.research_title}
                                 </th>
                                 <td class="px-1 sm:px-6 py-4 text-gray-600">
                                     ${data.email}
@@ -373,7 +459,7 @@
                                     ${data.created_at}
                                 </td>
                                 <td class="px-1 sm:px-6 py-4 text-gray-600">
-                                    ${data.status == 1 ? 'Approved' : 'Declined'}
+                                    ${data.is_approved == 1 ? 'Approved' : data.is_approved == 0 ? 'Pending' : 'Declined'}
                                 </td>
                                 <td class="px-1 sm:px-6 py-4 text-gray-600 flex gap-x-4">
                                     ${action}
@@ -408,6 +494,7 @@
                 const exportBtn = document.querySelector('#export-btn');
                 if(index !== 1) exportBtn.classList.add('hidden');
                 else exportBtn.classList.remove('hidden');
+                console.log(active);
             });
         });
     }
@@ -438,10 +525,10 @@
                         : `
                             <span onclick="archiveFile(${id}, 0, 'studies')" class="flex gap-1 items-center font-medium text-gray-500 hover:underline">
                                 <img src="../../src/img/Restore Page.svg" alt="">
-                                Unarchive
+                                Restore
                             </span> 
                         `;
-                    tr.lastElementChild.previousElementSibling.innerText = 'Approved';
+                    tr.lastElementChild.previousElementSibling.innerText = action === 1 ? 'Approved' : 'Declined';
                     tr.lastElementChild.classList.add('flex');
                     tr.lastElementChild.classList.add('gap-x-4');
                     tr.lastElementChild.innerHTML = lastTd;

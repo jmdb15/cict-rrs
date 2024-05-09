@@ -1,9 +1,12 @@
 <?php
-
+session_start();
 require_once('../../dompdf/autoload.inc.php');
 require_once('../../db/db.php');
 use Dompdf\Dompdf;
 extract($_POST);
+
+$uid = $_SESSION['id'];
+insertLog($conn, $uid, 'Report for list of research are generated');
 
 // if(isset($submit)){
 if(true){
@@ -28,11 +31,14 @@ if(true){
       break;
   }
 
-  $sql = "SELECT s.*, p.first_name, p.last_name FROM $table s JOIN profile p ON s.account_id=p.account_id WHERE project_title LIKE '%$key%' AND is_archived = 0 $within";
+  $sql = "SELECT s.*, p.first_name, p.last_name FROM $table s JOIN profile p ON s.account_id=p.account_id WHERE s.research_title LIKE '%$key%' AND s.is_archived = 0 $within";
   // $sql = "SELECT * FROM studies";
   $result = $conn->query($sql);
+  date_default_timezone_set('Asia/Shanghai');
+  $currentDateTime = date('M d, Y h:i a');
   $html = '';
-  $imagePath = '../../src/img/images.jpeg';
+  $cict = '../../src/img/images.jpeg';
+  $bsu = '../../src/img/bsu.jpg';
   $html .= '
     <style>
       .div{
@@ -41,11 +47,6 @@ if(true){
         justify-content: center;
         align-items: center;
       }
-      .one{
-        top: 0;
-        left: 0;
-        position: absolute;
-      }
       .two{
         width: 100%;
         display: flex;
@@ -53,8 +54,16 @@ if(true){
         font-size: 1rem;
         justify-content: center;
         align-items: center;
-        border: solid 1px red;
         margin: 0 auto;
+      }
+      .footer {
+        position: fixed;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        text-align: right;
+        font-size: 15px;
+        color: orange;
       }
       .two h1{
         margin: 0;
@@ -64,39 +73,37 @@ if(true){
       }
       .three{
         top: 0;
-        right: 0;
+        left: 0;
         position: absolute;
       }
       .four{
-        top: 30;
-        right: 40;
+        top: 0;
+        right: 0;
         position: absolute;
       }
     </style>
     <div class="div">
       
-      <div class="one">
-        <img src="data:image/jpeg;base64,'.base64_encode(file_get_contents($imagePath)).'" style="position:absolute; top: 10px; left: 5px;" height="70" width="80">
-      </div>
       <div class="two" align="center">
         <h1>Bulacan State University </h1>
         <p style="margin: 0;">College of Information and Communications Technology</p>
         <p>Research Repository System<p/>
       </div>
       <div class="three">
-        <img src="data:image/jpeg;base64,'.base64_encode(file_get_contents($imagePath)).'" style="position:absolute; top: 10px; left: 5px;" height="100" width="110">
+        <img src="data:image/jpg;base64,'.base64_encode(file_get_contents($bsu)).'" style="position:absolute; top: 10px; left: 5px;" height="100" width="110">
       </div>
       <div class="four">
-        <img src="data:image/jpeg;base64,'.base64_encode(file_get_contents($imagePath)).'" style="position:absolute; top: 10px; left: 5px;" height="100" width=110">
+        <img src="data:image/jpeg;base64,'.base64_encode(file_get_contents($cict)).'" style="position:absolute; top: 10px; left: 5px;" height="100" width=110">
       </div>
 
     </div>
-    <h4 align="center">Activity Logs of Users</h4>
+    <h4 align="center">Report of Research</h4>
+    <p>Report generated on: '.$currentDateTime.'</p>
     <table style="width: 100%; border-collapse: collapse;">
       <tr> 
         <th style="border:1px solid #ddd; padding:8px; text-align:left;">ID</th>
         <th style="border:1px solid #ddd; padding:8px; text-align:left;">Name</th>
-        <th style="border:1px solid #ddd; padding:8px; text-align:left;">Activty</th>
+        <th style="border:1px solid #ddd; padding:8px; text-align:left;">Research Title</th>
         <th style="border:1px solid #ddd; padding:8px; text-align:left;">Created at</th>
       </tr>
   ';
@@ -109,7 +116,6 @@ if(true){
         <tr>
           <td style="border:1px solid #ddd; padding:8px; text-align:left;">'.$count.'</td>
           <td style="border:1px solid #ddd; padding:8px; text-align:left;">'.$row['first_name'].' '.$row['last_name'].'</td>
-          <td style="border:1px solid #ddd; padding:8px; text-align:left;">'.$row['project_title'].'</td>
           <td style="border:1px solid #ddd; padding:8px; text-align:left;">'.$row['research_title'].'</td>
           <td style="border:1px solid #ddd; padding:8px; text-align:left;">'.$row['created_at'].'</td>
         </tr>
@@ -123,12 +129,8 @@ if(true){
       </tr>
     ';
   }
-  date_default_timezone_set('Asia/Shanghai');
-  $currentDateTime = date('M d, Y h:i a');
-  
   $html .= '</table>
-    <h5>Report generated on: '.$currentDateTime.'</h5>
-  ';
+  <div class="footer" >Printed by CICT-Files Admin</div>';
   $dompdf = new DOMPDF();
   $dompdf->loadHtml($html);
   $dompdf->setPaper('A4', 'portrait');

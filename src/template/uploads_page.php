@@ -39,9 +39,6 @@
                 </div>
                 <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                     <tr>
-                        <th scope="col" colspan="2" class="px-1 sm:px-6 py-3">
-                            Title
-                        </th>
                         <th scope="col" colspan="6" class="px-1 sm:px-6 py-3">
                             Research Title
                         </th>
@@ -61,9 +58,6 @@
         ?> <!-- PHP -->
                     <tr id="docs-tr-<?=$row['id']?>" class="bg-white border-b hover:bg-gray-50 cursor-pointer" onclick="window.location.href = 'view_study.php';">
                         <a href="view_study.php" class="my-4">
-                            <th scope="row" colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                <?=$row['project_title']?>
-                            </th>
                             <td colspan="6" class="px-1 sm:px-6 py-1 sm:py-4 text-xs sm:text-sm text-gray-600">
                                 <?=$row['research_title']?>
                             </td>
@@ -176,7 +170,7 @@
                             <?=$row['id']?>
                         </th>
                         <td colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600  text-wrap">
-                            <?=$row['project_title']?>
+                            <?=$row['research_title']?>
                         </td>
                         <td colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
                             <?=$row['created_at']?>
@@ -317,7 +311,7 @@
                 <tr id="docs-tr-${d.id}" class="bg-white border-b hover:bg-gray-50 cursor-pointer" onclick="window.location.href = 'view_study.php';">
                     <a href="view_study.php" class="my-4">
                         <th scope="row" colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-900 whitespace-nowrap ">
-                            ${d.project_title}
+                            ${d.research_title}
                         </th>
                         <td colspan="6" class="px-1 sm:px-6 py-1 sm:py-4 text-xs sm:text-sm text-gray-600">
                             ${d.research_title}
@@ -351,7 +345,7 @@
                         ${d.id}
                     </th>
                     <td colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600  text-wrap">
-                        ${d.project_title}
+                        ${d.research_title}
                     </td>
                     <td colspan="1" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
                         ${d.created_at}

@@ -1,5 +1,5 @@
 <div class="relative overflow-x-auto p-2 lg:px-24 xl:px-48">
-    <div class="flex justify-center items-center gap-4 md:gap-12 p-8">
+    <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-12 p-8">
         <button class="active option-btns">Students</button>
         <button class="btn-bordered option-btns">Archived</button>
         <input 
@@ -64,10 +64,10 @@
                             <?=$row['email']?>
                         </td>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
-                            BSIT
+                            <?=$row['course']?>
                         </td>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
-                            4E-G1
+                            <?=$row['year']?? 'unset'.$row['section']?? ''?>
                         </td>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
                             <span onclick="archiveFile(<?=$row['id']?>, 1, 'account')" class="flex gap-1 items-center font-medium text-gray-500 hover:underline">
@@ -94,15 +94,15 @@
                             <?=$row['contact']?>
                         </td>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
-                            BSIT
+                            <?=$row['course']?>
                         </td>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
-                            4E-G1
+                            <?=$row['year']?? 'unset'.$row['section']?? ''?>
                         </td>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
                             <span onclick="archiveFile(<?=$row['id']?>, 0, 'account')" class="flex gap-1 items-center font-medium text-gray-500 hover:underline">
                                 <img src="../../src/img/Restore Page.svg" alt="">
-                                Unarchive
+                                Restore
                             </span> 
                         </td>
                     </tr>
@@ -147,10 +147,10 @@
                 is_archived: activeType
             },
             success: function(response){
+                const elemId = activeType == '1' ? 'archived-tbody' : 'not-archived-tbody';
+                let tbody = document.getElementById(elemId);
                 if(response != 'none'){
                     const parsed = JSON.parse(response);
-                    const elemId = activeType == '1' ? 'archived-tbody' : 'not-archived-tbody';
-                    let tbody = document.getElementById(elemId);
                     
                     if(parsed.length == 0){
                         tbody.innerHTML = `
@@ -177,7 +177,7 @@
                                 action = `
                                     <span onclick="archiveFile(${data.id}, 0, 'account')" class="flex gap-1 items-center font-medium text-gray-500 hover:underline">
                                             <img src="../../src/img/Restore Page.svg" alt="">
-                                            Unarchive
+                                            Restore
                                         </span>   
                                 `;
                             }
@@ -210,7 +210,13 @@
                         tbody.innerHTML = renderedHTML.join('');
                     }
                 }else{
-                    alert(response)
+                    tbody.innerHTML = `
+                            <tr class="bg-white border-b hover:bg-gray-50 cursor-pointer">
+                                <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] max-w-none font-medium text-gray-900">
+                                    NO RECORDS FOUND
+                                </th>
+                            </tr>
+                        `;
                 }
             }
         })

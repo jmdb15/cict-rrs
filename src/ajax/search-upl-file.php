@@ -5,7 +5,7 @@ include ('../../db/db.php');
 $uid = $_SESSION['id'];
 $key = $_POST['key'];
 
-$sql = "SELECT * FROM `studies` WHERE account_id=$uid AND (project_title LIKE '%$key%' OR research_title LIKE '%$key%')";
+$sql = "SELECT * FROM `studies` WHERE account_id=$uid AND research_title LIKE '%$key%'";
 $res = $conn->query($sql);
 // $row = $res->fetch_assoc();
 if($res->num_rows > 0){

@@ -11,7 +11,6 @@ if($course == 'none'){
    $sql = "SELECT 
       s.id, 
       s.cover, 
-      s.project_title, 
       s.research_title, 
       COALESCE(view_count, 0) AS view_count
       FROM 
@@ -38,7 +37,6 @@ if($course == 'none'){
    $sql = "SELECT 
    s.id, 
    s.cover, 
-   s.project_title, 
    s.research_title, 
    COALESCE(view_count, 0) AS view_count
    FROM 

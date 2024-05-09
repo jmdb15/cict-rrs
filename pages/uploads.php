@@ -7,7 +7,7 @@ include('../db/db.php');
 
 $uid = $_SESSION['id'];
 $surveySql = "SELECT s.*, (SELECT COUNT(*) FROM response o WHERE o.account_id = s.account_id) AS responses FROM surveys s WHERE s.account_id = $uid";
-$requestSql = "SELECT requests.*, profile.first_name, profile.last_name, studies.project_title
+$requestSql = "SELECT requests.*, profile.first_name, profile.last_name, studies.research_title
 FROM requests
 JOIN studies ON requests.studies_id = studies.id
 JOIN profile ON studies.account_id = profile.account_id

@@ -39,7 +39,7 @@
 
 /* dashboard cards */
 .card{
-    @apply h-24 sm:h-32 shadow-md rounded-lg w-[20%] min-w-[160px] sm:min-w-[220px] sm:max-w-[320px] border flex justify-between px-2 md:pr-5 bg-gray-50
+    @apply h-24 sm:h-32 shadow-md rounded-lg w-[20%] min-w-[150px] sm:min-w-[200px] sm:max-w-[320px] border flex justify-between px-2 md:pr-5 bg-gray-50
 }
 .card-img-cont{
     @apply h-full basis-[40%] p-2 grid place-items-center
@@ -48,10 +48,10 @@
     @apply flex flex-col justify-center items-end
 }
 .card-text-number{
-    @apply text-2xl md:text-4xl text-orange-400 basis-[70%] grid place-items-center
+    @apply text-xl md:text-6xl text-orange-400 basis-[70%] grid place-items-center
 }
 .card-text-subheader{
-    @apply text-sm md:text-lg basis-[30%] pb-3
+    @apply text-base lg:text-xl basis-[30%] pb-3
 }
 
 /* ADMIN BUTTON STYLE */

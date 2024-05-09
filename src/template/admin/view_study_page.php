@@ -7,7 +7,7 @@
             <div class="flex w-full">
                 <img src="../../src/img/PDF.png" class="w-auto max-h-[50px] max-w-[50px]" alt="">
                 <div class="flex flex-col">
-                <h6 class="text-xl font-bold"><?=$row['project_title']?></h6>
+                <h6 class="text-xl font-bold"><?=$row['research_title']?></h6>
                 <p class="text-gray-400 text-sm"><?=$row['month_yr']?></p>
                 </div>
             </div>
@@ -20,9 +20,8 @@
         <!-- RIGHT SIDE -->
         <div class="w-[90%] md:basis-[56%] mx-auto md:ml-auto h-fit min-h-[596px] overflow-y-auto scroll-smooth mt-4 lg:mt-0 py-20 px-6 xl:px-16 relative bg-white rounded-lg z-10">
             <p class="text-base italic font-light text-gray-400 mb-7">Upload Date: <?=$row['created_at']?></p>
-            <h2 class="text-4xl font-medium"><?=$row['project_title']?></h2>
+            <h2 class="text-4xl font-medium"><?=$row['research_title']?></h2>
             <div class="flex justify-between items-center">
-                <h4 class="text-2xl font-normal"><?=$row['research_title']?></h4>
                 <span id="abstract-btn" class="hover:underline text-blue-500 text-sm cursor-pointer" onclick="showAbstract(this)">Show Abstract</span>
             </div>
             <div class="flex flex-col mt-4">

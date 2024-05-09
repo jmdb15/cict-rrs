@@ -27,7 +27,7 @@ if(in_array($fileActualExt, $allowed)){
             
             move_uploaded_file($fileTmpName, $fileDestination);
 
-            // $sql = "INSERT INTO `studies`(`project_title`, `research_title`, `authors`, `panels`, `accession`, `adviser`, `tags`, `month_yr`, `description`, `file`, `cover`, `account_id`) VALUES ('$pTitle', '$rTitle', '$authors', '$panels', '$accession', '$adviser', '$tags', '$month_yr', '$description', '$fileNameNew', '$coverNameNew', '$id')";
+            // $sql = "INSERT INTO `studies`(`research_title`, `authors`, `panels`, `accession`, `adviser`, `tags`, `month_yr`, `description`, `file`, `cover`, `account_id`) VALUES ('$pTitle', '$rTitle', '$authors', '$panels', '$accession', '$adviser', '$tags', '$month_yr', '$description', '$fileNameNew', '$coverNameNew', '$id')";
             $sql = "UPDATE `profile` SET `image`='$fileNameNew' WHERE account_id='$uid'";
 
             if($conn->query($sql)){

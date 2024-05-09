@@ -1,5 +1,5 @@
 <div class="relative overflow-x-auto p-2 md:px-8 lg:px-18 xl:px-48">
-    <div class="flex justify-center items-center gap-4 md:gap-12 p-8">
+    <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-12 p-8">
         <button class="active option-btns">Pending</button>
         <button class="btn-bordered option-btns">Transactions</button>
     </div>
@@ -160,7 +160,7 @@
                             <?=$row['id']?>
                         </th>
                         <td colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600  text-wrap">
-                            <?=$row['project_title']?>
+                            <?=$row['research_title']?>
                         </td>
                         <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
                             <?=$row['email']?>
@@ -187,7 +187,7 @@
                             <?=$row['id']?>
                         </th>
                         <td colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600  text-wrap">
-                            <?=$row['project_title']?>
+                            <?=$row['research_title']?>
                         </td>
                         <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
                             <?=$row['email']?>
@@ -414,7 +414,7 @@
                                     ${data.id}
                                 </th>
                                 <td colspan="6" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600  text-wrap">
-                                    ${data.project_title}
+                                    ${data.research_title}
                                 </td>
                                 <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
                                     ${data.email}

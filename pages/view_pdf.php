@@ -12,7 +12,7 @@ $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 $file = $row['file'];
 
-insertLog($conn, $uid, 'Viewed a Research: '.$row['project_title'], $id);
+insertLog($conn, $uid, 'Viewed a Research: '.$row['research_title'], $id);
 
 $isLoggedIn = true;
 $showNav = true;

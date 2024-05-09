@@ -36,7 +36,7 @@
                     </div>
                     <div class="w-1/2 mb-5">
                             <label for="url">URL <span class="text-gray-400 text-xs">(if applicable)</span></label>
-                            <input type="text" id="url" placeholder="Sample Survey Name" class="input-text">
+                            <input type="text" name="url" id="url" placeholder="Sample Survey Name" class="input-text">
                     </div>
                 </div>
                 

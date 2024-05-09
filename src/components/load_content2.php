@@ -3,7 +3,7 @@ include("../../db/db.php");
 $key = $_GET['key'];
 $idArray = $_GET['arrayId'] ?? [];
 $idString = implode(",", $idArray);
-$sql_count = "SELECT COUNT(*) AS total FROM studies WHERE id NOT IN ($idString) AND is_approved = 1 AND (project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%')";
+$sql_count = "SELECT COUNT(*) AS total FROM studies WHERE id NOT IN ($idString) AND is_approved = 1 AND (research_title LIKE '%$key%' OR tags LIKE '%$key%')";
 $count_result = $conn->query($sql_count);
 $count_row = $count_result->fetch_assoc();
 $total_records = $count_row['total'];
@@ -20,7 +20,7 @@ if($total_records <= 6){
     FROM studies s 
     LEFT JOIN (SELECT studies_id, COUNT(id) AS view_count FROM logs WHERE activity LIKE '%Viewed%' GROUP BY studies_id) AS viewed_logs 
     ON s.id = viewed_logs.studies_id  
-    WHERE s.id NOT IN ($idString) AND is_approved = 1 AND (project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%')";
+    WHERE s.id NOT IN ($idString) AND is_approved = 1 AND (research_title LIKE '%$key%' OR tags LIKE '%$key%')";
     $result = $conn->query($sql);
 
     echo '<div class="flex flex-wrap gap-x-8 gap-y-4 items-center justify-start h-fit">';
@@ -29,9 +29,8 @@ if($total_records <= 6){
                     <div class="relative flex gap-x-2 p-4 h-[120px] bg-white rounded-lg shadow-md hover:brightness-105">
                         <img src="../public/images/cover/'.$row['cover'].'" class="w-auto object-contain min-w-[120px] h-auto basis-[40%]" alt="Cover">
                         <div class="flex flex-col justify-between">
-                            <p class="text-md font-bold tracking-wider">'. $row['project_title'] .'</p>
-                            <p class="text-xs text-gray-500 text-ellipsis overflow-hidden">'. $row['research_title'] .'</p>
-                            <p class="text-sm text-gray-400">'. $row['view_count'] .' views</p>
+                            <p class="text-sm font-bold tracking-wide line-clamp-3">'. $row['research_title'] .'</p>
+                            <p class="text-sm text-orange-400">'. $row['view_count'] .' views</p>
                         </div>
                     </div>
                 </a>';
@@ -64,7 +63,7 @@ if($total_records <= 6){
     FROM studies s 
     LEFT JOIN (SELECT studies_id, COUNT(id) AS view_count FROM logs WHERE activity LIKE '%Viewed%' GROUP BY studies_id) AS viewed_logs 
     ON s.id = viewed_logs.studies_id  
-    WHERE s.id NOT IN ($idString) AND is_approved = 1 AND (project_title LIKE '%$key%' OR research_title LIKE '%$key%' OR tags LIKE '%$key%') LIMIT $start, $perpage";
+    WHERE s.id NOT IN ($idString) AND is_approved = 1 AND (research_title LIKE '%$key%' OR tags LIKE '%$key%') LIMIT $start, $perpage";
     $result = $conn->query($sql);
 
     $limit = $total_records / $perpage;
@@ -79,9 +78,8 @@ if($total_records <= 6){
                     <div class="relative flex gap-x-2 p-4 h-[120px] min-w-[290px] bg-white rounded-lg shadow-md hover:brightness-105">
                         <img src="../public/images/cover/'.$row['cover'].'" class="w-auto object-contain min-w-[120px] h-auto basis-[40%]" alt="Cover">
                         <div class="flex flex-col justify-between">
-                            <p class="text-md font-bold tracking-wider">'. $row['project_title'] .'</p>
-                            <p class="text-xs text-gray-500 text-ellipsis overflow-hidden">'. $row['research_title'] .'</p>
-                            <p class="text-sm text-gray-400">'. $row['view_count'] .' view/s</p>
+                            <p class="text-sm font-bold tracking-wide line-clamp-3">'. $row['research_title'] .'</p>
+                            <p class="text-sm text-orange-400">'. $row['view_count'] .' view/s</p>
                         </div>
                     </div>
                 </a>';

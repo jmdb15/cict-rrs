@@ -105,7 +105,7 @@
                     <div class="w-full flex flex-col justify-start items-start px-4 leading-normal text-sm md:text-lg">
                         <p class="text-[#FF8A01] text-xs md:text-sm"><?=$row['created_at']?></p>
                         <h5 class="mb-2 text-xl md:text-3xl font-bold tracking-tight text-gray-900">
-                            <?=$row['project_title']?>
+                            <?=$row['research_title']?>
                         </h5>
                         <p class="mb-3 font-normal line-clamp-4 text-sm md:text-md text-[#667085]">
                             <?=$row['description']?>
@@ -244,7 +244,7 @@
                                     </div>
                                     <div class="dv">
                                         <input 
-                                            onchange="registerAs('Faculty')"
+                                            onchange="registerAs('Employee')"
                                             id="default-radio-2" 
                                             type="radio" 
                                             value="faculty" 
@@ -459,7 +459,7 @@
             <div class="p-4 md:p-5 space-y-4">
                 <div class="flex flex-col justify-center items-center">
                     <section class="w-full flex items-center border-b-2 py-2">
-                        <img src="../img/terms.png" alt="">
+                        <img src="../src/img/terms.png" alt="">
                         <span class="text-md md:text-lg lg:text-xl text-[#FF8A01]">Terms and Conditions: <p class="text-sm text-gray-950">Last updated May 3, 2024</p></span>
                     </section>
                     

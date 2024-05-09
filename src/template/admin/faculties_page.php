@@ -1,5 +1,5 @@
 <div class="relative overflow-x-auto p-2 lg:px-24 xl:px-48">
-    <div class="flex justify-center items-center gap-4 md:gap-12 p-8">
+    <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-12 p-8">
         <button class="active option-btns">Faculties</button>
         <button class="btn-bordered option-btns">Archived</button>
         <input 
@@ -32,7 +32,7 @@
             <thead class="sticky top-[81px] text-xs text-gray-700 uppercase bg-gray-100">
                 <tr>
                     <th scope="col" class="px-1 sm:px-6 py-3">
-                        Student No.
+                        Employee Number
                     </th>
                     <th scope="col" class="px-1 sm:px-6 py-3">
                         Name
@@ -41,7 +41,7 @@
                         Email
                     </th>
                     <th scope="col" class="px-1 sm:px-6 py-3">
-                        Position
+                        Academic Rank
                     </th>
                     <th scope="col" class="px-1 sm:px-6 py-3">
                         Action
@@ -61,7 +61,7 @@
                             <?=$row['email']?>
                         </td>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
-                            Prof
+                            <?=$row['academic_rank']?>
                         </td>
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
                             <span onclick="archiveFile(<?=$row['id']?>, 1, 'account')" class="flex gap-1 items-center font-medium text-gray-500 hover:underline">
@@ -93,7 +93,7 @@
                         <td class="px-1 sm:px-6 py-4 text-gray-600">
                             <span onclick="archiveFile(<?=$row['id']?>, 0, 'account')" class="flex gap-1 items-center font-medium text-gray-500 hover:underline">
                                 <img src="../../src/img/Restore Page.svg" alt="">
-                                Unarchive
+                                Restore
                             </span> 
                         </td>
                     </tr>
@@ -166,7 +166,7 @@
                             action = `
                                 <span onclick="archiveFile(${data.id}, 0, 'account')" class="flex gap-1 items-center font-medium text-gray-500hover:underline">
                                     <img src="../../src/img/Restore Page.svg" alt="">
-                                    Unarchive
+                                    Restore
                                 </span>   
                             `;
                         }

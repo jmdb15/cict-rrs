@@ -7,7 +7,7 @@ $sql = '';
 // if (isset ($_POST['start'])) {
 //     $start = $_POST['start'];
 //     $end = $_POST['end'];
-//     $sql = "SELECT * FROM requests WHERE `project_title` LIKE '%$key%' AND (created_at BETWEEN '$start' AND '$end')";
+//     $sql = "SELECT * FROM requests WHERE `research_title` LIKE '%$key%' AND (created_at BETWEEN '$start' AND '$end')";
 // } else {
     $type = $_POST['date'];
     switch ($type) {
@@ -27,7 +27,7 @@ $sql = '';
         $within = "AND l.created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 1 YEAR)";
         break;
     }
-    $sql = "SELECT l.*, p.* FROM logs l LEFT JOIN profile p ON l.account_id = p.account_id WHERE CONCAT_WS(' ', p.first_name, p.middle_name, p.last_name) LIKE '%$key%' OR p.account_id LIKE '%$key%' $within"; // LIKE '%$searchKey%'
+    $sql = "SELECT l.*, p.* FROM logs l LEFT JOIN profile p ON l.account_id = p.account_id WHERE (CONCAT_WS(' ', p.first_name, p.middle_name, p.last_name) LIKE '%$key%' OR p.account_id LIKE '%$key%' OR l.activity LIKE '%$key%') $within"; // LIKE '%$searchKey%'
 // }
 $result = $conn->query($sql);
 $data = array();

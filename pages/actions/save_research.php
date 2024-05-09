@@ -7,7 +7,6 @@ if (!isset($_SESSION["id"])) {
 
 if(isset($_POST['project-title'])){
     $id = $_SESSION['id'];
-    $pTitle = $_POST['project-title'];
     $rTitle = $_POST['research-title'];
     $author = $_POST['authors'];
     $panel = $_POST['panels'];
@@ -56,21 +55,21 @@ if(isset($_POST['project-title'])){
                 move_uploaded_file($fileTmpName, $fileDestination);
                 move_uploaded_file($coverTmpName, $coverDestination);
 
-                // $sql = "INSERT INTO studies(project_title, research_title, authors, panels, accession, adviser, tags, month_yr, description, file, cover, account_id) VALUES ('$pTitle', '$rTitle', '$authors', '$panels', '$accession', '$adviser', '$tags', '$month_yr', '$description', '$fileNameNew', '$coverNameNew', '$id')";
+                // $sql = "INSERT INTO studies(research_title, authors, panels, accession, adviser, tags, month_yr, description, file, cover, account_id) VALUES ('$pTitle', '$rTitle', '$authors', '$panels', '$accession', '$adviser', '$tags', '$month_yr', '$description', '$fileNameNew', '$coverNameNew', '$id')";
 
-                $sql = "INSERT INTO studies (project_title, research_title, authors, panels, accession, adviser, tags, month_yr, description, file, cover, account_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO studies (research_title, authors, panels, accession, adviser, tags, month_yr, description, file, cover, account_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
                 // Prepare the statement
                 $stmt = $conn->prepare($sql);
 
                 // Bind parameters to the placeholders
-                $stmt->bind_param("sssssssssssi", $pTitle, $rTitle, $authors, $panels, $accession, $adviser, $tags, $month_yr, $description, $fileNameNew, $coverNameNew, $id);
+                $stmt->bind_param("ssssssssssi", $rTitle, $authors, $panels, $accession, $adviser, $tags, $month_yr, $description, $fileNameNew, $coverNameNew, $id);
 
                 // Execute the statement
                 $stmt->execute();
                
                 if(!$stmt->errno){
-                    insertLog($conn, $id, 'Uploaded a Research: '.$pTitle);   
+                    insertLog($conn, $id, 'Uploaded a Research: '.$rTitle);   
                     $_SESSION['toast']['error'] = false;
                     $msg = 'Your study have been published.';
                 }else{

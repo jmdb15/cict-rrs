@@ -4,16 +4,20 @@
 if(isset($_POST['date'])){
   $searchKey = $_POST['key'];
   $active = $_POST['active'];
-    $type = $_POST['date'];
+  $type = $_POST['date'];
   $table = $_POST['table'];
-  $column = $table == 'studies' ? 'project_title' : 'survey_name';
+  $course = $_POST['course'];
+  $status = $_POST['status'] ?? '';
+  $stat = $status == 'pending' ? 0 : ($status == 'files' ? 1 : -1);
+  $column = $table == 'studies' ? 'research_title' : 'survey_name';
   $within = '';
   $sql = '';
+  $crs = '';
   $is_archived = '';
   if (isset ($_POST['start'])) {
     $start = $_POST['start'];
     $end = $_POST['end'];
-    $sql = "SELECT * FROM `$table` WHERE `project_title` LIKE '%$searchKey%' AND (created_at BETWEEN '$start' AND '$end')";
+    $sql = "SELECT * FROM `$table` WHERE `research_title` LIKE '%$searchKey%' AND (created_at BETWEEN '$start' AND '$end')";
   } else {
     switch ($type) {
       case 'all':
@@ -32,7 +36,19 @@ if(isset($_POST['date'])){
         $within = "AND `created_at` >= DATE_SUB(CURRENT_DATE, INTERVAL 1 YEAR)";
         break;
     }
-    $sql = "SELECT s.*, a.email FROM $table s JOIN account a ON s.account_id = a.number WHERE s.is_archived = $active AND $column LIKE '%$searchKey%' $within";
+    switch($course){
+      case 'all':
+        $crs = "";
+        break;
+      case 'none':
+        $crs = "AND p.course = 'none'";
+        break;
+      default: 
+        $crs = "AND p.course LIKE '%$course%'";
+        break;
+    }
+    if($stat == -1) $sql = "SELECT s.*, a.email FROM $table s JOIN account a ON s.account_id = a.number JOIN profile p ON s.account_id = p.account_id WHERE s.is_archived = $active AND $column LIKE '%$searchKey%' $crs $within";
+    else $sql = "SELECT s.*, a.email FROM $table s JOIN account a ON s.account_id = a.number JOIN profile p ON s.account_id = p.account_id WHERE s.is_archived = $active AND s.is_approved=$stat AND $column LIKE '%$searchKey%' $crs $within";
   }
   $result = $conn->query($sql);
   $data = array();

@@ -31,7 +31,7 @@
                 </div>
                 <div class="w-1/2 min-w-80">
                     <label for="url">URL <span class="text-gray-400">(if applicable)</span></label>
-                    <p class="input-text">
+                    <p class="input-text underline">
                         <a href="<?=$row['url']?>" target="_blank"><?=$row['url']?></a>
                     </p>
                 </div>

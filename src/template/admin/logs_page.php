@@ -223,7 +223,7 @@
                 if(parsed.length == 0){
                     tbody.innerHTML = `
                         <tr class="bg-white border-b hover:bg-gray-50 cursor-pointer">
-                            <th class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] max-w-none font-medium text-gray-900">
+                            <th colspan="11" class="px-1 text-center sm:px-6 py-4 text-xs sm:text-sm max-w-[170px] max-w-none font-medium text-gray-900">
                                 NO RECORDS FOUND
                             </th>
                         </tr>

@@ -157,7 +157,7 @@
                         <div class="my-4 flex"> 
                             <img src="../src/img/file.png" class="">
                             <div class="flex flex-col">
-                                <h6><?=$row['project_title']?></h6>
+                                <h6><?=$row['research_title']?></h6>
                                 <p class="text-sm text-gray-400"><?=$row['created_at']?></p>
                             </div>
                         </div>

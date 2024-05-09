@@ -9,7 +9,7 @@ $sendEmailSql = "SELECT r.*, a.email, s.* FROM requests r JOIN studies s ON r.st
 $res = $conn->query($sendEmailSql);
 $row = $res->fetch_assoc();
 $email = $row['email'];
-$title = $row['project_title'];
+$title = $row['research_title'];
 $subject = ($todo == 1) 
             ? "Download Request Approved"
             : "Download Request Declined";

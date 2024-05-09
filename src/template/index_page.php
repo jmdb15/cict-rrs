@@ -13,8 +13,7 @@
                     <div class="relative flex gap-x-2 p-4 h-[120px] min-w-[290px] bg-white rounded-lg shadow-md">
                         <img src="../public/images/cover/<?=$row['cover']?>" class="w-auto object-contain min-w-[120px] h-auto basis-[40%]" alt="">
                         <div class="flex flex-col justify-between">
-                            <p class="text-md font-bold tracking-wider"><?=$row['project_title']?></p>
-                            <p class="text-xs text-gray-500"><?=$row['research_title']?></p>
+                            <p class="text-sm font-bold tracking-wide line-clamp-3"><?=$row['research_title']?></p>
                             <!-- <p><?=$row['view_count']?> view/s</p> -->
                         </div>
                     </div>
@@ -39,8 +38,7 @@
                     <div class="relative flex gap-x-2 p-4 h-[120px] min-w-[290px] bg-white rounded-lg shadow-md">
                         <img src="../public/images/cover/<?=$row['cover']?>" class="w-auto object-contain min-w-[120px] h-auto basis-[40%]" alt="">
                         <div class="flex flex-col justify-between">
-                            <p class="text-md font-bold tracking-wider"><?=$row['project_title']?></p>
-                            <p class="text-xs text-gray-500"><?=$row['research_title']?></p>
+                            <p class="text-sm font-bold tracking-wide line-clamp-3"><?=$row['research_title']?></p>
                             <p class="text-orange-400 text-sm"><?=$row['view_count']?> view/s</p>
                         </div>
                     </div>

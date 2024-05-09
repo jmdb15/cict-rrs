@@ -7,34 +7,6 @@ $sql = "SELECT * FROM `surveys` WHERE id=$id";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 
-// print_r($data);
-// foreach ($data as $entry) {
-    // foreach($data[0] as $key => $value){
-    //     if(gettype($value) == 'string'){
-    //         echo $value;
-    //     }else{
-    //         echo '\n '.$key.' \n';
-    //         print_r($value);
-    //     }
-    // }
-    // print_r($data[1]);
-    // $questionnaireRow = [];
-    // foreach ($data[0][0] as $key => $question) {
-    //     $questionnaireRow[] = $question['question'];
-    // }
-    // $csvData[] = $questionnaireRow;
-    
-    // $answerRow = [];
-    // foreach ($data[0][1] as $key => $value) {
-    //     if(gettype($value) == 'array'){
-    //         $answerRow[] = implode(', ', $value);
-    //     }else{
-    //         $answerRow[] = $value;
-    //     }
-    // }
-    // $csvData[] = $answerRow;
-
-// }
 try{
     
     $jsonData =  file_get_contents('../../src/js/surveys/'.$row['filename']);
