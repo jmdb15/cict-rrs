@@ -64,7 +64,7 @@ if($course == 'none'){
 
 $res = $conn->query($sql);
 
-$previousSql = "SELECT l.*, s.* FROM logs l LEFT JOIN studies s ON l.studies_id=s.id WHERE l.account_id='$uid' AND l.studies_id != '' AND l.activity LIKE '%Viewed%'";
+$previousSql = "SELECT l.*, s.* FROM logs l LEFT JOIN studies s ON l.studies_id=s.id WHERE l.account_id='$uid' AND l.studies_id != '' AND l.activity LIKE '%Viewed%' ORDER BY l.created_at DESC";
 $previousRes = $conn->query($previousSql);
 
 $imports = '';

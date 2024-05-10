@@ -1,11 +1,12 @@
 <?php
 require_once("../../db/db.php");
 require_once("emailer.php");
+require_once("dl-emailer.php");
 
 $todo = $_POST['toDo'];
 $id = $_POST['id'];
 $isAdmin = $_POST['is_admin'];
-$sendEmailSql = "SELECT r.*, a.email, s.* FROM requests r JOIN studies s ON r.studies_id = s.id JOIN account a ON r.account_id = a.number WHERE r.id = $id";
+$sendEmailSql = "SELECT r.*, a.email, s.*, p.first_name as fn, p.last_name as ln FROM requests r JOIN studies s ON r.studies_id = s.id JOIN account a ON r.account_id = a.number JOIN profile p ON r.account_id=p.account_id WHERE r.id = $id";
 $res = $conn->query($sendEmailSql);
 $row = $res->fetch_assoc();
 $email = $row['email'];
@@ -23,7 +24,8 @@ $filePath = ($todo == 1)
             ? $userFilePath
             : "";
 if($todo == 1){
-    sendEmail([$email], $subject, $body, [$filePath]);
+    $name = $row['fn'] . ' ' . $row['ln'];
+    sendFileWithWatermark($name, $email, $subject, $body, $filePath);
 }else{
     sendEmail([$email], $subject, $body);
 }

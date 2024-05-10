@@ -278,7 +278,16 @@
             type: 'POST',
             data: { id:id, toDo:toDo, is_admin: true },
             success: function (response) {
-                alert(response);
+                if(response === 'Message has been sentsuccess'){
+                    const toast = document.getElementById('toast-default');
+                    document.getElementById('toast-msg').innerText = 'The user have been informed.';
+                    toast.classList.remove('hidden');
+                    toast.classList.add('flex');
+                    setTimeout(() => {
+                        toast.classList.remove('flex');
+                        toast.classList.add('hidden');
+                    }, 3000);
+                }
                 var formattedDate = getDateToday();
                 const tr = document.getElementById(`pend-${id}`);
                 tr.remove();

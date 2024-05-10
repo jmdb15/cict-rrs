@@ -40,14 +40,14 @@
 
     <div class="flex flex-col lg:flex-row justify-center items-center gap-4 mx-auto my-8">
         <!-- PIE CHART CONTAINER -->
-        <div id="pieChart" class="h-64 lg:h-[370px] w-[90%] min-w-[360px] max-w-[700px] lg:w-[49%]"></div>
+        <div id="pieChart" class="h-64 lg:h-[370px] w-[90%] min-w-[360px] max-w-[700px] lg:w-[49%] shadow rounded"></div>
     
         <!-- DONUT CONTAINER -->
-        <div id="chartContainer" class="h-64 lg:h-[370px] w-[90%] min-w-[360px] max-w-[700px] lg:w-[49%]"></div>
+        <div id="chartContainer" class="h-64 lg:h-[370px] w-[90%] min-w-[360px] max-w-[700px] lg:w-[49%] shadow rounded"></div>
     </div>
 
     <!-- SIDE CHART FOR MOST VIEWED -->
-    <div id="mostViewedChart" class="mx-auto h-64 lg:h-[370px] w-[90%] lg:w-full max-w-[1420px]"></div> 
+    <div id="mostViewedChart" class="mx-auto h-64 lg:h-[370px] w-[90%] lg:w-full max-w-[1420px] shadow rounded"></div> 
 
 
 </div>
