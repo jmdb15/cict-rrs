@@ -48,6 +48,9 @@
                         <th scope="col" colspan="2" class="px-1 sm:px-6 py-3">
                             Date Uploaded
                         </th>
+                        <th scope="col" colspan="2" class="px-1 sm:px-6 py-3">
+                            Status
+                        </th>
                     </tr>
                 </thead>
                 <tbody id="docs-tbody">
@@ -66,6 +69,9 @@
                             </td>
                             <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
                                 <?=$row['created_at']?>
+                            </td>
+                            <td colspan="2" class="px-1 sm:px-6 py-4 text-xs sm:text-sm text-gray-600">
+                                <?= ($row['is_approved'] == 0) ? 'Pending' :( ($row['is_approved'] == 1) ? 'Approved' : 'Declined' )?>
                             </td>
                         </a>
                     </tr>

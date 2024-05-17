@@ -5,11 +5,7 @@
             <h4 class="text-lg font-medium mb-5">Tell us about your study</h4>
             <!-- TITLES -->
             <div class="flex flex-col sm:flex-row justify-around">
-                <div class="mb-5 basis-[48%]">
-                    <label for="project-title" class="block mb-2 text-sm font-medium text-gray-900">Project Title</label>
-                    <input type="text" id="project-title" name="project-title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required placeholder="Enter your project title"/>
-                </div>
-                <div class="mb-5 basis-[48%]">
+                <div class="mb-5 basis-full">
                     <label for="research-title" class="block mb-2 text-sm font-medium text-gray-900">Research Title</label>
                     <input type="text" id="research-title" name="research-title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required placeholder="Enter your research title" />
                 </div>

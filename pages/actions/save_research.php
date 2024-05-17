@@ -5,7 +5,7 @@ if (!isset($_SESSION["id"])) {
   header("Location:../landing.php");
 }
 
-if(isset($_POST['project-title'])){
+if(isset($_POST['research-title'])){
     $id = $_SESSION['id'];
     $rTitle = $_POST['research-title'];
     $author = $_POST['authors'];
